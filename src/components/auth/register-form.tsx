@@ -20,6 +20,8 @@ import { Input } from "@/components/ui/input";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/message/form-error";
 import { FormSuccess } from "@/components/message/form-success";
+import { BeatLoader } from "react-spinners";
+import { cn } from "@/lib/utils";
 
 export const RegisterForm = () => {
 
@@ -35,7 +37,7 @@ export const RegisterForm = () => {
         }
     })
 
-    const { isLoading } = form.formState;
+    const { isLoading, isSubmitting } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
         setError("");
@@ -70,7 +72,7 @@ export const RegisterForm = () => {
                         <FormField
                             control={form.control}
                             name="name"
-                            disabled={isLoading}
+                            disabled={isLoading || isSubmitting}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
@@ -87,7 +89,7 @@ export const RegisterForm = () => {
                         <FormField
                             control={form.control}
                             name="email"
-                            disabled={isLoading}
+                            disabled={isLoading || isSubmitting}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
@@ -105,7 +107,7 @@ export const RegisterForm = () => {
                         <FormField
                             control={form.control}
                             name="password"
-                            disabled={isLoading}
+                            disabled={isLoading || isSubmitting}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
@@ -126,9 +128,9 @@ export const RegisterForm = () => {
                     <Button
                         disabled={isLoading}
                         type="submit"
-                        className={"w-full"}
+                        className={cn("w-full", isSubmitting && "bg-white")}
                     >
-                        Create an account
+                        {isSubmitting ? (<BeatLoader />) : "Create an account"}
                     </Button>
                 </form>
             </Form>

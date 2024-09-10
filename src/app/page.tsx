@@ -1,7 +1,15 @@
+"use client"
+
+import { UserButton } from "@/components/auth/user-button";
+import { useCurrentUser } from "@/hooks/use-current-user";
+
 export default function Home() {
+  const user = useCurrentUser();
+
   return (
     <div>
-      We start from here
+      {user?.name}
+      <UserButton />
     </div>
   );
 }

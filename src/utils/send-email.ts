@@ -4,6 +4,13 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 const OAUTH_PLAYGROUND = "https://developers.google.com/oauthplayground"
 
+export interface SendEmailProps {
+    to: string;
+    url: string;
+    subject: string;
+    template: (params: { to: string; url: string }) => string;
+}
+
 const {
     MAILING_SERVICE_CLIENT_ID,
     MAILING_SERVICE_CLIENT_SECRET,
@@ -24,7 +31,12 @@ oauth2Client.setCredentials({
 
 // send email;
 
-export const sendEmail = async (to: string, url: string, subject: string, template: (to: string, url: string) => string) => {
+export const sendEmail = async ({
+    subject,
+    template,
+    to,
+    url
+}: SendEmailProps) => {
     const accessTokenResponse = await oauth2Client.getAccessToken();
     const accessToken = accessTokenResponse?.token;
     if (!accessToken) {
@@ -47,7 +59,7 @@ export const sendEmail = async (to: string, url: string, subject: string, templa
         from: SENDER_EMAIL_ADDRESS,
         to: to,
         subject: subject,
-        html: template(to, url),
+        html: template({ to, url }),
     };
     smtpTransport.sendMail(mailingOptions, (err, infos) => {
         if (err) return err

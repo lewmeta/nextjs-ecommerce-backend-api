@@ -9,10 +9,18 @@ export const sendVerificationEmail = async (
 ) => {
     const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
-    sendEmail(
-        email,
-        "Verify your Email",
-        confirmLink,
-        activateEmailTemplate
-    )
+    // sendEmail(
+    //     // email,
+    //     // "Verify your Email",
+    //     // confirmLink,
+    //     // activateEmailTemplate
+
+
+    // )
+    sendEmail({
+        to: email,
+        subject: "Verify your Email",
+        url: confirmLink,
+        template: activateEmailTemplate,
+    });
 } 
