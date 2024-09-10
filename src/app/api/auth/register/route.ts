@@ -4,6 +4,8 @@ import bcyrpt from "bcryptjs"
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import { db } from "@/lib/db";
+import { generateVerificationToken } from "@/lib/token";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function POST(
     req: Request
@@ -14,30 +16,38 @@ export async function POST(
         const validatedFields = RegisterSchema.safeParse(values);
 
         if (!validatedFields.success) {
-            return { error: "Invalid fields!" };
+            // Collect all Zod error messages
+            const errorMessages = validatedFields.error.errors.map((err) => err.message);
+            return new NextResponse(`${errorMessages}`, { status: 409 })
         }
 
         const { email, password, name } = validatedFields.data;
+
 
         const hashedPassword = await bcyrpt.hash(password, 10);
 
         const existingUser = await getUserByEmail(email);
 
         if (existingUser) {
-            // return new NextResponse("Email is already in use!", { status: 409 });
             return NextResponse.json({ error: "Email is already in use!" }, { status: 409 });
-
         }
 
-        const user = await db.user.create({
+        await db.user.create({
             data: {
                 name,
                 email,
                 password: hashedPassword,
             }
-        })
+        });
 
-        return NextResponse.json(user);
+        const verificationToken = await generateVerificationToken(email);
+
+        await sendVerificationEmail(
+            verificationToken.email,
+            verificationToken.token,
+        );
+
+        return NextResponse.json(verificationToken, { status: 200 });
     } catch (error) {
         console.log("[REGISTER]", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

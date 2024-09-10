@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/message/form-error";
 import { FormSuccess } from "@/components/message/form-success";
@@ -36,15 +35,14 @@ export const RegisterForm = () => {
         }
     })
 
-    const { isLoading, isValid } = form.formState;
+    const { isLoading } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
-        console.log(values);
         try {
             await axios.post(`/api/auth/register`, values);
-            setSuccess("User created successfully!")
+            setSuccess("Confirmation email sent");
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -52,7 +50,6 @@ export const RegisterForm = () => {
                 setError(errorMessage)
             } else {
                 setError("An unexpected error occurred.");
-                toast({ title: "An unexpected error occurred.", variant: "destructive" });
             }
         }
     }
@@ -60,7 +57,7 @@ export const RegisterForm = () => {
     return (
         <CardWrapper
             headerLabel="Create an account"
-            backButtonLablel="Already have an account?"
+            backButtonLabel="Already have an account?"
             backButtonHref="/auth/login"
             showSocials={true}
         >
@@ -127,7 +124,7 @@ export const RegisterForm = () => {
                     <FormError message={error} />
                     <FormSuccess message={success} />
                     <Button
-                        disabled={isLoading || !isValid}
+                        disabled={isLoading}
                         type="submit"
                         className={"w-full"}
                     >
