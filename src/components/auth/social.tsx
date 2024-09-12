@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation"
 
 import { GoogleIcon } from "@/components/icons/google-icon"
-import { GithubIcon } from "@/components/icons/github-icon"
+// import { GithubIcon } from "@/components/icons/github-icon"
 import { FacebookIcon } from "@/components/icons/facebook-icon"
 
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
