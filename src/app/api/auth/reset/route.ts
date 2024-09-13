@@ -1,6 +1,6 @@
 import { getUserByEmail } from "@/data/user";
 import { sendPasswordResetEmail, sendVerificationEmail } from "@/lib/mail";
-import { generateVerificationToken } from "@/lib/token";
+import { generatePasswordResetToken, generateVerificationToken } from "@/lib/token";
 import { ResetSchema } from "@/schemas";
 import { NextResponse } from "next/server";
 
@@ -33,7 +33,7 @@ export async function POST(
             return NextResponse.json({ error: "Email not verified, verification email sent!." }, { status: 202 });
         }
 
-        const passwordResetToken = await generateVerificationToken(email);
+        const passwordResetToken = await generatePasswordResetToken(email);
 
         await sendPasswordResetEmail(
             passwordResetToken.email,

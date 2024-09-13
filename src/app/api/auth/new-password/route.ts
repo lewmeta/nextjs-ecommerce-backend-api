@@ -9,14 +9,14 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
     try {
         const { values, token } = await req.json();
-        const validatedFields = NewPasswordSchema.safeParse(values);
 
-        // Check for missing token
         if (!token) {
             return NextResponse.json({ error: "Missing token!" }, { status: 400 }); // 400: Bad Request
         }
 
-        // Validate form fields
+        const validatedFields = NewPasswordSchema.safeParse(values);
+
+
         if (!validatedFields.success) {
             const errorMessages = validatedFields.error.errors.map((err) => err.message);
             return NextResponse.json({ error: `Invalid input: ${errorMessages.join(", ")}` }, { status: 422 }); // 422: Unprocessable Entity
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         // Check if token exists
         const existingToken = await getPasswordResetTokenByToken(token);
         if (!existingToken) {
-            return NextResponse.json({ error: "Invalid or expired token!" }, { status: 403 }); // 403: Forbidden
+            return NextResponse.json({ error: "Invalid token!" }, { status: 403 }); // 403: Forbidden
         }
 
         // Check if token has expired

@@ -36,7 +36,34 @@ export const NewPasswordForm = () => {
         },
     });
 
-    const { isLoading, isSubmitting, isValid } = form.formState
+    const { isLoading, isSubmitting } = form.formState
+
+    // const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
+    //     setError("");
+    //     setSuccess("");
+
+    //     try {
+    //         const res = await axios.post(`/api/auth/new-password`, { values, token });
+
+    //         const data = res.data;
+    //         if (res.status === 200) {
+    //             setSuccess(data.success);
+    //         } else if (res.status) {
+    //             setError(data.error);
+    //         } else {
+    //             if (data?.error) {
+    //                 setError(data.error);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         if (axios.isAxiosError(error)) {
+    //             setError(error.response?.data?.error || error.message || "Something went wrong");
+    //         } else {
+    //             setError("An unknown error occurred. Please try again.");
+    //         }
+    //     }
+
+    // };
 
     const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
         setError("");
@@ -44,25 +71,44 @@ export const NewPasswordForm = () => {
 
         try {
             const res = await axios.post(`/api/auth/new-password`, { values, token });
-
             const data = res.data;
+
             if (res.status === 200) {
-                setSuccess(data.success);
-            } else if (res.status === 404) {
-                setError(data.error);
+                setSuccess(data.success || "Password reset successfully!");
             } else {
-                if (data?.error) {
-                    setError(data.error);
+                // Handle error cases based on the status code
+                switch (res.status) {
+                    case 400:
+                        setError("Bad Request: Please provide a valid token.");
+                        break;
+                    case 403:
+                        setError("Invalid token. Please try requesting a new one.");
+                        break;
+                    case 410:
+                        setError("The reset token has expired. Please request a new one.");
+                        break;
+                    case 404:
+                        setError("The email associated with this token does not exist.");
+                        break;
+                    case 422:
+                        setError(data.error || "Invalid input. Please check your data.");
+                        break;
+                    default:
+                        setError("Unexpected error occurred. Please try again.");
                 }
             }
         } catch (error) {
+            // Axios error handling
             if (axios.isAxiosError(error)) {
-                setError(error.response?.data?.error || error.message || "Something went wrong");
+                setError(
+                    error.response?.data?.error ||
+                    error.message ||
+                    "Something went wrong. Please try again."
+                );
             } else {
                 setError("An unknown error occurred. Please try again.");
             }
         }
-
     };
 
     return (
