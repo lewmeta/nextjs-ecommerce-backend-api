@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/navigation/navbar";
-import { currentUser } from "@/lib/auth";
+import { currentRole, currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
@@ -12,6 +12,7 @@ export default async function AdminLayout({
 }>) {
 
     const user = await currentUser();
+    const user_role = await currentRole();
 
     if (!user?.id) {
         redirect("/auth/login");
@@ -28,7 +29,6 @@ export default async function AdminLayout({
         redirect("/");
     }
     return (
-
         <>
             <Navbar />
             {children}

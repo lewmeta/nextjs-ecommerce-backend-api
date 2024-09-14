@@ -13,11 +13,16 @@ import { useStoreModal } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
 import { StoreSchema } from "@/schemas";
 import { useToast } from "@/hooks/use-toast";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const StoreModal = () => {
     const storeModal = useStoreModal();
     const router = useRouter();
     const { toast } = useToast();
+    const userRole = useCurrentRole();
+    const user = useCurrentUser();
+
 
     const form = useForm<z.infer<typeof StoreSchema>>({
         resolver: zodResolver(StoreSchema),
@@ -29,10 +34,15 @@ export const StoreModal = () => {
     const { isSubmitting } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof StoreSchema>) => {
+        console.log(values);
         try {
             isSubmitting
+            const res = await axios.post("/api/stores", values);
 
-            const response = await axios.post("/api/stores", values);
+            toast({
+                title: res.data.message
+            })
+
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({

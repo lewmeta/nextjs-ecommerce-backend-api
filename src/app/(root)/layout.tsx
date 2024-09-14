@@ -1,4 +1,4 @@
-import { currentUser } from '@/lib/auth';
+import { currentRole, currentUser } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
@@ -8,7 +8,6 @@ export default async function SetupLayout({
     children: React.ReactNode
 }) {
     const user = await currentUser();
-
 
     if (!user) {
         redirect('/sign-in');
@@ -20,10 +19,15 @@ export default async function SetupLayout({
         }
     });
 
-    if (store) {
-        redirect(`/${store.id}`);
-    };
+    console.log({ store: store })
 
+    if (store) {
+        if (user?.role === 'ADMIN') {
+            redirect(`/${store.id}/admin`);
+        } else {
+            redirect(`/${store.id}/vendor`);
+        }
+    }
     return (
         <>
             {children}
