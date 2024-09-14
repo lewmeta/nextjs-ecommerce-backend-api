@@ -14,7 +14,7 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
+    // FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/auth/card-wrapper"
@@ -79,12 +79,12 @@ export const ResetForm = () => {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    {/* <FormLabel>Email</FormLabel> */}
                                     <FormControl>
                                         <Input
                                             {...field}
                                             disabled={isSubmitting}
-                                            placeholder="john.doe@example.com"
+                                            placeholder="Email address"
                                             type="email"
                                         />
                                     </FormControl>

@@ -12,7 +12,7 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
+    // FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -75,11 +75,11 @@ export const RegisterForm = () => {
                             disabled={isLoading || isSubmitting}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    {/* <FormLabel>Name</FormLabel> */}
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            placeholder="John Doe..."
+                                            placeholder="Your name"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -92,11 +92,11 @@ export const RegisterForm = () => {
                             disabled={isLoading || isSubmitting}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    {/* <FormLabel>Email</FormLabel> */}
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            placeholder="john.doe@example.com"
+                                            placeholder="Email address"
                                             type="email"
                                         />
                                     </FormControl>
@@ -109,12 +109,12 @@ export const RegisterForm = () => {
                             name="password"
                             disabled={isLoading || isSubmitting}
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
+                                <FormItem className="mt-0 pt-0">
+                                    {/* <FormLabel>Password</FormLabel> */}
+                                    <FormControl >
                                         <Input
                                             {...field}
-                                            placeholder="******"
+                                            placeholder="Password"
                                             type="password"
                                         />
                                     </FormControl>

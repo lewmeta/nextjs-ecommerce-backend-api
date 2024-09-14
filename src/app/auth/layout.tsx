@@ -4,9 +4,8 @@ const AuthLayout = ({
     children: React.ReactNode
 }) => {
     return (
-        <div className="h-full flex items-center justify-center bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(https://wallpaperaccess.com/full/459877.jpg)` }}
-        >
+        <div className="h-full flex items-center justify-center w-full"
+            style={{ backgroundImage: `url(https://wallpaperaccess.com/full/371625.jpg)`, backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
             {children}
         </div>
     );

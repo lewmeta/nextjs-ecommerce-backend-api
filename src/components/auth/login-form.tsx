@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,6 +24,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper"
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/message/form-error";
 import { FormSuccess } from "@/components/message/form-success";
+import { Checkbox } from "../ui/checkbox";
 
 export const LoginForm = () => {
     const searchParams = useSearchParams();
@@ -34,6 +36,8 @@ export const LoginForm = () => {
     const [showTwoFactor, setShowTwoFactor] = useState(false);
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    // const [rememberMe, setRememberMe] = useState<boolean>(false);
+
     const [isPending] = useTransition();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
@@ -41,12 +45,14 @@ export const LoginForm = () => {
         defaultValues: {
             email: "",
             password: "",
+            rememberMe: false,
         },
     });
 
     const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
         setError("");
         setSuccess("");
+        console.log(values)
 
         try {
             const res = await axios.post(`/api/auth/login`, { values, callbackUrl });
@@ -102,6 +108,13 @@ export const LoginForm = () => {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
                 >
+                    <div className="flex items-center justify-between">
+                        <div className="max-w-[130px] w-full h-[1px] bg-slate-200">
+                        </div>
+                        Or use Email.
+                        <div className="max-w-[130px] w-full h-[1px] bg-slate-200">
+                        </div>
+                    </div>
                     <div className="space-y-4">
                         {showTwoFactor && (
                             <FormField
@@ -134,7 +147,7 @@ export const LoginForm = () => {
                                                 <Input
                                                     {...field}
                                                     disabled={isPending}
-                                                    placeholder="john.doe@example.com"
+                                                    placeholder="Email address"
                                                     type="email"
                                                 />
                                             </FormControl>
@@ -152,21 +165,43 @@ export const LoginForm = () => {
                                                 <Input
                                                     {...field}
                                                     disabled={isPending}
-                                                    placeholder="******"
+                                                    placeholder="Password"
                                                     type="password"
                                                 />
                                             </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="rememberMe"
+                                    render={({ field }) => (
+                                        <FormItem className="flex  items-center justify-between space-x-3 ">
+                                            <div className="flex items-center space-x-3">
+                                                <FormControl>
+                                                    <Checkbox
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                        className="mt-0 pt-0"
+                                                    />
+                                                </FormControl>
+                                                <FormDescription
+                                                    className="!mt-0"
+                                                >
+                                                    Rember me on this device.
+                                                </FormDescription>
+                                            </div>
                                             <Button
                                                 size="sm"
                                                 variant="link"
                                                 asChild
-                                                className="px-0 font-normal"
+                                                className="px-0 font-normal !mt-0"
                                             >
                                                 <Link href="/auth/reset">
                                                     Forgot password?
                                                 </Link>
                                             </Button>
-                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />

@@ -53,6 +53,7 @@ export const LoginSchema = z.object({
         message: "Password is required",
     }),
     code: z.optional(z.string()),
+    rememberMe: z.optional(z.boolean().default(false)),
 });
 
 export const ResetSchema = z.object({

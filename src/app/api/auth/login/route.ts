@@ -19,7 +19,7 @@ export async function POST(
             return NextResponse.json({ error: "Invalid fields!" }, { status: 400 });
         }
 
-        const { email, password, code } = validatedFields.data;
+        const { email, password, rememberMe } = validatedFields.data;
 
         const existingUser = await getUserByEmail(email);
 
@@ -38,12 +38,15 @@ export async function POST(
 
         // TODO: Add two-factor authentication logic here
 
+        const sessionExpiration = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60; // 30 days vs 1 day
+
         // If the email is verified, proceed to login
         try {
             const signInResponse = await signIn("credentials", {
                 email,
                 password,
-                redirect: false // Prevent automatic redirection
+                redirect: false, // Prevent automatic redirection
+                expiresIn: sessionExpiration
             });
 
             if (signInResponse?.error) {

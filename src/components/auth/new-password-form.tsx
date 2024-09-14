@@ -14,7 +14,7 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
+    // FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/auth/card-wrapper"
@@ -38,33 +38,6 @@ export const NewPasswordForm = () => {
 
     const { isLoading, isSubmitting } = form.formState
 
-    // const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
-    //     setError("");
-    //     setSuccess("");
-
-    //     try {
-    //         const res = await axios.post(`/api/auth/new-password`, { values, token });
-
-    //         const data = res.data;
-    //         if (res.status === 200) {
-    //             setSuccess(data.success);
-    //         } else if (res.status) {
-    //             setError(data.error);
-    //         } else {
-    //             if (data?.error) {
-    //                 setError(data.error);
-    //             }
-    //         }
-    //     } catch (error) {
-    //         if (axios.isAxiosError(error)) {
-    //             setError(error.response?.data?.error || error.message || "Something went wrong");
-    //         } else {
-    //             setError("An unknown error occurred. Please try again.");
-    //         }
-    //     }
-
-    // };
-
     const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
         setError("");
         setSuccess("");
@@ -76,7 +49,6 @@ export const NewPasswordForm = () => {
             if (res.status === 200) {
                 setSuccess(data.success || "Password reset successfully!");
             } else {
-                // Handle error cases based on the status code
                 switch (res.status) {
                     case 400:
                         setError("Bad Request: Please provide a valid token.");
@@ -98,7 +70,6 @@ export const NewPasswordForm = () => {
                 }
             }
         } catch (error) {
-            // Axios error handling
             if (axios.isAxiosError(error)) {
                 setError(
                     error.response?.data?.error ||
@@ -128,12 +99,12 @@ export const NewPasswordForm = () => {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Password</FormLabel>
+                                    {/* <FormLabel>Password</FormLabel> */}
                                     <FormControl>
                                         <Input
                                             {...field}
                                             disabled={isLoading || isSubmitting}
-                                            placeholder="******"
+                                            placeholder="New password"
                                             type="password"
                                         />
                                     </FormControl>

@@ -20,7 +20,7 @@ export const Header = ({
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
                 <BoltIcon className="text-blue-500" />
             </div>
-            <p className={cn("text-3xl font-semibold", font.className)}>
+            <p className={cn("text-2xl font-semibold", font.className)}>
                 {label}
             </p>
         </div>
