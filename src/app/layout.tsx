@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { ModalProvider } from "@/providers/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,6 +38,7 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Toaster />
+          <ModalProvider />
           <main className="h-screen">
             {children}
           </main>

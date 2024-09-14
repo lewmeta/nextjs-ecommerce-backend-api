@@ -1,6 +1,5 @@
-import React from 'react';
 import type { SVGProps } from 'react';
 
 export function MenuIcon(props: SVGProps<SVGSVGElement>) {
-    return (<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 50 50" {...props}><g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}><path stroke="#344054" d="M6.25 25h37.5"></path><path stroke="#306cfe" d="M6.25 12.5h37.5m-37.5 25h37.5z"></path></g></svg>);
+    return (<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 6.032a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m1 5.033a1 1 0 1 0 0 2h18a1 1 0 0 0 0-2z"></path></svg>);
 }

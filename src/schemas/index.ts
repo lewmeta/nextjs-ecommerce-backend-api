@@ -61,3 +61,10 @@ export const ResetSchema = z.object({
         message: "Email is required",
     }),
 });
+
+
+export const StoreSchema = z.object({
+    name: z.string().min(1, {
+        message: "Minimum 1 character required",
+    }),
+});
