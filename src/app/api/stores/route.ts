@@ -33,8 +33,8 @@ export async function POST(
         await db.store.create({
             data: {
                 name,
-                userId: user.id
-            }
+                userId: user.id,
+            },
         });
 
         return NextResponse.json({ success: "Store created successfully!" }, { status: 200 });

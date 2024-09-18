@@ -14,16 +14,33 @@ datasource db {
   relationMode = "prisma"
 }
 
-enum UserRole {
-  ADMIN
-  USER
+enum ProductStatus {
+  AVAILABLE
+  OUT_OF_STOCK
+  DISCONTINUED
 }
 
-model Store {
-  id     String @id @default(cuid()) @map("_id")
-  name   String
-  userId String
-  User   User   @relation(fields: [userId], references: [id])
+enum UserRole {
+  USER
+  ADMIN
+  VENDOR
+}
+
+enum OrderStatus {
+  NOT_PROCESSED
+  PROCESSING
+  DISPATCHED
+  CANCELLED
+  COMPLETED
+}
+
+enum NotificationType {
+  ORDER_PLACED
+  ORDER_SHIPPED
+  ORDER_DELIVERED
+  REVIEW_RECEIVED
+  DISCOUNT_OFFER
+  EMAIL_VERIFICATION
 }
 
 model User {
@@ -35,9 +52,15 @@ model User {
   password              String?
   role                  UserRole               @default(USER)
   accounts              Account[]
-  stores                Store[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+
+  Review Review[]
+  Store Store[]
+  Order Order[]
+  Address Address[]
+  Notification Notification[]
+  Cart Cart[]
 }
 
 model Account {
@@ -93,4 +116,187 @@ model TwoFactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Store {
+  id         String     @id @default(cuid()) @map("_id")
+  name       String
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String
+  products   Product[]
+  categories Category[] @relation("StoreToCategory")
+  
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+}
+
+model Product {
+  id            String       @id @default(cuid()) @map("_id")
+  name          String
+  description   String
+  brand         String
+  slug          String       @unique
+  categoryId    String
+  storeId       String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  store         Store        @relation(fields: [storeId], references: [id])
+  reviews       Review[]
+  subProducts   SubProduct[]
+  questions     Question[]
+  rating        Float        @default(0)
+  numReviews    Int          @default(0)
+  refundPolicy  String       @default("30 days")
+  shippingPrice Float        @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  OrderProduct OrderProduct[]
+
+  CartProduct CartProduct[]
+}
+
+model SubProduct {
+  id                 String   @id @default(cuid()) @map("_id")
+  sku                String
+  productId          String
+  product            Product  @relation(fields: [productId], references: [id])
+  images             String[]
+  description_images String[]
+  color              Json
+  sizes              Size[]
+  discount           Float    @default(0)
+  sold               Int      @default(0)
+}
+
+model Size {
+  id           String     @id @default(cuid()) @map("_id")
+  subProductId String
+  subProduct   SubProduct @relation(fields: [subProductId], references: [id])
+  size         String
+  qty          Int
+  price        Float
+}
+
+model Review {
+  id         String   @id @default(cuid()) @map("_id")
+  reviewBy   User     @relation(fields: [reviewById], references: [id])
+  reviewById String
+  rating     Float
+  review     String
+  size       String?
+  style      Json?
+  images     String[]
+  likes      String[]
+
+  productId String
+  products Product @relation(fields: [productId], references: [id])
+}
+
+model Question {
+  id        String  @id @default(cuid()) @map("_id")
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  question  String
+  answer    String?
+}
+
+model Category {
+  id       String    @id @default(cuid()) @map("_id")
+  name     String
+  products Product[]
+
+  store Store @relation("StoreToCategory",fields:[storeId], references: [id])
+  storeId String
+}
+
+model Cart {
+  id                 String        @id @default(cuid()) @map("_id")
+  userId             String        @unique
+  user               User          @relation(fields: [userId], references: [id])
+  products           CartProduct[]
+  cartTotal          Float
+  totalAfterDiscount Float?
+}
+
+model CartProduct {
+  id        String  @id @default(cuid()) @map("_id")
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  name      String
+  image     String
+  size      String
+  qty       Int
+  color     Json
+  price     Float
+}
+
+model Order {
+  id                  String         @id @default(cuid()) @map("_id")
+  user                User           @relation(fields: [userId], references: [id])
+  userId              String
+  products            OrderProduct[]
+  shippingAddress     Json
+  paymentMethod       String
+  paymentResult       Json?
+  total               Float
+  totalBeforeDiscount Float
+  couponApplied       String?
+  shippingPrice       Float          @default(0)
+  taxPrice            Float?
+  isPaid              Boolean        @default(false)
+  status              OrderStatus    @default(NOT_PROCESSED)
+  paidAt              DateTime?
+  deliveredAt         DateTime?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+}
+
+model OrderProduct {
+  id        String  @id @default(cuid()) @map("_id")
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  name      String
+  image     String
+  size      String
+  qty       Int
+  color     Json
+  price     Float
+}
+
+model Coupon {
+  id        String   @id @default(cuid()) @map("_id")
+  coupon    String   @unique
+  discount  Float
+  startDate DateTime
+  endDate   DateTime
+}
+
+model Address {
+  id          String  @id @default(cuid()) @map("_id")
+  userId      String 
+  user        User    @relation(fields: [userId], references: [id])
+  firstName   String
+  lastName    String
+  phoneNumber String
+  address1    String
+  address2    String?
+  city        String
+  state       String?
+  zipCode     String
+  country     String
+}
+
+model Notification {
+  id        String           @id @default(cuid()) @map("_id")
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+  message   String
+  type      NotificationType
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
 }
