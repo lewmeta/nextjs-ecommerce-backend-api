@@ -10,7 +10,7 @@ export default async function SetupLayout({
     const user = await currentUser();
 
     if (!user) {
-        redirect('/sign-in');
+        redirect('/auth/login');
     }
 
     const store = await db.store.findFirst({
@@ -19,15 +19,17 @@ export default async function SetupLayout({
         }
     });
 
-    console.log({ store: store })
-
+    // if (store) {
+    //     if (user?.role === 'ADMIN') {
+    //         redirect(`/${store.id}/admin`);
+    //     } else {
+    //         redirect(`/${store.id}/vendor`);
+    //     }
+    // }
     if (store) {
-        if (user?.role === 'ADMIN') {
-            redirect(`/${store.id}/admin`);
-        } else {
-            redirect(`/${store.id}/vendor`);
-        }
-    }
+        redirect(`/${store.id}`);
+    };
+
     return (
         <>
             {children}
