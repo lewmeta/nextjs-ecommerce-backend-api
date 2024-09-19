@@ -8,7 +8,9 @@ import { SidebarItems } from "./sidebar-items";
 import { BarChartIcon, LayersIcon, LayoutIcon, ListBulletIcon } from "@radix-ui/react-icons";
 import { UserIcon } from "../icons/user-icon";
 
-export const Sidebar = () => {
+export const Sidebar = ({
+    items
+}: any) => {
     const { expandSidebar, toggleSidebar } = useExpandSlice();
 
     const pathname = usePathname();
@@ -51,7 +53,7 @@ export const Sidebar = () => {
         }
     ]
 
-    // console.log({ params: params.storeId })
+    console.log({ params: params.storeId })
     const routes = isAdminRoute ? ADMIN_ROUTES : VENDOR_ROUTES;
 
     return (

@@ -19,16 +19,16 @@ export default async function SetupLayout({
         }
     });
 
-    // if (store) {
-    //     if (user?.role === 'ADMIN') {
-    //         redirect(`/${store.id}/admin`);
-    //     } else {
-    //         redirect(`/${store.id}/vendor`);
-    //     }
-    // }
     if (store) {
-        redirect(`/${store.id}`);
-    };
+        if (user?.role === 'ADMIN') {
+            redirect(`/${store.id}/admin`);
+        } else {
+            redirect(`/${store.id}/vendor`);
+        }
+    }
+    // if (store) {
+    //     redirect(`/${store.id}`);
+    // };
 
     return (
         <>
