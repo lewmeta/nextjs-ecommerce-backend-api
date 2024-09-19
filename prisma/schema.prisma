@@ -55,12 +55,12 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  Review Review[]
-  Store Store[]
-  Order Order[]
-  Address Address[]
-  Notification Notification[]
-  Cart Cart[]
+  Review       Review[]
+  Store        Store[]
+  Order        Order[]
+  Address      Address[]
+  notifications Notification[]
+  Cart         Cart[]
 }
 
 model Account {
@@ -119,16 +119,16 @@ model TwoFactorConfirmation {
 }
 
 model Store {
-  id         String     @id @default(cuid()) @map("_id")
-  name       String
-  user      User       @relation(fields: [userId], references: [id])
-  userId    String
-  products   Product[]
-  categories Category[] @relation("StoreToCategory")
-  
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id            String         @id @default(cuid()) @map("_id")
+  name          String
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  products      Product[]
+  categories    Category[]     @relation("StoreToCategory")
+  notifications Notification[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -190,7 +190,7 @@ model Review {
   likes      String[]
 
   productId String
-  products Product @relation(fields: [productId], references: [id])
+  products  Product @relation(fields: [productId], references: [id])
 }
 
 model Question {
@@ -206,7 +206,7 @@ model Category {
   name     String
   products Product[]
 
-  store Store @relation("StoreToCategory",fields:[storeId], references: [id])
+  store   Store  @relation("StoreToCategory", fields: [storeId], references: [id])
   storeId String
 }
 
@@ -278,7 +278,7 @@ model Coupon {
 
 model Address {
   id          String  @id @default(cuid()) @map("_id")
-  userId      String 
+  userId      String
   user        User    @relation(fields: [userId], references: [id])
   firstName   String
   lastName    String
@@ -299,4 +299,8 @@ model Notification {
   type      NotificationType
   read      Boolean          @default(false)
   createdAt DateTime         @default(now())
+
+  storeId String
+  store   Store?  @relation(fields: [storeId], references: [id])
+  expires_at        Int?
 }

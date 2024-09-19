@@ -13,16 +13,10 @@ import { useStoreModal } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
 import { StoreSchema } from "@/schemas";
 import { useToast } from "@/hooks/use-toast";
-import { useCurrentRole } from "@/hooks/use-current-role";
-import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const StoreModal = () => {
     const storeModal = useStoreModal();
-    const router = useRouter();
     const { toast } = useToast();
-    const userRole = useCurrentRole();
-    const user = useCurrentUser();
-
 
     const form = useForm<z.infer<typeof StoreSchema>>({
         resolver: zodResolver(StoreSchema),
@@ -46,7 +40,7 @@ export const StoreModal = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
-                    title: error.response?.data.message || "Something went wrong!",
+                    title: error.response?.data.error || "Something went wrong!",
                     description: "This can be solved by fixing the problem"
                 })
             } else {

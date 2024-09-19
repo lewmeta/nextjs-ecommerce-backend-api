@@ -19,18 +19,18 @@ export const Sidebar = ({
 
     const pathname = usePathname();
     const params = useParams();
-    
+
     const isAdminRoute = pathname?.startsWith(`/${params.storeId}/admin`);
 
     const VENDOR_ROUTES = [
         {
             href: `/${params.storeId}/dashboard`,
             label: "Dashboard",
-            icon: LayoutIcon,
+            icon: <LayoutIcon/>,
             active: pathname === `/${params.storeId}/dashboard`,
         },
         {
-            icon: LayersIcon,
+            icon: <LayersIcon />,
             label: "Browse",
             href: "/search",
             active: true
@@ -38,19 +38,19 @@ export const Sidebar = ({
     ]
     const ADMIN_ROUTES = [
         {
-            icon: ListBulletIcon,
+            icon: <ListBulletIcon/>,
             label: "Courses",
             href: "/teacher/courses",
             active: true
         },
         {
-            icon: BarChartIcon,
+            icon: <ListBulletIcon/>,
             label: "Analytics",
             href: "/teacher/analytics",
             active: true
         },
         {
-            icon: UserIcon,
+            icon: <ListBulletIcon/>,
             label: "Manage Users",
             href: "/teacher/users",
             active: true
@@ -64,17 +64,17 @@ export const Sidebar = ({
             <div className="flex flex-col justify-between h-full w-full">
                 <div className="h-[40px] flex justify-between items-center">
                     <div>
-                        <StoreSwitcher items={items}/>
+                        <StoreSwitcher items={items} />
                     </div>
                     <MenuIcon onClick={toggleSidebar} />
                 </div>
                 <div className="h-full flex flex-col justify-between">
-                    <div>
+                    <div className="mt-10 flex flex-col w-full space-y-2">
                         {routes.map((route) => (
                             <SidebarItems
                                 href={route.href}
                                 key={route.href}
-                                lablel={route.label}
+                                label={route.label}
                                 icon={route.icon}
                                 active={route.active}
 
@@ -82,7 +82,7 @@ export const Sidebar = ({
                         ))}
                     </div>
                     <div>
-                        footer
+                        <StoreSwitcher items={items} />
                     </div>
                 </div>
             </div>
