@@ -59,11 +59,6 @@ export default auth((req) => {
 
     if (isApiAuthRoute) return;
 
-    // If the user is logged in and there are no search params, redirect to the default path
-    // if (isLoggedIn && !nextUrl.search) {
-    //     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    // }
-
     if (isAuthRoute) {
         if (isLoggedIn) {
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))

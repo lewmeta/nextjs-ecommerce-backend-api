@@ -7,11 +7,6 @@ import { useParams, usePathname } from "next/navigation";
 import { SidebarItems } from "./sidebar-items";
 import { BarChartIcon, LayersIcon, LayoutIcon, ListBulletIcon } from "@radix-ui/react-icons";
 import { UserIcon } from "../icons/user-icon";
-import { StoreSwitcher } from "./store-switcher";
-
-interface ItemsProps {
-    items: Record<string, any>[];
-}
 
 export const Sidebar = () => {
     const { expandSidebar, toggleSidebar } = useExpandSlice();
@@ -56,7 +51,7 @@ export const Sidebar = () => {
         }
     ]
 
-    console.log({ params: params.storeId })
+    // console.log({ params: params.storeId })
     const routes = isAdminRoute ? ADMIN_ROUTES : VENDOR_ROUTES;
 
     return (
@@ -64,7 +59,7 @@ export const Sidebar = () => {
             <div className="flex flex-col justify-between h-full w-full">
                 <div className="h-[40px] flex justify-between items-center">
                     <div>
-                        <StoreSwitcher />
+                        L
                     </div>
                     <MenuIcon onClick={toggleSidebar} />
                 </div>
