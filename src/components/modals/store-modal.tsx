@@ -40,14 +40,14 @@ export const StoreModal = () => {
             const res = await axios.post("/api/stores", values);
 
             toast({
-                title: res.data.message
+                title: res.data.success || "Store created!"
             })
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
                     title: error.name,
-                    description: "This can be fixed by do this and that"
+                    description: "This can be solved by fixing the problem"
                 })
             } else {
                 toast({
