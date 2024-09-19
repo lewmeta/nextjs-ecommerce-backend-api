@@ -46,7 +46,7 @@ export const StoreModal = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
-                    title: error.name,
+                    title: error.response?.data.message || "Something went wrong!",
                     description: "This can be solved by fixing the problem"
                 })
             } else {

@@ -103,7 +103,7 @@ export const StoreSwitcher = ({
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
+                Create a Store
               </CommandItem>
             </CommandGroup>
           </CommandList>
