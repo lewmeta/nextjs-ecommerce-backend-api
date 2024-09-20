@@ -26,9 +26,6 @@ export default async function SetupLayout({
             redirect(`/${store.id}/vendor`);
         }
     }
-    // if (store) {
-    //     redirect(`/${store.id}`);
-    // };
 
     return (
         <>

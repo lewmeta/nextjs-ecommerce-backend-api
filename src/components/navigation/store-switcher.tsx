@@ -48,7 +48,7 @@ export const StoreSwitcher = ({
 
   const onStoreSelect = (store: { value: string; label: string }) => {
     setOpen(false);
-    router.push(`/${store.value}`)
+    router.push(`/${store.value}/vendor`)
   }
 
   return (
@@ -60,14 +60,14 @@ export const StoreSwitcher = ({
           role="combobox"
           aria-expanded={open}
           aria-label="Select a store"
-          className={cn("w-[200px] justify-between", className)}
+          className={cn("max-w-[300px] w-full py-5 bg-[#287f71] text-white justify-between", className)}
         >
           <Store className="mr-2 h-4 w-4" />
           {currentStore?.label}
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="max-w-[300px] w-full p-0">
         <Command>
           <CommandList>
             <CommandInput placeholder="Search store..." />
