@@ -1,3 +1,5 @@
+'use client'
+
 import { useParams, usePathname } from "next/navigation";
 
 import { Compass } from "lucide-react";
@@ -12,10 +14,14 @@ import { CategoryIcon } from "../icons/category-icon";
 import { BillBoardIcon } from "../icons/billboard-icon";
 import { RocketIcon } from "../icons/rocket-icon";
 import { UserIcon } from "../icons/user-icon";
+import { useExpandSlice } from "@/hooks/use-expand-slice";
 
 export const SidebarRoutes = () => {
     const params = useParams();
     const pathname = usePathname();
+
+    const { expandSidebar } = useExpandSlice();
+
 
     const VENDOR_ROUTES = [
         {

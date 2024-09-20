@@ -5,6 +5,7 @@ import { LucideIcon, LucideProps } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { ComponentType, SVGProps } from 'react'
+import { useExpandSlice } from "@/hooks/use-expand-slice";
 
 type IconType = LucideIcon | ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -28,6 +29,8 @@ export const SidebarItem = ({
         router.push(href)
     }
 
+    const { expandSidebar } = useExpandSlice();
+
     return (
         <button
             onClick={onClick}
@@ -38,14 +41,21 @@ export const SidebarItem = ({
             )}
         >
             <div className="flex items-center gap-x-2 py-2">
-                <Icon 
-                    size={22}   
+                <Icon
+                    // size={22}
                     className={cn(
-                        "text-slate-500",
+                        "text-slate-500 text-[16px]",
                         active && `text-white`
                     )}
                 />
-                {label}
+                {expandSidebar ? (
+                    <>
+                    {label}
+                    </>
+                ): (
+                    <>
+                    </>
+                )}
             </div>
             {/* <div 
                 className={cn(
@@ -53,6 +63,6 @@ export const SidebarItem = ({
                     active && `dark:border-sky-700 dark:text-white border-gray-900 bg-gray-200/20 dark:bg-sky-200/20 h-full transition-all opacity-100`
                 )}
             /> */}
-        </button> 
+        </button>
     )
 }
