@@ -55,12 +55,12 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  Review       Review[]
-  Store        Store[]
-  Order        Order[]
-  Address      Address[]
+  Review        Review[]
+  Store         Store[]
+  Order         Order[]
+  Address       Address[]
   notifications Notification[]
-  Cart         Cart[]
+  Cart          Cart[]
 }
 
 model Account {
@@ -126,6 +126,19 @@ model Store {
   products      Product[]
   categories    Category[]     @relation("StoreToCategory")
   notifications Notification[]
+  Billboard     Billboard[]    @relation("StoreToBillboard")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Billboard {
+  id         String     @id @default(cuid()) @map("_id")
+  storeId    String
+  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
+  label      String
+  imageUrl   String
+  categories Category[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -202,12 +215,14 @@ model Question {
 }
 
 model Category {
-  id       String    @id @default(cuid()) @map("_id")
-  name     String
-  products Product[]
-
-  store   Store  @relation("StoreToCategory", fields: [storeId], references: [id])
-  storeId String
+  id          String    @id @default(cuid()) @map("_id")
+  name        String
+  products    Product[]
+  billboardId String // Foreign Key to Billboard
+  billboard   Billboard @relation(fields: [billboardId], references: [id])
+  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
+  storeId     String
+  imageUrl   String
 }
 
 model Cart {
@@ -300,7 +315,7 @@ model Notification {
   read      Boolean          @default(false)
   createdAt DateTime         @default(now())
 
-  storeId String
-  store   Store?  @relation(fields: [storeId], references: [id])
-  expires_at        Int?
+  storeId    String
+  store      Store? @relation(fields: [storeId], references: [id])
+  expires_at Int?
 }
