@@ -73,4 +73,5 @@ export const BillboardSchema = z.object({
     label: z.string().min(1),
     imageUrl: z.string().min(1),
     description: z.string().min(1),
+    originalFilename: z.string().min(1),
 });

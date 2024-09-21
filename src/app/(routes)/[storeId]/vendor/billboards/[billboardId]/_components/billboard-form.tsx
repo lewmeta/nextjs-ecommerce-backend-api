@@ -24,6 +24,7 @@ import { Heading } from "@/components/navigation/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
 import { BillboardSchema } from "@/schemas"
 import { useToast } from "@/hooks/use-toast"
+import { FileUpload } from "@/components/upload/file-upload"
 
 type BillboardFormValues = z.infer<typeof BillboardSchema>
 
@@ -51,7 +52,8 @@ export const BillboardForm = ({
         defaultValues: initialData || {
             label: '',
             imageUrl: '',
-            description: ''
+            description: '',
+            originalFilename: ''
         },
     });
 
@@ -131,6 +133,38 @@ export const BillboardForm = ({
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-8 w-full"
                 >
+                    <FormField
+                        control={form.control}
+                        name="imageUrl"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Background image</FormLabel>
+                                <FormControl>
+                                    {/* <ImageUpload
+                                        value={field.value ? [field.value] : []}
+                                        disabled={loading}
+                                        onChange={(url) => field.onChange(url)}
+                                        onRemove={() => field.onChange('')}
+                                    /> */}
+                                    <FileUpload 
+                                    endpoint="billboardImage"
+                                    onChange={(url, originalFilename) => {
+                                        if (url && originalFilename) {
+                                            onSubmit({
+                                                imageUrl: url,
+                                                originalFilename: originalFilename,
+                                                label: "",
+                                                description: ""
+                                            })
+                                        }
+                                    }}
+                                    
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <div className="md:grid md:grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
