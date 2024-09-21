@@ -53,7 +53,6 @@ export const BillboardForm = ({
             label: '',
             imageUrl: '',
             description: '',
-            originalFilename: ''
         },
     });
 
@@ -140,25 +139,10 @@ export const BillboardForm = ({
                             <FormItem>
                                 <FormLabel>Background image</FormLabel>
                                 <FormControl>
-                                    {/* <ImageUpload
-                                        value={field.value ? [field.value] : []}
-                                        disabled={loading}
-                                        onChange={(url) => field.onChange(url)}
-                                        onRemove={() => field.onChange('')}
-                                    /> */}
-                                    <FileUpload 
-                                    endpoint="billboardImage"
-                                    onChange={(url, originalFilename) => {
-                                        if (url && originalFilename) {
-                                            onSubmit({
-                                                imageUrl: url,
-                                                originalFilename: originalFilename,
-                                                label: "",
-                                                description: ""
-                                            })
-                                        }
-                                    }}
-                                    
+                                    <FileUpload
+                                        endpoint="billboardImage"
+                                        onChange={field.onChange}
+                                        value={field.value}
                                     />
                                 </FormControl>
                                 <FormMessage />
