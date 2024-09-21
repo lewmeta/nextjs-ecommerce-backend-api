@@ -133,12 +133,13 @@ model Store {
 }
 
 model Billboard {
-  id         String     @id @default(cuid()) @map("_id")
-  storeId    String
-  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
-  label      String
-  imageUrl   String
-  categories Category[]
+  id          String     @id @default(cuid()) @map("_id")
+  storeId     String
+  store       Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
+  label       String
+  description String
+  imageUrl    String
+  categories  Category[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -222,7 +223,7 @@ model Category {
   billboard   Billboard @relation(fields: [billboardId], references: [id])
   store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
   storeId     String
-  imageUrl   String
+  imageUrl    String
 }
 
 model Cart {

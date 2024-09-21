@@ -25,7 +25,6 @@ const Page = async ({ params }: { params: { storeId: string } }) => {
 
     return (
         <LayoutComponent
-            title=""
         >
             <div className="">
                 <SettingsForm initialData={store} />
