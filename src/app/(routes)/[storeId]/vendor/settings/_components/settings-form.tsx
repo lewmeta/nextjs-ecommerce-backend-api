@@ -65,7 +65,7 @@ const SettingsForm = ({
             setLoading(false);
         }
     }
-    const onDelete = async() => {
+    const onDelete = async () => {
         try {
             setLoading(true);
             await axios.delete(`/api/stores/${params.storeId}`);
@@ -73,17 +73,24 @@ const SettingsForm = ({
             router.push('/');
             toast({
                 title: 'Store deleted.',
-            description: 'Store deleted.'
+                description: 'Store deleted.'
             });
-          } catch (error: any) {
-            toast({
-                title: 'Make sure you removed all products and categories first.',
-                description: 'Make sure you removed all products and categories first.'
-            });
-          } finally {
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast({
+                    title: 'Make sure you removed all products and categories first.',
+                    description: 'Make sure you removed all products and categories first.'
+                });
+            } else {
+                toast({
+                    title: 'Something went wrong.',
+                    description: 'Loos like something went wrong.'
+                });
+            }
+        } finally {
             setLoading(false);
             setOpen(false);
-          }
+        }
     }
     return (
         <>
@@ -124,28 +131,29 @@ const SettingsForm = ({
                 </form>
             </Form>
 
-            <Separator />
+            {/* <Separator /> */}
+            <div className="px-4 mt-8">
+                <ApiAlert
+                    title="NEXT_PUBLIC_API_URL"
+                    variant="public"
+                    description={`${origin}/api/stores/${params.storeId}`}
+                />
 
-            <ApiAlert
-                title="NEXT_PUBLIC_API_URL"
-                variant="public"
-                description={`${origin}/api/stores/${params.storeId}`}
-            />
+                <Separator />
 
-            <Separator />
+                <div className="flex items-center flex-col justify-between ">
+                    Danger zode
 
-            <div className="flex items-center flex-col justify-between ">
-                Danger zode
-
-                <div className="border-destructive border rounded-md w-full">
-                    <Button
-                        disabled={loading}
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => setOpen(true)}
-                    >
-                        <Trash className="h-4 w-4" />
-                    </Button>
+                    <div className="border-destructive border rounded-md">
+                        <Button
+                            disabled={loading}
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => setOpen(true)}
+                        >
+                            <Trash className="h-4 w-4" />
+                        </Button>
+                    </div>
                 </div>
             </div>
         </>

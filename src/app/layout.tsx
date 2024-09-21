@@ -7,7 +7,7 @@ import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { ModalProvider } from "@/providers/modal-provider";
-import { Inter } from "next/font/google";
+import { Jost } from "next/font/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,7 +20,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const inter = Inter({
+const jost = Jost({
   subsets: ['latin']
 })
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${inter.className} antialiased`}
+          className={`${geistSans.variable} ${jost.className} antialiased`}
         >
           <Toaster />
           <ModalProvider />
