@@ -3,6 +3,7 @@ import { MainNav } from "./main-nav"
 import { Sidebar } from "./sidebar"
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { MobileNavbar } from "./mobile-navbar";
 
 export const Navbar = async () => {
 
@@ -18,9 +19,9 @@ export const Navbar = async () => {
     });
 
     return (
-        <div className="flex items-center">
-            <Sidebar items={stores}/>
+        <div className="flex items-center bg-sky-500">
             <MainNav />
+            <MobileNavbar/>
         </div>
     )
 }

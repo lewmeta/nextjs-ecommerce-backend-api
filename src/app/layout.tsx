@@ -7,7 +7,7 @@ import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { ModalProvider } from "@/providers/modal-provider";
-import { Jost } from "next/font/google";
+import { Jost, Poppins } from "next/font/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,8 +20,9 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const jost = Jost({
-  subsets: ['latin']
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: "400"
 })
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="en">
         <body
-          className={`${jost.className} antialiased`}
+          className={`${poppins.className}`}
         >
           <Toaster />
           <ModalProvider />

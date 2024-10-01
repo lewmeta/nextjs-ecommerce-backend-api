@@ -34,11 +34,7 @@ const VendorPage = () => {
         }
     ]
     return (
-        <LayoutComponent
-            title="Dashboard"
-            // routes={
-            //     ROUTES
-            // }
+        <div
         >
             <Heading 
             title="Dashboard"
@@ -46,7 +42,7 @@ const VendorPage = () => {
             routes={ROUTES}
             />
             content
-        </LayoutComponent>
+        </div>
     )
 }
 
