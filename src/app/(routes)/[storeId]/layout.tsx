@@ -25,18 +25,25 @@ export default async function AdminLayout({
         },
     });
 
+    const stores = await db.store.findMany({
+        where: {
+            userId: user?.id,
+        },
+    });
+
+
     if (!store) {
         redirect("/")
     }
     return (
         <div className="h-full">
-            <div className="h-[80px] md:pl-80 fixed w-full inset-y-0 z-50">
+            <div className="overflow-hidden fixed w-full inset-y-0 z-50">
                 <Navbar />
             </div>
             <div className="hidden md:flex h-full flex-col fixed inset-y-0 z-50">
-                <Sidebar items={[]} />
+                <Sidebar items={stores} />
             </div>
-            <main className="md:pl-80 pt-[80px] h-full">
+            <main className="h-full z-[200]">
                 {children}
             </main>
         </div>

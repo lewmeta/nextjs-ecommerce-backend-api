@@ -17,16 +17,7 @@ export const MainNav = () => {
 
     const params = useParams();
     return (
-        <div className={cn("fixed top-0 right-0 flex items-center justify-between border-b border-b-gray-200 px-4 h-[60px] bg-white  z-50", expandSidebar ? "md:w-[calc(100%-300px)] w-full " : "md:w-[calc(100%-80px)]  w-full")}>
-            <div className=" flex items-center gap-4 text-lg text-muted-foreground">
-                {!expandSidebar && (
-                    <RemoveIcon onClick={toggleSidebar} />
-                )}
-                <SearchIcon />
-                <span className="text-sm">
-                    Search anything here ...
-                </span>
-            </div>
+        <div className={cn("", expandSidebar ? "w-full " : "")}>
             <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-3 text-lg font-bold text-gray-600">
                     <DownloadIcon />

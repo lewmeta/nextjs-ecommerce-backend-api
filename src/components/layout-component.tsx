@@ -25,7 +25,7 @@ interface LayoutComponentProps {
 export const LayoutComponent = ({ children }: LayoutComponentProps) => {
     const { expandSidebar } = useExpandSlice();
     return (
-        <div className={cn("mt-[70px] h-full ", expandSidebar ? "md:ml-[300px] ml-0 mt-[70px]" : "ml-[80px] ")}>
+        <div className={cn("mt-[70px] h-full ", expandSidebar ? "md:pl-80 pt-[80px] ml-0 " : "ml-[70px] ")}>
             <div className="bg-gray-50 h-full">
                 {children}
             </div>
