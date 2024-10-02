@@ -128,11 +128,13 @@ export const SidebarRoutes = () => {
                         {
                             href: `/${params.storeId}/vendor/products/create`,
                             label: "Create Product",
+                            icon: ProductIcon,
                             active: pathname === `/${params.storeId}/vendor/products/create`,
                         },
                         {
                             href: `/${params.storeId}/vendor/products/manage`,
                             label: "Manage Products",
+                            icon: ProductIcon,
                             active: pathname === `/${params.storeId}/vendor/products/manage`,
                         },
                     ],

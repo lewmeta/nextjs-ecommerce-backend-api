@@ -13,11 +13,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export const MainNav = () => {
-    const { expandSidebar, toggleSidebar } = useExpandSlice();
-
     const params = useParams();
     return (
-        <div className={cn("", expandSidebar ? "w-full " : "")}>
+        <div className=''>
             <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-3 text-lg font-bold text-gray-600">
                     <DownloadIcon />

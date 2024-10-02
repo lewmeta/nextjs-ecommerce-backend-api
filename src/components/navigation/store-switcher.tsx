@@ -64,9 +64,10 @@ export const StoreSwitcher = ({
             role="combobox"
             aria-expanded={open}
             aria-label="Select a store"
-            className={cn("max-w-[300px] w-full py-5 justify-between", className)}
+            className={cn("max-w-[300px] w-full font-medium text-sm py-5 justify-between", className)}
           >
             <Store className="mr-2 h-4 w-4" />
+
             {currentStore?.label}
             <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>

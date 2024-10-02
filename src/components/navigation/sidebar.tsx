@@ -23,47 +23,43 @@ export const Sidebar = ({
     const { expandSidebar, toggleSidebar } = useExpandSlice();
 
     return (
-        <div className={cn('h-full border-r flex flex-col overflow-y-auto shadow-sm', expandSidebar ? 'w-80 ' : 'w-[70px]')}
+        <div className={cn('h-full border-r flex flex-col shadow-sm', expandSidebar ? 'w-80 ' : 'w-[70px]')}
         >
-            <div className={cn("w-[70px] relative flex items-center justify-center p-4", expandSidebar && 'w-80')}>
-                <div className="fixed inset-y-0 ">
-                    {expandSidebar ? (
-                        <div className="flex items-center justify-between h-[40px] w-full">
-                            <div className="w-[170px]">
-                                <Image
-                                    src={'/logo.svg'}
-                                    width={100} height={60} alt="logo"
-                                    className="w-auto h-auto object-cover flex-0"
-                                />
-                            </div>
-                            <button
-                                onClick={toggleSidebar}
-                                className="cursor-pointer"
-                            >
-                                <CollapeseIcon width={25} height={25} className="border-blue-600" />
-                            </button>
+            <div className="relative w-full flex items-center justify-center p-4 ">
+                {expandSidebar ? (
+                    <div className="flex items-center justify-between h-[40px] w-full">
+                        <div className="w-[170px]">
+                            <Image
+                                src={'/logo.svg'}
+                                width={100} height={60} alt="logo"
+                                className="w-auto h-auto object-cover flex-0"
+                            />
                         </div>
-                    ) : (
-                        <div className="flex items-center flex-col">
-                            <Image src={'/site-logo.svg'} width={100} height={100} alt="logo" className="w-[30px] h-[30px] object-cover" />
-                            <Separator className="my-5" />
-                            <button
-                                onClick={toggleSidebar}
-                            >
-                                <ExpandIcon width={24} height={24} />
-                            </button>
-                        </div>
-                    )}
-                </div>
+                        <button
+                            onClick={toggleSidebar}
+                            className="cursor-pointer"
+                        >
+                            <CollapeseIcon width={25} height={25} className="border-blue-600" />
+                        </button>
+                    </div>
+                ) : (
+                    <div className="flex items-center flex-col">
+                        <Image src={'/site-logo.svg'} width={100} height={100} alt="logo" className="w-[30px] h-[30px] object-cover" />
+                        <Separator className="my-5" />
+                        <button
+                            onClick={toggleSidebar}
+                        >
+                            <ExpandIcon width={24} height={24} />
+                        </button>
+                    </div>
+                )}
             </div>
-
-            <div className="px-4 mt-6">
+            <div className="px-4 mt-6 h-full">
                 <StoreSwitcher items={items} />
                 <div className="mt-6">
                     <SidebarRoutes />
                 </div>
             </div>
-
         </div>
     )
 }

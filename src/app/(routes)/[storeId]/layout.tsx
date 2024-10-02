@@ -36,11 +36,11 @@ export default async function AdminLayout({
         redirect("/")
     }
     return (
-        <div className="h-full">
-            <div className="overflow-hidden fixed w-full inset-y-0 z-50">
+        <div className="h-full w-full relative ">
+            <div className="overflow-hidden fixed w-full h-auto left-auto">
                 <Navbar />
             </div>
-            <div className="hidden md:flex h-full flex-col fixed inset-y-0 z-50">
+            <div className="hidden md:flex h-full flex-col fixed top-0 z-50">
                 <Sidebar items={stores} />
             </div>
             <main className="h-full z-[200]">

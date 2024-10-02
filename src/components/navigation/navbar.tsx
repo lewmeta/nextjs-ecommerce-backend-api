@@ -1,21 +1,18 @@
 'use client'
 
-import { db } from "@/lib/db";
 import { MainNav } from "./main-nav"
-import { Sidebar } from "./sidebar"
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { MobileNavbar } from "./mobile-navbar";
 import { useExpandSlice } from "@/hooks/use-expand-slice";
 import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
 
-    const { expandSidebar} = useExpandSlice();
+    const { expandSidebar } = useExpandSlice();
     return (
-        <div className={cn("flex items-center !h-[80px] pl-24 w-full border-b", expandSidebar && 'pl-80')}>
-            <MainNav />
-            <MobileNavbar/>
+        <div className={cn("fixed inset-y-0 right-0 w-full flex items-center h-[80px] md:pl-24", expandSidebar ? 'md:pl-80' : 'md:pl-[70px]')}>
+            <div className="w-full border-b h-full flex items-center">
+                <MainNav />
+                {/* <MobileNavbar /> */}
+            </div>
         </div>
     )
 }
