@@ -47,7 +47,7 @@ export const FileUpload = ({
         )
     }
     return (
-        <UploadButton
+        <UploadDropzone
             endpoint={endpoint}
             onClientUploadComplete={(res) => {
                 // console.log("onClientUploadComplete res:", res),

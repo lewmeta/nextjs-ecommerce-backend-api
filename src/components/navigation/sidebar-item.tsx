@@ -87,7 +87,7 @@ export const SidebarItem = ({
                                                 {item && item.children ? (
                                                     <Button variant="outline">
                                                         <DropdownMenu>
-                                                            <DropdownMenuTrigger>
+                                                            <DropdownMenuTrigger onClick={() => item.href && router.push(item.href)}>
                                                                 {item.icon && <item.icon className="" />}
                                                             </DropdownMenuTrigger>
                                                             {item.children && item.children.length && isOpen && (

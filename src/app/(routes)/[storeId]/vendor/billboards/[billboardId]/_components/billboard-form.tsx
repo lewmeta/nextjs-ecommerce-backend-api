@@ -136,7 +136,7 @@ export const BillboardForm = ({
                         control={form.control}
                         name="imageUrl"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-auto col-span-3">
                                 <FormLabel>Background image</FormLabel>
                                 <FormControl>
                                     <FileUpload
