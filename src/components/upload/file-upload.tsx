@@ -20,12 +20,11 @@ export const FileUpload = ({
     value
 }: FileUploadProps) => {
     const { toast } = useToast();
-
     const type = value?.split('.').pop()
 
     if (value) {
         return (
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center relative">
                 {type !== "pdf" && (
                     <div className="relative w-40 h-40">
                         <Image
@@ -40,6 +39,7 @@ export const FileUpload = ({
                     onClick={() => onChange('')}
                     variant={'ghost'}
                     type="button"
+                    className="absolute transform  top-1/2 left-1/2"
                 >
                     <X className="h-4 w-4" />
                 </Button>
