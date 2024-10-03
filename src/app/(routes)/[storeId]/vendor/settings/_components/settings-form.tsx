@@ -100,7 +100,17 @@ const SettingsForm = ({
                 onClose={() => setOpen(false)}
                 onConfirm={onDelete}
             />
-            <Heading title="Store settings" description="Manage store preferences" />
+            <div className="flex items-center w-full justify-between px-4">
+                <Heading title="Store settings" description="Manage store preferences" />
+                <Button
+                    disabled={loading}
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setOpen(true)}
+                >
+                    <Trash className="h-4 w-4" />
+                </Button>
+            </div>
 
             <Form {...form}>
                 <form
@@ -131,7 +141,6 @@ const SettingsForm = ({
                 </form>
             </Form>
 
-            {/* <Separator /> */}
             <div className="px-4 mt-8">
                 <ApiAlert
                     title="NEXT_PUBLIC_API_URL"
@@ -140,21 +149,6 @@ const SettingsForm = ({
                 />
 
                 <Separator />
-
-                <div className="flex items-center flex-col justify-between ">
-                    Danger zode
-
-                    <div className="border-destructive border rounded-md">
-                        <Button
-                            disabled={loading}
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => setOpen(true)}
-                        >
-                            <Trash className="h-4 w-4" />
-                        </Button>
-                    </div>
-                </div>
             </div>
         </>
     )

@@ -7,6 +7,7 @@ import { ExpandIcon } from "./expand-icon";
 import { ChevronLeft } from "./chevron-left";
 import { ChevronRight } from "./chevron-right";
 import { ChevronDown } from "./chevron-down";
+import { PlusIcon } from "./plus-icon";
 
 export { 
     BillBoardIcon, 
@@ -17,5 +18,6 @@ export {
     ExpandIcon,
     ChevronLeft,
     ChevronRight,
-    ChevronDown
+    ChevronDown,
+    PlusIcon,
 }

@@ -55,17 +55,20 @@ export const SidebarItem = ({
         <div className="flex flex-col">
             {expandSidebar && (
                 <div className="flex flex-col items-start" >
-                    <span className="text-gray-400 uppercase text-sm font-normal">{label}</span>
+                    <span className="text-muted-foreground uppercase text-sm font-normal">{label}</span>
                 </div>
             )}
             <div className="w-full">
                 {items.map((item, index) => (
                     <div key={index} className="w-full">
-                        <div className="flex items-center justify-center py-2 w-full">
+                        <div className="flex items-center justify-center py-1 w-full">
                             {expandSidebar ? (
-                                <>
+                                <Button className="w-full"
+                                    variant={'ghost'}
+                                    onClick={() => setIsOpen(prev => !prev)}
+                                >
                                     {item.icon && <item.icon className="" />}
-                                    <button
+                                    <div
                                         className={cn("flex ml-2 items-center justify-between text-sm w-full", item.active && "font-bold")}
                                     >
                                         <span
@@ -77,18 +80,18 @@ export const SidebarItem = ({
                                         {item && item.children && (
                                             <span onClick={() => setIsOpen(prev => !prev)}>{isOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}</span>
                                         )}
-                                    </button>
-                                </>
+                                    </div>
+                                </Button>
                             ) : (
                                 <>
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger asChild>
                                                 {item && item.children ? (
-                                                    <Button variant="outline">
+                                                    <Button variant="outline" asChild>
                                                         <DropdownMenu>
-                                                            <DropdownMenuTrigger onClick={() => item.href && router.push(item.href)}>
-                                                                {item.icon && <item.icon className="" />}
+                                                            <DropdownMenuTrigger onClick={() => setIsOpen(prev => !prev)}>
+                                                                {item.icon && <Button variant={"outline"}><item.icon/></Button>}
                                                             </DropdownMenuTrigger>
                                                             {item.children && item.children.length && isOpen && (
                                                                 <DropdownMenuContent className="pl-4">
@@ -108,7 +111,7 @@ export const SidebarItem = ({
                                                         </DropdownMenu>
                                                     </Button>
                                                 ) : (
-                                                    <Button variant="outline">
+                                                    <Button variant="outline" onClick={() => item.href && router.push(item.href)}>
                                                         {item.icon && <item.icon className="" />}
                                                     </Button>
                                                 )}
@@ -122,7 +125,7 @@ export const SidebarItem = ({
                             )}
                         </div>
                         {item.children && item.children.length && isOpen && expandSidebar && (
-                            <div className="pl-2 text-sm mb-3 bg-blue-600">
+                            <div className="ml-4 text-sm mb-3 ">
                                 {item.children.map((child, childIndex) => (
                                     <button
                                         key={childIndex}

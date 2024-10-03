@@ -21,7 +21,7 @@ export const Heading = ({
     routes
 }: LayoutComponentProps) => {
     return (
-        <div className="bg-white  flex items-center justify-between p-[20px] py-2">
+        <div className="bg-background  flex items-center justify-between p-[20px] py-2">
             <div className="">
                 <h2 className="text-3xl font-bold tracking-tight mt-0">{title}</h2>
                 {/* <p className="text-sm text-muted-foreground mt-4">{description}</p> */}
