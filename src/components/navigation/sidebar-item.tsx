@@ -88,10 +88,10 @@ export const SidebarItem = ({
                                         <Tooltip>
                                             <TooltipTrigger asChild>
                                                 {item && item.children ? (
-                                                    <Button variant="outline" asChild>
+                                                    <Button variant="ghost" asChild>
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger onClick={() => setIsOpen(prev => !prev)}>
-                                                                {item.icon && <Button variant={"outline"}><item.icon/></Button>}
+                                                                {item.icon && <Button variant={"ghost"}><item.icon/></Button>}
                                                             </DropdownMenuTrigger>
                                                             {item.children && item.children.length && isOpen && (
                                                                 <DropdownMenuContent className="pl-4">
@@ -111,7 +111,7 @@ export const SidebarItem = ({
                                                         </DropdownMenu>
                                                     </Button>
                                                 ) : (
-                                                    <Button variant="outline" onClick={() => item.href && router.push(item.href)}>
+                                                    <Button variant="ghost" onClick={() => item.href && router.push(item.href)}>
                                                         {item.icon && <item.icon className="" />}
                                                     </Button>
                                                 )}

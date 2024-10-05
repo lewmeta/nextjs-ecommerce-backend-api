@@ -54,7 +54,7 @@ export const Sidebar = ({
                     </div>
                 )}
             </div>
-            <div className="px-4 mt-6 h-full">
+            <div className="px-6 mt-6 h-full">
                 <StoreSwitcher items={items} />
                 <div className="mt-6">
                     <SidebarRoutes />

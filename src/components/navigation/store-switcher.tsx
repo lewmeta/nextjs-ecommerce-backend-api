@@ -73,8 +73,8 @@ export const StoreSwitcher = ({
           </Button>
         ) : (
           <Button
-            variant="outline"
-            size="sm"
+            variant="ghost"
+            // size="sm"
             role="combobox"
             aria-expanded={open}
             aria-label="Select a store"

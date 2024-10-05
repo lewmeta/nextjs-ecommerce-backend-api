@@ -29,13 +29,7 @@ const Billboards = async (
         <LayoutComponent
         >
             <div className='flex-1 space-y-4 p-8 pt-6'>
-                {isEmpty ? (
-                    <div className="text-center text-gray-500">
-                        No billboards available for this store.
-                    </div>
-                ) : (
-                    <BillboardClient data={formatedBillboards} />
-                )}
+                <BillboardClient data={formatedBillboards} />
             </div>
         </LayoutComponent>
     )
