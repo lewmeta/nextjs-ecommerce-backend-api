@@ -2,21 +2,6 @@
 
 import { useExpandSlice } from "@/hooks/use-expand-slice";
 import { cn } from "@/lib/utils";
-import { useParams, usePathname } from "next/navigation";
-import { CategoryIcon } from "./icons/category-icon";
-import { CouponIcon } from "./icons/coupon-icon";
-import { RocketIcon } from "./icons/rocket-icon";
-import { LucideIcon } from "lucide-react";
-import { ComponentType, SVGProps } from "react";
-
-// type IconType = ComponentType<SVGProps<SVGSVGElement>>;
-
-// interface Route {
-//     href: string;
-//     label: string;
-//     icon: IconType;
-//     active: boolean;
-// }
 
 interface LayoutComponentProps {
     children: React.ReactNode
@@ -25,8 +10,8 @@ interface LayoutComponentProps {
 export const LayoutComponent = ({ children }: LayoutComponentProps) => {
     const { expandSidebar } = useExpandSlice();
     return (
-        <div className={cn("mt-[70px] h-full ", expandSidebar ? "md:ml-[300px] ml-0 mt-[70px]" : "ml-[80px] ")}>
-            <div className="bg-gray-50 h-full">
+        <div className={cn("pt-[80px] h-full z-[100]", expandSidebar ? "md:pl-80  ml-0 " : "md:ml-[70px] ")}>
+            <div className="h-full z-50">
                 {children}
             </div>
         </div>

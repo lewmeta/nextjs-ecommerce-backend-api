@@ -152,8 +152,8 @@ model Product {
   brand         String
   slug          String       @unique
   categoryId    String
+  category      Category     @relation("CategoryToProduct", fields: [categoryId], references: [id])
   storeId       String
-  category      Category     @relation(fields: [categoryId], references: [id])
   store         Store        @relation(fields: [storeId], references: [id])
   reviews       Review[]
   subProducts   SubProduct[]
@@ -217,13 +217,19 @@ model Question {
 
 model Category {
   id          String    @id @default(cuid()) @map("_id")
-  name        String
-  products    Product[]
+  storeId     String //Foreign Key to Store
+  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
   billboardId String // Foreign Key to Billboard
   billboard   Billboard @relation(fields: [billboardId], references: [id])
-  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
-  storeId     String
+  name        String
+  products    Product[] @relation("CategoryToProduct")
   imageUrl    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([billboardId])
 }
 
 model Cart {

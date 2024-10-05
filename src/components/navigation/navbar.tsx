@@ -1,27 +1,19 @@
-import { db } from "@/lib/db";
+'use client'
+
 import { MainNav } from "./main-nav"
-import { Sidebar } from "./sidebar"
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { useExpandSlice } from "@/hooks/use-expand-slice";
+import { cn } from "@/lib/utils";
 import { MobileNavbar } from "./mobile-navbar";
 
-export const Navbar = async () => {
+export const Navbar = () => {
 
-    const user = await currentUser();
-
-    if (!user?.id) {
-        redirect("/auth/login")
-    }
-    const stores = await db.store.findMany({
-        where: {
-            userId: user?.id,
-        },
-    });
-
+    const { expandSidebar } = useExpandSlice();
     return (
-        <div className="flex items-center bg-sky-500">
-            <MainNav />
-            <MobileNavbar/>
+        <div className={cn("fixed inset-y-0 right-0 w-full flex items-center h-[80px] md:pl-24", expandSidebar ? 'md:pl-80' : 'md:pl-[70px]')}>
+            <div className="w-full border-b h-full flex items-center justify-end px-4">
+                <MainNav />
+                <MobileNavbar />
+            </div>
         </div>
     )
 }

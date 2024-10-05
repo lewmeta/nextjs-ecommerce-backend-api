@@ -34,15 +34,10 @@ const VendorPage = () => {
         }
     ]
     return (
-        <div
+        <LayoutComponent
         >
-            <Heading 
-            title="Dashboard"
-            description="Check out your dahsboard and your perfomance metrixes"
-            routes={ROUTES}
-            />
             content
-        </div>
+        </LayoutComponent>
     )
 }
 

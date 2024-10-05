@@ -30,12 +30,10 @@ const Billboards = async (
         >
             <div className='flex-1 space-y-4 p-8 pt-6'>
                 {isEmpty ? (
-                    // Render a message or component when no billboards are available
                     <div className="text-center text-gray-500">
                         No billboards available for this store.
                     </div>
                 ) : (
-                    // Render the BillboardClient component with the data
                     <BillboardClient data={formatedBillboards} />
                 )}
             </div>

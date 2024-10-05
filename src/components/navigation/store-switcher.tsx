@@ -22,6 +22,7 @@ import {
 
 import { useParams, useRouter } from "next/navigation";
 import { useStoreModal } from "@/hooks/use-store-modal";
+import { useExpandSlice } from "@/hooks/use-expand-slice";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>;
 
@@ -34,6 +35,8 @@ export const StoreSwitcher = ({
   items = []
 }: StoreSwitcherProps) => {
   const storeModal = useStoreModal();
+  const { expandSidebar, toggleSidebar } = useExpandSlice();
+
   const params = useParams();
   const router = useRouter();
 
@@ -54,18 +57,31 @@ export const StoreSwitcher = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          role="combobox"
-          aria-expanded={open}
-          aria-label="Select a store"
-          className={cn("max-w-[300px] w-full py-5 bg-[#287f71] text-white justify-between", className)}
-        >
-          <Store className="mr-2 h-4 w-4" />
-          {currentStore?.label}
-          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        {expandSidebar ? (
+          <Button
+            variant="outline"
+            size="sm"
+            role="combobox"
+            aria-expanded={open}
+            aria-label="Select a store"
+            className={cn("max-w-[300px] w-full font-medium text-sm py-5 justify-between", className)}
+          >
+            <Store className="mr-2 h-4 w-4" />
+
+            {currentStore?.label}
+            <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        ) : (
+          <Button
+            variant="outline"
+            size="sm"
+            role="combobox"
+            aria-expanded={open}
+            aria-label="Select a store"
+          >
+            <Store className="h-4 w-4" />
+          </Button>
+        )}
       </PopoverTrigger>
       <PopoverContent className="max-w-[300px] w-full p-0">
         <Command>

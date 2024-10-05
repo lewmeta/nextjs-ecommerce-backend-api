@@ -130,13 +130,13 @@ export const BillboardForm = ({
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8 w-full"
+                    className="space-y-8 w-auto "
                 >
                     <FormField
                         control={form.control}
                         name="imageUrl"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className=" flex flex-col items-start">
                                 <FormLabel>Background image</FormLabel>
                                 <FormControl>
                                     <FileUpload
