@@ -9,12 +9,12 @@ const Billboards = async (
     { params }: { params: { storeId: string } }
 ) => {
 
-    const billboards = await db.billboard.findMany({
+    const billboards = await db?.billboard?.findMany({
         where: {
             storeId: params.storeId
         }
     });
-    const formatedBillboards: BillboardColumn[] = billboards.map((item) => ({
+    const formatedBillboards: BillboardColumn[] = billboards?.map((item) => ({
         id: item.id,
         label: item.label,
         imageUrl: item.imageUrl,
