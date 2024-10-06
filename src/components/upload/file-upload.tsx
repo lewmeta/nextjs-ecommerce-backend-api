@@ -2,7 +2,7 @@
 
 import { ourFileRouter } from "@/app/api/uploadthing/core"
 import { useToast } from "@/hooks/use-toast";
-import { UploadButton, UploadDropzone } from "@/lib/uploadthing"
+import { UploadDropzone } from "@/lib/uploadthing"
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";

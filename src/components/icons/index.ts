@@ -8,6 +8,7 @@ import { ChevronLeft } from "./chevron-left";
 import { ChevronRight } from "./chevron-right";
 import { ChevronDown } from "./chevron-down";
 import { PlusIcon } from "./plus-icon";
+import { CustomersIcon } from "./customers-icon";
 
 export { 
     BillBoardIcon, 
@@ -20,4 +21,5 @@ export {
     ChevronRight,
     ChevronDown,
     PlusIcon,
+    CustomersIcon
 }

@@ -37,7 +37,7 @@ export default async function AdminLayout({
     }
     return (
         <div className="h-full w-full relative ">
-            <div className="overflow-hidden fixed w-full h-auto left-auto">
+            <div className="overflow-hidden fixed w-full h-auto left-auto z-50">
                 <Navbar />
             </div>
             <div className="hidden md:flex h-full flex-col fixed top-0 z-50">

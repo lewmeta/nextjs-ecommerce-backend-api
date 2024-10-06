@@ -45,7 +45,7 @@ export const BillboardForm = ({
     const title = initialData ? 'Edit billboard' : ' Create billboard'
     const description = initialData ? 'Edit a billboard' : 'Add a billboard';
     const toastMessage = initialData ? 'Billboard updated' : 'Billboard created'
-    const action = initialData ? 'Save changes' : 'Create'
+    const action = initialData ? 'Save changes' : 'Create billboard'
 
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(BillboardSchema),
@@ -132,23 +132,6 @@ export const BillboardForm = ({
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-8 w-auto "
                 >
-                    <FormField
-                        control={form.control}
-                        name="imageUrl"
-                        render={({ field }) => (
-                            <FormItem className=" flex flex-col items-start">
-                                <FormLabel>Background image</FormLabel>
-                                <FormControl>
-                                    <FileUpload
-                                        endpoint="billboardImage"
-                                        onChange={field.onChange}
-                                        value={field.value}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
                     <div className="md:grid md:grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
@@ -185,6 +168,23 @@ export const BillboardForm = ({
                             )}
                         />
                     </div>
+                    <FormField
+                        control={form.control}
+                        name="imageUrl"
+                        render={({ field }) => (
+                            <FormItem className=" flex flex-col items-start">
+                                <FormLabel>Background image</FormLabel>
+                                <FormControl>
+                                    <FileUpload
+                                        endpoint="billboardImage"
+                                        onChange={field.onChange}
+                                        value={field.value}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <Button disabled={loading} className="ml-auto" type="submit">
                         {action}
                     </Button>

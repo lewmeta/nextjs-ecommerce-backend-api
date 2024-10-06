@@ -15,6 +15,7 @@ import { BillBoardIcon } from "../icons/billboard-icon";
 import { RocketIcon } from "../icons/rocket-icon";
 import { UserIcon } from "../icons/user-icon";
 import { useExpandSlice } from "@/hooks/use-expand-slice";
+import { CustomersIcon } from "../icons";
 
 export const SidebarRoutes = () => {
     const params = useParams();
@@ -94,7 +95,7 @@ export const SidebarRoutes = () => {
                     href: `/${params.storeId}/vendor/billboards`,
                     label: "Billboards",
                     icon: BillBoardIcon,
-                    active: pathname === `/${params.storeId}/vendor/billboards`,
+                    active: pathname.includes(`/${params.storeId}/vendor/billboards`),
                 },
                 {
                     href: `/${params.storeId}/vendor`,
@@ -149,7 +150,7 @@ export const SidebarRoutes = () => {
                 {
                     href: `/${params.storeId}/vendor/users`,
                     label: "Users",
-                    icon: UserIcon,
+                    icon: CustomersIcon,
                     active: pathname === `/${params.storeId}/vendor/users`,
                 },
             ],

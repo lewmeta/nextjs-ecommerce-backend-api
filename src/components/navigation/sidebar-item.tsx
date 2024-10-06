@@ -62,13 +62,13 @@ export const SidebarItem = ({
                     <div key={index} className="w-full">
                         <div className="flex items-center justify-center py-1 w-full">
                             {expandSidebar ? (
-                                <Button className="w-full"
+                                <Button className={cn("w-full",item.active && " text-primary bg-secondary")}
                                     variant={'ghost'}
                                     onClick={() => setIsOpen(prev => !prev)}
                                 >
                                     {item.icon && <item.icon className="" />}
                                     <div
-                                        className={cn("flex ml-2 items-center justify-between text-sm w-full", item.active && "font-bold")}
+                                        className={cn("flex ml-2 items-center justify-between text-sm w-full")}
                                     >
                                         <span
                                             onClick={() => item.href && router.push(item.href)}
@@ -102,7 +102,7 @@ export const SidebarItem = ({
                                                                         <DropdownMenuItem
                                                                             key={childIndex}
                                                                             onClick={() => child.href && router.push(child.href)}
-                                                                            className={cn("flex items-center cursor-pointer", child.active && "font-bold")}
+                                                                            className={cn("flex items-center cursor-pointer", child.active && "text-primary bg-secondary")} 
                                                                         >
                                                                             {/* {child.icon && <child.icon className="mr-2" />} */}
                                                                             {child.label}
@@ -113,7 +113,7 @@ export const SidebarItem = ({
                                                         </DropdownMenu>
                                                     </Button>
                                                 ) : (
-                                                    <Button variant="ghost" onClick={() => item.href && router.push(item.href)}>
+                                                    <Button variant="ghost" onClick={() => item.href && router.push(item.href)} className={cn(item.active && 'text-primary bg-secondary')}>
                                                         {item.icon && <item.icon className="" />}
                                                     </Button>
                                                 )}
@@ -132,9 +132,9 @@ export const SidebarItem = ({
                                     <button
                                         key={childIndex}
                                         onClick={() => child.href && router.push(child.href)}
-                                        className={cn("flex items-center", child.active && "font-bold")}
+                                        className={cn("flex items-center", child.active && "font-bold text-primary")}
                                     >
-                                        {child.icon && <child.icon className="mr-2" />}
+                                        {/* {child.icon && <child.icon className="mr-2" />} */}
                                         {child.label}
                                     </button>
                                 ))}

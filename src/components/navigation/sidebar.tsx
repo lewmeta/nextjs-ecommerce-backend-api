@@ -35,13 +35,12 @@ export const Sidebar = ({
                                 className="w-auto h-auto object-cover flex-0"
                             />
                         </div>
-                        <Button
-                            variant={'ghost'}
+                        <button
                             onClick={toggleSidebar}
                             className="cursor-pointer"
                         >
-                            <CollapeseIcon className="w-4 h-4" />
-                        </Button>
+                            <CollapeseIcon width={23} height={23} />
+                        </button>
                     </div>
                 ) : (
                     <div className="flex items-center flex-col">
@@ -56,7 +55,7 @@ export const Sidebar = ({
                     </div>
                 )}
             </div>
-            <div className="px-6 mt-6 h-full">
+            <div className="px-6 mt-6 h-full overflow-y-auto">
                 <div className="w-full flex items-center justify-center">
                     <StoreSwitcher items={items} />
                 </div>
