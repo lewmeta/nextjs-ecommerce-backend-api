@@ -35,12 +35,13 @@ export const Sidebar = ({
                                 className="w-auto h-auto object-cover flex-0"
                             />
                         </div>
-                        <button
+                        <Button
+                            variant={'ghost'}
                             onClick={toggleSidebar}
                             className="cursor-pointer"
                         >
-                            <CollapeseIcon width={25} height={25} className="border-blue-600" />
-                        </button>
+                            <CollapeseIcon className="w-4 h-4" />
+                        </Button>
                     </div>
                 ) : (
                     <div className="flex items-center flex-col">
@@ -48,14 +49,17 @@ export const Sidebar = ({
                         <Separator className="my-5" />
                         <button
                             onClick={toggleSidebar}
+                            className="hover:text-primary"
                         >
-                            <ExpandIcon width={24} height={24} />
+                            <ExpandIcon className="w-5 h-5" />
                         </button>
                     </div>
                 )}
             </div>
             <div className="px-6 mt-6 h-full">
-                <StoreSwitcher items={items} />
+                <div className="w-full flex items-center justify-center">
+                    <StoreSwitcher items={items} />
+                </div>
                 <div className="mt-6">
                     <SidebarRoutes />
                 </div>

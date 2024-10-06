@@ -82,24 +82,7 @@ export const SidebarRoutes = () => {
 
     const VENDOR_ROUTES = [
         {
-            label: "Analytics",
-            items: [
-                {
-                    href: `/${params.storeId}/vendor`,
-                    label: "Dashboard",
-                    icon: Overview,
-                    active: pathname === `/${params.storeId}/vendor`,
-                },
-                {
-                    href: `/${params.storeId}/vendor/perfomance`,
-                    label: "Performance",
-                    icon: PerformanceIcon,
-                    active: pathname === `/${params.storeId}/vendor/perfomance`,
-                },
-            ],
-        },
-        {
-            label: "Application",
+            label: "General",
             items: [
                 {
                     href: `/${params.storeId}/vendor/orders`,
@@ -113,11 +96,18 @@ export const SidebarRoutes = () => {
                     icon: BillBoardIcon,
                     active: pathname === `/${params.storeId}/vendor/billboards`,
                 },
-            ],
-        },
-        {
-            label: "Products",
-            items: [
+                {
+                    href: `/${params.storeId}/vendor`,
+                    label: "Dashboard",
+                    icon: Overview,
+                    active: pathname === `/${params.storeId}/vendor`,
+                },
+                {
+                    href: `/${params.storeId}/vendor/perfomance`,
+                    label: "Performance",
+                    icon: PerformanceIcon,
+                    active: pathname === `/${params.storeId}/vendor/perfomance`,
+                },
                 {
                     href: `/${params.storeId}/vendor/products`,
                     label: "Products",
@@ -145,11 +135,6 @@ export const SidebarRoutes = () => {
                     icon: CategoryIcon,
                     active: pathname === `/${params.storeId}/vendor/category`,
                 },
-            ],
-        },
-        {
-            label: "Marketing",
-            items: [
                 {
                     href: `/${params.storeId}/vendor/coupons`,
                     label: "Coupons",
@@ -159,7 +144,7 @@ export const SidebarRoutes = () => {
             ],
         },
         {
-            label: "Administration",
+            label: "Account",
             items: [
                 {
                     href: `/${params.storeId}/vendor/users`,

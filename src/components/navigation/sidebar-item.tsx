@@ -19,7 +19,6 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown, ChevronLeft, ChevronRight } from "../icons";
@@ -55,10 +54,10 @@ export const SidebarItem = ({
         <div className="flex flex-col">
             {expandSidebar && (
                 <div className="flex flex-col items-start" >
-                    <span className="text-muted-foreground uppercase text-sm font-normal">{label}</span>
+                    <span className="text-muted-foreground capitalize text-sm font-normal">{label}</span>
                 </div>
             )}
-            <div className="w-full">
+            <div className="w-full px-0">
                 {items.map((item, index) => (
                     <div key={index} className="w-full">
                         <div className="flex items-center justify-center py-1 w-full">
@@ -74,7 +73,7 @@ export const SidebarItem = ({
                                         <span
                                             onClick={() => item.href && router.push(item.href)}
                                         >
-                                            {label}
+                                            {item.label}
                                         </span>
 
                                         {item && item.children && (
@@ -91,18 +90,21 @@ export const SidebarItem = ({
                                                     <Button variant="ghost" asChild>
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger onClick={() => setIsOpen(prev => !prev)}>
-                                                                {item.icon && <Button variant={"ghost"}><item.icon/></Button>}
+                                                                {
+                                                                    item.icon &&
+                                                                    <Button variant={"ghost"}><item.icon /></Button>
+                                                                }
                                                             </DropdownMenuTrigger>
                                                             {item.children && item.children.length && isOpen && (
-                                                                <DropdownMenuContent className="pl-4">
-                                                                    <DropdownMenuLabel>Products</DropdownMenuLabel>
+                                                                <DropdownMenuContent className="ml-4" side="bottom">
+                                                                    {/* <DropdownMenuLabel>Products</DropdownMenuLabel> */}
                                                                     {item.children.map((child, childIndex) => (
                                                                         <DropdownMenuItem
                                                                             key={childIndex}
                                                                             onClick={() => child.href && router.push(child.href)}
-                                                                            className={cn("flex items-center", child.active && "font-bold")}
+                                                                            className={cn("flex items-center cursor-pointer", child.active && "font-bold")}
                                                                         >
-                                                                            {child.icon && <child.icon className="mr-2" />}
+                                                                            {/* {child.icon && <child.icon className="mr-2" />} */}
                                                                             {child.label}
                                                                         </DropdownMenuItem>
                                                                     ))}

@@ -15,6 +15,12 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -72,15 +78,26 @@ export const StoreSwitcher = ({
             <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
         ) : (
-          <Button
-            variant="ghost"
-            // size="sm"
-            role="combobox"
-            aria-expanded={open}
-            aria-label="Select a store"
-          >
-            <Store className="h-4 w-4" />
-          </Button>
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    // size="sm"
+                    role="combobox"
+                    aria-expanded={open}
+                    aria-label="Select a store"
+                  >
+                    <Store className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  {currentStore?.label}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
         )}
       </PopoverTrigger>
       <PopoverContent className="max-w-[300px] w-full p-0">
