@@ -50,11 +50,8 @@ export async function POST(
             },
         });
 
-        // if (existingSlug){
-        //     // return NextResponse.json({error: "Slug already exists"}, { status: 403})
-        // }
         if (existingSlug) {
-            return NextResponse.json({ error: "Email is already in use!" }, { status: 409 });
+            return NextResponse.json({ error: "This slug already exists!" }, { status: 409 });
         }
 
         const category = await db.category.create({
@@ -71,5 +68,28 @@ export async function POST(
     } catch (error) {
         console.log('[CATEGORIES_POST]', error);
         return new NextResponse('Internal erorr', { status: 500 })
+    }
+}
+
+export async function GET(
+    req: Request,
+    { params }: { params: { storeId: string } }
+) {
+    try {
+        if (!params.storeId) {
+            return NextResponse.json({error: 'Store id is requred'}, { status: 400})
+        }
+
+        const categories = await db.category.findMany({
+            where: {
+                storeId: params.storeId
+            },
+        });
+
+        return NextResponse.json(categories);
+
+    } catch (error) {
+        console.log('[CATEGORIES_GET]', error);
+        return new NextResponse('Internal error', { status: 500 })
     }
 }

@@ -76,7 +76,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             }
             router.refresh();
             router.push(`/${params.storeId}/vendor/categories`);
-            //   toast.success(toastMessage);
+              toast({
+                title: toastMessage
+              });
         } catch (error) {
             if (axios.isAxiosError(error)){
                 toast({
