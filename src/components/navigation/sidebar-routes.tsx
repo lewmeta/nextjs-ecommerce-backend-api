@@ -15,7 +15,7 @@ import { BillBoardIcon } from "../icons/billboard-icon";
 import { RocketIcon } from "../icons/rocket-icon";
 import { UserIcon } from "../icons/user-icon";
 import { useExpandSlice } from "@/hooks/use-expand-slice";
-import { CustomersIcon } from "../icons";
+import { CustomersIcon, SettingsIcon } from "../icons";
 
 export const SidebarRoutes = () => {
     const params = useParams();
@@ -23,63 +23,6 @@ export const SidebarRoutes = () => {
 
     const { expandSidebar } = useExpandSlice();
 
-
-    const VENDO_ROUTES = [
-        {
-            href: `/${params.storeId}/vendor`,
-            label: "Dashboard",
-            icon: Overview,
-            active: pathname === `/${params.storeId}/vendor`,
-        },
-        {
-            href: `/${params.storeId}/vendor/orders`,
-            label: "Orders",
-            icon: OrdersIcon,
-            active: pathname === `/${params.storeId}/vendor/orders`,
-        },
-        {
-            href: `/${params.storeId}/vendor/orders`,
-            label: "Orders",
-            icon: MessagesIcon,
-            active: pathname === `/${params.storeId}/vendor/orders`,
-        },
-        {
-            href: `/${params.storeId}/vendor/billboards`,
-            label: "Billboards",
-            icon: BillBoardIcon,
-            active: pathname === `/${params.storeId}/vendor/billboards`,
-        },
-        {
-            href: `/${params.storeId}/vendor/products`,
-            label: "Products",
-            icon: ProductIcon,
-            active: pathname === `/${params.storeId}/vendor/products`,
-        },
-        {
-            href: `/${params.storeId}/vendor/category`,
-            label: "Category",
-            icon: CategoryIcon,
-            active: pathname === `/${params.storeId}/vendor/category`,
-        },
-        {
-            href: `/${params.storeId}/vendor/coupons`,
-            label: "Coupons",
-            icon: CouponIcon,
-            active: pathname === `/${params.storeId}/vendor/coupons`,
-        },
-        {
-            icon: UserIcon,
-            label: "Users",
-            href: `/${params.storeId}/vendor/users`,
-            active: pathname === `/${params.storeId}/vendor/users`
-        },
-        {
-            icon: PerformanceIcon,
-            label: "Perfomance",
-            href: `/${params.storeId}/vendor/perfomance`,
-            active: pathname === `/${params.storeId}/vendor/perfomance`
-        }
-    ]
 
     const VENDOR_ROUTES = [
         {
@@ -131,10 +74,10 @@ export const SidebarRoutes = () => {
                     ],
                 },
                 {
-                    href: `/${params.storeId}/vendor/category`,
+                    href: `/${params.storeId}/vendor/categories`,
                     label: "Category",
                     icon: CategoryIcon,
-                    active: pathname === `/${params.storeId}/vendor/category`,
+                    active: pathname.includes(`/${params.storeId}/vendor/categories`),
                 },
                 {
                     href: `/${params.storeId}/vendor/coupons`,
@@ -149,9 +92,15 @@ export const SidebarRoutes = () => {
             items: [
                 {
                     href: `/${params.storeId}/vendor/users`,
-                    label: "Users",
+                    label: "Customers",
                     icon: CustomersIcon,
                     active: pathname === `/${params.storeId}/vendor/users`,
+                },
+                {
+                    href: `/${params.storeId}/vendor/settings`,
+                    label: "Settings",
+                    icon: SettingsIcon,
+                    active: pathname === `/${params.storeId}/vendor/settings`,
                 },
             ],
         },
@@ -198,6 +147,7 @@ export const SidebarRoutes = () => {
             active: pathname === `/${params.storeId}/vendor/perfomance`
         }
     ]
+    
     const isAdminRoute = pathname?.startsWith(`/${params.storeId}/admin`);
     const routes = isAdminRoute ? ADMIN_ROUTES : VENDOR_ROUTES;
 

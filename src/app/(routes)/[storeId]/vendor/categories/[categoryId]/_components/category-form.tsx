@@ -1,7 +1,7 @@
 "use client"
 
 import * as z from "zod"
-import axios from "axios"
+import axios, { isAxiosError } from "axios"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -25,6 +25,7 @@ import { Heading } from "@/components/navigation/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { FileUpload } from "@/components/upload/file-upload"
+import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
     name: z.string().min(2),
@@ -49,6 +50,8 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const { toast } = useToast()
+
     const title = initialData ? 'Edit category' : 'Create category';
     const description = initialData ? 'Edit a category.' : 'Add a new category';
     const toastMessage = initialData ? 'Category updated.' : 'Category created.';
@@ -72,11 +75,16 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                 await axios.post(`/api/${params.storeId}/categories`, data);
             }
             router.refresh();
-            router.push(`/${params.storeId}/categories`);
-            //   toast.success(toastMessage);
-        } catch (error: any) {
-            console.log('something went wrong.')
-            //   toast.error('Something went wrong.');
+            router.push(`/${params.storeId}/vendor/categories`);
+              toast({
+                title: toastMessage
+              });
+        } catch (error) {
+            if (axios.isAxiosError(error)){
+                toast({
+                    title: error.response?.data.error
+                });
+            }
         } finally {
             setLoading(false);
         }
@@ -88,10 +96,10 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
             router.refresh();
             router.push(`/${params.storeId}/categories`);
-            //   toast.success('Category deleted.');
         } catch (error: any) {
-            console.log('something went wrong.')
-            //   toast.error('Make sure you removed all products using this category first.');
+            toast({
+                title: 'Make sure you removed all products using this category first.'
+            });
         } finally {
             setLoading(false);
             setOpen(false);

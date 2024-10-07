@@ -151,6 +151,7 @@ model Product {
   description   String
   brand         String
   slug          String       @unique
+  isPublished   Boolean      @default(false)
   categoryId    String
   category      Category     @relation("CategoryToProduct", fields: [categoryId], references: [id])
   storeId       String
@@ -174,6 +175,7 @@ model SubProduct {
   id                 String   @id @default(cuid()) @map("_id")
   sku                String
   productId          String
+  isPublished        Boolean  @default(false)
   product            Product  @relation(fields: [productId], references: [id])
   images             String[]
   description_images String[]
@@ -224,6 +226,7 @@ model Category {
   name        String
   products    Product[] @relation("CategoryToProduct")
   imageUrl    String
+  slug        String    @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
