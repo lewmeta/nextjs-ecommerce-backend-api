@@ -18,6 +18,7 @@ import {
 import { AlertModal } from "@/components/modals/alert-modal";
 
 import { CategoryColumn } from "./columns";
+import { useToast } from "@/hooks/use-toast";
 
 interface CellActionProps {
   data: CategoryColumn;
@@ -31,15 +32,18 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const {toast} = useToast();
+
   const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
-    //   toast.success('Category deleted.');
+      toast({title: 'Category deleted.'});
       router.refresh();
     } catch (error) {
-        console.log("something went wrong")
-    //   toast.error('Make sure you removed all products using this category first.');
+      toast({
+        title: 'Make sure you removed all products using this category first.'
+      });
     } finally {
       setOpen(false);
       setLoading(false);
@@ -48,7 +52,9 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    // toast.success('Category ID copied to clipboard.');
+    toast({
+      title: 'Category ID copied to clipboard.'
+    });
   }
 
   return (
@@ -74,7 +80,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             <Copy className="mr-2 h-4 w-4" /> Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}
+            onClick={() => router.push(`/${params.storeId}/vendor/categories/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
