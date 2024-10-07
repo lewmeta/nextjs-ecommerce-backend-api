@@ -62,25 +62,45 @@ export const SidebarItem = ({
                     <div key={index} className="w-full">
                         <div className="flex items-center justify-center py-1 w-full">
                             {expandSidebar ? (
-                                <Button className={cn("w-full", item.active && " text-primary bg-secondary border border-primary")}
-                                    variant={'ghost'}
-                                    onClick={() => setIsOpen(prev => !prev)}
-                                >
-                                    {item.icon && <item.icon className="" />}
-                                    <div
-                                        className={cn("flex ml-2 items-center justify-between text-sm w-full")}
-                                    >
-                                        <span
-                                            onClick={() => item.href && router.push(item.href)}
+                                <>
+                                    {item.children ? (
+                                        <Button className={cn("w-full", item.active && " text-primary bg-secondary border border-primary")}
+                                            variant={'ghost'}
+                                            onClick={() => setIsOpen(prev => !prev)}
                                         >
-                                            {item.label}
-                                        </span>
+                                            {item.icon && <item.icon className="" />}
+                                            <div
+                                                className={cn("flex ml-2 items-center justify-between text-sm w-full")}
+                                            >
+                                                <span
+                                                    onClick={() => item.href && router.push(item.href)}
+                                                >
+                                                    {item.label}
+                                                </span>
 
-                                        {item && item.children && (
-                                            <span onClick={() => setIsOpen(prev => !prev)}>{isOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}</span>
-                                        )}
-                                    </div>
-                                </Button>
+                                                {item && item.children && (
+                                                    <span onClick={() => setIsOpen(prev => !prev)}>{isOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}</span>
+                                                )}
+                                            </div>
+                                        </Button>
+                                    ) : (
+                                        <Button className={cn("w-full", item.active && " text-primary bg-secondary border border-primary")}
+                                            variant={'ghost'}
+                                        >
+                                            {item.icon && <item.icon className="" />}
+                                            <div
+                                                className={cn("flex ml-2 items-center justify-between text-sm w-full")}
+                                            >
+                                                <span
+                                                    onClick={() => item.href && router.push(item.href)}
+                                                >
+                                                    {item.label}
+                                                </span>
+
+                                            </div>
+                                        </Button>
+                                    )}
+                                </>
                             ) : (
                                 <>
                                     <TooltipProvider>
