@@ -73,7 +73,6 @@ export const SidebarItem = ({
                                                 className={cn("flex ml-2 items-center justify-between text-sm w-full")}
                                             >
                                                 <span
-                                                    onClick={() => item.href && router.push(item.href)}
                                                 >
                                                     {item.label}
                                                 </span>
