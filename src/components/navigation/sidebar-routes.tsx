@@ -131,10 +131,10 @@ export const SidebarRoutes = () => {
                     ],
                 },
                 {
-                    href: `/${params.storeId}/vendor/category`,
+                    href: `/${params.storeId}/vendor/categories`,
                     label: "Category",
                     icon: CategoryIcon,
-                    active: pathname === `/${params.storeId}/vendor/category`,
+                    active: pathname.includes(`/${params.storeId}/vendor/categories`),
                 },
                 {
                     href: `/${params.storeId}/vendor/coupons`,
@@ -149,7 +149,7 @@ export const SidebarRoutes = () => {
             items: [
                 {
                     href: `/${params.storeId}/vendor/users`,
-                    label: "Users",
+                    label: "Customers",
                     icon: CustomersIcon,
                     active: pathname === `/${params.storeId}/vendor/users`,
                 },
@@ -198,6 +198,7 @@ export const SidebarRoutes = () => {
             active: pathname === `/${params.storeId}/vendor/perfomance`
         }
     ]
+    
     const isAdminRoute = pathname?.startsWith(`/${params.storeId}/admin`);
     const routes = isAdminRoute ? ADMIN_ROUTES : VENDOR_ROUTES;
 

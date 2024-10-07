@@ -62,7 +62,7 @@ export const SidebarItem = ({
                     <div key={index} className="w-full">
                         <div className="flex items-center justify-center py-1 w-full">
                             {expandSidebar ? (
-                                <Button className={cn("w-full",item.active && " text-primary bg-secondary")}
+                                <Button className={cn("w-full", item.active && " text-primary bg-secondary border border-primary")}
                                     variant={'ghost'}
                                     onClick={() => setIsOpen(prev => !prev)}
                                 >
@@ -102,7 +102,7 @@ export const SidebarItem = ({
                                                                         <DropdownMenuItem
                                                                             key={childIndex}
                                                                             onClick={() => child.href && router.push(child.href)}
-                                                                            className={cn("flex items-center cursor-pointer", child.active && "text-primary bg-secondary")} 
+                                                                            className={cn("flex items-center cursor-pointer", child.active && "text-primary bg-secondary")}
                                                                         >
                                                                             {/* {child.icon && <child.icon className="mr-2" />} */}
                                                                             {child.label}

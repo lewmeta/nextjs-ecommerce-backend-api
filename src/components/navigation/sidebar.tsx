@@ -25,7 +25,7 @@ export const Sidebar = ({
     return (
         <div className={cn('h-full border-r flex flex-col shadow-sm', expandSidebar ? 'w-80 ' : 'w-[70px]')}
         >
-            <div className="relative w-full flex items-center justify-center p-4 ">
+            <div className="relative w-full flex items-center justify-center p-4">
                 {expandSidebar ? (
                     <div className="flex items-center justify-between h-[40px] w-full">
                         <div className="w-[170px]">
@@ -55,7 +55,7 @@ export const Sidebar = ({
                     </div>
                 )}
             </div>
-            <div className="px-6 mt-6 h-full overflow-y-auto">
+            <div className="scrollbar overflow-y-scroll px-6 mt-6 h-full">
                 <div className="w-full flex items-center justify-center">
                     <StoreSwitcher items={items} />
                 </div>
