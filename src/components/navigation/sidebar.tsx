@@ -3,7 +3,7 @@
 import { useExpandSlice } from "@/hooks/use-expand-slice";
 import { cn } from "@/lib/utils";
 import { MenuIcon } from "../icons/menu-icon";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { StoreSwitcher } from "./store-switcher";
 import { SidebarRoutes } from "./sidebar-routes";
 import { BoltIcon } from "../icons/bolt-icon";
@@ -22,17 +22,20 @@ export const Sidebar = ({
 }: StoreProps) => {
     const { expandSidebar, toggleSidebar } = useExpandSlice();
 
+    const router  = useRouter();
+    const params = useParams();
     return (
         <div className={cn('h-full border-r flex flex-col shadow-sm', expandSidebar ? 'w-80 ' : 'w-[70px]')}
         >
-            <div className="relative w-full flex items-center justify-center p-4">
+            <div className="relative w-full flex items-center justify-center p-6">
                 {expandSidebar ? (
                     <div className="flex items-center justify-between h-[40px] w-full">
-                        <div className="w-[170px]">
+                        <div className="w-[168px]">
                             <Image
                                 src={'/logo.svg'}
                                 width={100} height={60} alt="logo"
-                                className="w-auto h-auto object-cover flex-0"
+                                className="w-auto h-auto object-cover cursor-pointer flex-0"
+                                onClick={() => router.push(`/${params.storeId}/vendor`)}
                             />
                         </div>
                         <button
@@ -44,7 +47,9 @@ export const Sidebar = ({
                     </div>
                 ) : (
                     <div className="flex items-center flex-col">
-                        <Image src={'/site-logo.svg'} width={100} height={100} alt="logo" className="w-[30px] h-[30px] object-cover" />
+                        <Image src={'/site-logo.svg'} width={100} height={100} alt="logo" className="w-[30px] cursor-pointer h-[30px] object-contain"
+                        onClick={() => router.push(`/${params.storeId}/vendor`)}
+                        />
                         <Separator className="my-5" />
                         <button
                             onClick={toggleSidebar}

@@ -26,14 +26,14 @@ export const Heading = ({
                 <h2 className="text-3xl font-bold tracking-tight mt-0">{title}</h2>
                 {/* <p className="text-sm text-muted-foreground mt-4">{description}</p> */}
             </div>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
                 {routes?.map((item, index) => (
                     <div key={index} className="flex items-center gap-2 border rounded-lg p-1 px-3 text-sm">
                         {item.icon && <item.icon />}
                         {item.label}
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     )
 }
