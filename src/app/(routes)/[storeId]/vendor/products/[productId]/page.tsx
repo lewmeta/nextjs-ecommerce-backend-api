@@ -5,6 +5,9 @@ import { currentUser } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { redirect } from 'next/navigation';
 import { Actions } from './_components/actions';
+import { IconBadge } from '@/components/icon-badge';
+import { LayoutDashboard } from 'lucide-react';
+import ProductNameForm from './_components/name-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -89,8 +92,14 @@ const page = async (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                     <div>
                         <div className='flex items-center gap-x-2'>
-                            
+                            <IconBadge 
+                            icon={LayoutDashboard}
+                            />
+                            <h2 className="text-xl">
+                                Customize your product
+                            </h2>
                         </div>
+                        <ProductNameForm initialData={product!} productId={params.productId}/>
                     </div>
                 </div>
             </div>
