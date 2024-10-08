@@ -51,6 +51,7 @@ const CreateProduct = () => {
 
             router.push(`/${params.storeId}/vendor/products/${response.data.id}`);
 
+
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
@@ -69,7 +70,7 @@ const CreateProduct = () => {
             <div className="max-w-5xl mx-auto flex  p-6">
                 <Card className="border-secondary">
                     <CardHeader>
-                        <CardTitle className="text-2xl">Name you new product</CardTitle>
+                        <CardTitle className="text-2xl">Name your new product</CardTitle>
                         <CardDescription>
                             What would you like to name your product? Don&apos;t worry, you
                             can change this later.
@@ -94,7 +95,7 @@ const CreateProduct = () => {
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                What will you teach in this course?
+                                               This is the product you will be selling.
                                             </FormDescription>  <FormMessage />
                                         </FormItem>
                                     )}
