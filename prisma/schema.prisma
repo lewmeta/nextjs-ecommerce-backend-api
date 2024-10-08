@@ -152,17 +152,19 @@ model Product {
   brand         String?
   slug          String       @unique
   isPublished   Boolean      @default(false)
+  isFeatured    Boolean      @default(false)
+  isArchived    Boolean      @default(false)
   categoryId    String?
   category      Category?    @relation("CategoryToProduct", fields: [categoryId], references: [id])
   storeId       String
-  store         Store       @relation(fields: [storeId], references: [id])
+  store         Store        @relation(fields: [storeId], references: [id])
   reviews       Review[]
   subProducts   SubProduct[]
   questions     Question[]
-  rating        Float?        @default(0)
-  numReviews    Int?          @default(0)
-  refundPolicy  String?       @default("30 days")
-  shippingPrice Float?        @default(0)
+  rating        Float?       @default(0)
+  numReviews    Int?         @default(0)
+  refundPolicy  String?      @default("30 days")
+  shippingPrice Float?       @default(0)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
@@ -176,6 +178,7 @@ model SubProduct {
   sku                String
   productId          String
   isPublished        Boolean  @default(false)
+  position           Int
   product            Product  @relation(fields: [productId], references: [id])
   images             String[]
   description_images String[]

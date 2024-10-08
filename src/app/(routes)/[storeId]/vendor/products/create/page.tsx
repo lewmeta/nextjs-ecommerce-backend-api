@@ -46,8 +46,8 @@ const CreateProduct = () => {
         try {
             const response = await axios.post(`/api/${params.storeId}/products`, values);
 
-            router.push(`/${params.storeId}/vendor/products/${response.data.id}`)
-
+            router.push(`/${params.storeId}/vendor/products/${response.data.id}`);
+            
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
@@ -66,7 +66,7 @@ const CreateProduct = () => {
             <div className="max-w-5xl mx-auto flex  h-full p-6">
                 <div>
                     <h1 className="text-2xl font-semibold">Name you new product</h1>
-                    <p className="text-sm text-slate-600">
+                    <p className="text-sm">
                         What would you like to name your product? Don&apos;t worry, you
                         can change this later.
                     </p>
