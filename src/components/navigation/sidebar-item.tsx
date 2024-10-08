@@ -46,10 +46,6 @@ export const SidebarItem = ({
     const [isOpen, setIsOpen] = useState(false);
     const { expandSidebar } = useExpandSlice();
 
-    // const handleToggle = () => {
-    //     setIsOpen(!isOpen);
-    // };
-
     return (
         <div className="flex flex-col">
             {expandSidebar && (
@@ -146,17 +142,19 @@ export const SidebarItem = ({
                             )}
                         </div>
                         {item.children && item.children.length && isOpen && expandSidebar && (
-                            <div className="ml-4 text-sm mb-3 ">
-                                {item.children.map((child, childIndex) => (
-                                    <button
-                                        key={childIndex}
-                                        onClick={() => child.href && router.push(child.href)}
-                                        className={cn("flex items-center", child.active && "font-bold text-primary")}
-                                    >
-                                        {/* {child.icon && <child.icon className="mr-2" />} */}
-                                        {child.label}
-                                    </button>
-                                ))}
+                            <div className="text-sm w-full mt-2 ">
+                                <div className="w-full bg-white p-2 rounded-sm">
+                                    {item.children.map((child, childIndex) => (
+                                        <Button
+                                            variant={'ghost'}
+                                            key={childIndex}
+                                            onClick={() => child.href && router.push(child.href)}
+                                            className={cn("flex items-start my-2  justify-start w-full", child.active && "border  bg-secondary text-primary")}
+                                        >
+                                            {child.label}
+                                        </Button>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>

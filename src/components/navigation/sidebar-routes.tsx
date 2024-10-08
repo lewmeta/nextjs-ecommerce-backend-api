@@ -11,11 +11,11 @@ import { MessagesIcon } from "../icons/messages-icon";
 import { ProductIcon } from "../icons/product-icon";
 import { CouponIcon } from "../icons/coupon-icon";
 import { CategoryIcon } from "../icons/category-icon";
-import { BillBoardIcon } from "../icons/billboard-icon";
+// import { BillBoardIcon } from "../icons/billboard-icon";
 import { RocketIcon } from "../icons/rocket-icon";
 import { UserIcon } from "../icons/user-icon";
 import { useExpandSlice } from "@/hooks/use-expand-slice";
-import { CustomersIcon, SettingsIcon } from "../icons";
+import { CustomersIcon, SettingsIcon, BillBoardIcon } from "../icons";
 
 export const SidebarRoutes = () => {
     const params = useParams();

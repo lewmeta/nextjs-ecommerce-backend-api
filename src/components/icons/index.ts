@@ -23,5 +23,5 @@ export {
     ChevronDown,
     PlusIcon,
     CustomersIcon,
-    SettingsIcon
+    SettingsIcon,
 }
