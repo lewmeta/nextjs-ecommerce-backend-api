@@ -110,7 +110,7 @@ const CreateProduct = () => {
                                     </Link>
                                     <Button
                                         type="submit"
-                                        disabled={!isValid || isSubmitting}
+                                        disabled={isSubmitting}
                                         variant={'default'}
                                     >
                                         Continue
