@@ -64,13 +64,14 @@ export const StoreSwitcher = ({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         {expandSidebar ? (
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
+            // variant="ghost"
+            // size="sm"
             role="combobox"
             aria-expanded={open}
             aria-label="Select a store"
-            className={cn("text-sm gap-4 flex items-center bg-secondary  font-bold text-primary justify-start", className)}
+            // className={cn("text-sm gap-4 flex items-center bg-secondary font-bold text-primary justify-start", className)}
+            className={cn("flex items-center gap-3 rounded-lg px-3 py-1 transition-all hover:text-primary relative  bg-muted text-primary", className)}
           >
             <div className="flex items-center gap-1 py-1 font-semibold text-sm">
               <Store className="mr-2 h-5 w-5" />
@@ -82,9 +83,10 @@ export const StoreSwitcher = ({
               </span>
             </div>
             <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
-          </Button>
+          </button>
         ) : (
           <div className="w-full flex items-center justify-center">
+            
             <button
               role="combobox"
               aria-expanded={open}
