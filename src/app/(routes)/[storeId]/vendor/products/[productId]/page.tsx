@@ -9,6 +9,7 @@ import { IconBadge } from '@/components/icon-badge';
 import { LayoutDashboard } from 'lucide-react';
 import ProductNameForm from './_components/name-form';
 import DescriptionForm from './_components/description-form';
+import { CategoryForm } from './_components/category-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -107,6 +108,11 @@ const page = async (
                             storeId={params.storeId}
                         />
                         <DescriptionForm
+                            initialData={product!}
+                            productId={product?.id!}
+                            storeId={product?.storeId!}
+                        />
+                        <CategoryForm
                             initialData={product!}
                             productId={product?.id!}
                             storeId={product?.storeId!}
