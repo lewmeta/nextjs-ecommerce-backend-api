@@ -75,7 +75,7 @@ export const StoreSwitcher = ({
           >
             <div className="flex items-center gap-1 py-1 font-semibold text-sm">
               <Store className="mr-2 h-5 w-5" />
-              <span className="font-extrabold text-lg">
+              <span className="font-semibold text-sm">
                 {currentStore?.label}
               </span>
               <span className="sr-only">
