@@ -70,11 +70,16 @@ export const StoreSwitcher = ({
             role="combobox"
             aria-expanded={open}
             aria-label="Select a store"
-            className={cn("font-semibold text-sm gap-4 flex items-center justify-start", className)}
+            className={cn("text-sm gap-4 flex items-center bg-secondary  font-bold text-primary justify-start", className)}
           >
-            <div className="flex items-center gap-1 font-semibold text-sm">
+            <div className="flex items-center gap-1 py-1 font-semibold text-sm">
               <Store className="mr-2 h-5 w-5" />
-              {currentStore?.label}
+              <span className="font-extrabold text-lg">
+                {currentStore?.label}
+              </span>
+              <span className="sr-only">
+                {currentStore?.label}
+              </span>
             </div>
             <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
           </Button>

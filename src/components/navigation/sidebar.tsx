@@ -44,28 +44,16 @@ export const Sidebar = ({
             label: "General",
             items: [
                 {
-                    href: `/${params.storeId}/vendor/orders`,
-                    label: "Orders",
-                    icon: OrdersIcon,
-                    active: pathname === `/${params.storeId}/vendor/orders`,
-                },
-                {
-                    href: `/${params.storeId}/vendor/billboards`,
-                    label: "Billboards",
-                    icon: BillBoardIcon,
-                    active: pathname.includes(`/${params.storeId}/vendor/billboards`),
-                },
-                {
                     href: `/${params.storeId}/vendor`,
                     label: "Dashboard",
                     icon: Overview,
                     active: pathname === `/${params.storeId}/vendor`,
                 },
                 {
-                    href: `/${params.storeId}/vendor/perfomance`,
-                    label: "Performance",
-                    icon: PerformanceIcon,
-                    active: pathname === `/${params.storeId}/vendor/perfomance`,
+                    href: `/${params.storeId}/vendor/billboards`,
+                    label: "Billboards",
+                    icon: BillBoardIcon,
+                    active: pathname.includes(`/${params.storeId}/vendor/billboards`),
                 },
                 {
                     href: `/${params.storeId}/vendor/products`,
@@ -95,6 +83,24 @@ export const Sidebar = ({
                     active: pathname.includes(`/${params.storeId}/vendor/categories`),
                 },
                 {
+                    href: `/${params.storeId}/vendor/perfomance`,
+                    label: "Performance",
+                    icon: PerformanceIcon,
+                    active: pathname === `/${params.storeId}/vendor/perfomance`,
+                },
+                {
+                    href: `/${params.storeId}/vendor/orders`,
+                    label: "Orders",
+                    icon: OrdersIcon,
+                    active: pathname === `/${params.storeId}/vendor/orders`,
+                },
+                {
+                    href: `/${params.storeId}/vendor/users`,
+                    label: "Customers",
+                    icon: CustomersIcon,
+                    active: pathname === `/${params.storeId}/vendor/users`,
+                },
+                {
                     href: `/${params.storeId}/vendor/coupons`,
                     label: "Coupons",
                     icon: CouponIcon,
@@ -105,12 +111,6 @@ export const Sidebar = ({
         {
             label: "Account",
             items: [
-                {
-                    href: `/${params.storeId}/vendor/users`,
-                    label: "Customers",
-                    icon: CustomersIcon,
-                    active: pathname === `/${params.storeId}/vendor/users`,
-                },
                 {
                     href: `/${params.storeId}/vendor/settings`,
                     label: "Settings",
@@ -164,7 +164,7 @@ export const Sidebar = ({
                                                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4" key={item.href}>
                                                         <Link
                                                             href={item.href}
-                                                            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary text-muted-foreground", item.active && 'bg-muted text-primary')}
+                                                            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary h-full relative   text-muted-foreground", item.active && 'bg-muted text-primary border border-primary')}
                                                         >
                                                             <item.icon className="h-4 w-4" />
                                                             {item.label}{" "}
@@ -177,7 +177,8 @@ export const Sidebar = ({
                                                 {vendor.items.map((item) => (
                                                     <Link
                                                         href={item.href}
-                                                        className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary text-muted-foreground", item.active && 'bg-muted text-primary')}
+                                                        key={item.href}
+                                                        className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary relative text-muted-foreground", item.active && 'bg-muted text-primary border border-primary')}
                                                     >
                                                         <item.icon className="h-4 w-4" />
                                                         {item.label}{" "}
