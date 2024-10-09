@@ -150,7 +150,7 @@ model Product {
   name          String
   description   String?
   brand         String?
-  slug          String       @unique
+  slug          String       
   isPublished   Boolean      @default(false)
   isFeatured    Boolean      @default(false)
   isArchived    Boolean      @default(false)
@@ -171,6 +171,8 @@ model Product {
   OrderProduct OrderProduct[]
 
   CartProduct CartProduct[]
+
+  @@unique([slug, storeId])
 }
 
 model SubProduct {

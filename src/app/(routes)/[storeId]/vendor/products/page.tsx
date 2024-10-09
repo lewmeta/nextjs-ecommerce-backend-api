@@ -32,6 +32,10 @@ const ProductsPage = async ({
         }
     });
 
+    if (products.length === 0){
+        return redirect(`/${params.storeId}/vendor/products/create`)
+    }
+
     const formattedProducts = products.map((item) => ({
         id: item.id,
         name: item.name,
