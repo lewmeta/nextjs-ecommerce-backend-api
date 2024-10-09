@@ -106,51 +106,6 @@ export const SidebarRoutes = () => {
         },
     ];
 
-    const ADMIN_ROUTES = [
-        {
-            icon: Compass,
-            label: "Courses",
-            href: "/teacher/courses",
-            active: true
-        },
-        {
-            icon: Compass,
-            label: "Analytics",
-            href: "/teacher/analytics",
-            active: true
-        },
-        {
-            icon: Compass,
-            label: "Manage Users",
-            href: "/teacher/users",
-            active: true
-        }
-    ]
-
-    const HELP_ROUTES = [
-        {
-            href: `/${params.storeId}/vendor/category`,
-            label: "Category",
-            icon: CategoryIcon,
-            active: pathname === `/${params.storeId}/vendor/category`,
-        },
-        {
-            href: `/${params.storeId}/vendor/coupons`,
-            label: "Coupons",
-            icon: CouponIcon,
-            active: pathname === `/${params.storeId}/vendor/coupons`,
-        },
-        {
-            icon: RocketIcon,
-            label: "Perfomance",
-            href: `/${params.storeId}/vendor/perfomance`,
-            active: pathname === `/${params.storeId}/vendor/perfomance`
-        }
-    ]
-    
-    const isAdminRoute = pathname?.startsWith(`/${params.storeId}/admin`);
-    const routes = isAdminRoute ? ADMIN_ROUTES : VENDOR_ROUTES;
-
     return (
         <>
             {

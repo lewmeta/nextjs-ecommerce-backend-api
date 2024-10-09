@@ -65,42 +65,36 @@ export const StoreSwitcher = ({
       <PopoverTrigger asChild>
         {expandSidebar ? (
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             role="combobox"
             aria-expanded={open}
             aria-label="Select a store"
-            className={cn("max-w-[300px] w-full font-medium text-sm py-5 justify-between", className)}
+            className={cn("font-semibold text-sm gap-4 flex items-center justify-start", className)}
           >
-            <Store className="mr-2 h-4 w-4" />
-
-            {currentStore?.label}
-            <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            <div className="flex items-center gap-1 font-semibold text-sm">
+              <Store className="mr-2 h-5 w-5" />
+              {currentStore?.label}
+            </div>
+            <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
           </Button>
         ) : (
-          <>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    // size="sm"
-                    role="combobox"
-                    aria-expanded={open}
-                    aria-label="Select a store"
-                  >
-                    <Store className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  {currentStore?.label}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </>
+          <div className="w-full flex items-center justify-center">
+            <button
+              role="combobox"
+              aria-expanded={open}
+              aria-label="Select a store"
+              className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+            >
+              <Store className="h-4 w-4" />
+              <span className="sr-only">
+                {currentStore?.label}
+              </span>
+            </button>
+          </div>
         )}
       </PopoverTrigger>
-      <PopoverContent className="max-w-[300px] w-full p-0">
+      <PopoverContent className="max-w-[300px] w-full ml-4">
         <Command>
           <CommandList>
             <CommandInput placeholder="Search store..." />

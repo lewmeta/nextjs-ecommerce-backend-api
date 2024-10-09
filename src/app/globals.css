@@ -100,16 +100,17 @@ B (255 */
   }
 }
 
-.scrollbar::-webkit-scrollbar {
-  width: 3px;
-  background: hsl(214.12 70% 50%);
-  border-radius: 50px;
-  display: none;
+
+.scrollbar {
+  overflow-y: scroll;
+  scrollbar-color: red purple ;
+  scrollbar-width: thin;
+  position: relative;
 }
 
-.scrollbar::-webkit-scrollbar:hover {
+/* .scrollbar::-webkit-scrollbar:hover {
   display: block;
-}
+} */
 
 
 .dotPattern {

@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { ModalProvider } from "@/providers/modal-provider";
 import { Jost, Poppins } from "next/font/google";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,9 +46,11 @@ export default async function RootLayout({
         >
           <Toaster />
           <ModalProvider />
-          <main className="h-screen">
-            {children}
-          </main>
+          <TooltipProvider>
+            <main className="h-screen">
+              {children}
+            </main>
+          </TooltipProvider>
         </body>
       </html>
     </SessionProvider>
