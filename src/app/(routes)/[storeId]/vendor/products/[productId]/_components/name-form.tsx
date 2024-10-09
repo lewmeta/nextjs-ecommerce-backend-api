@@ -18,12 +18,14 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface TitleFormProps {
     initialData: {
-        name: string
+        name: string;
     },
-    productId: string
+    productId: string;
+    storeId: string;
 }
 
 const formSchema = z.object({
@@ -35,9 +37,13 @@ const formSchema = z.object({
 
 const ProductNameForm = ({
     initialData,
+    storeId,
+    productId
 
 }: TitleFormProps) => {
     const [isEditing, setIsEditing] = useState(false);
+
+    const {toast} = useToast()
 
     const toggleEdit = () => setIsEditing((current) => !current)
 
@@ -48,7 +54,20 @@ const ProductNameForm = ({
     })
 
     const { isSubmitting, isLoading } = form.formState;
-    const onSubmit = () => { }
+    const onSubmit = async (values: z.infer<typeof formSchema>) => { 
+        try {
+            await axios.patch(`/api/${storeId}/products/${productId}`, values);
+            toggleEdit();
+            router.refresh();
+            toast({
+                title: "Title updated."
+            })
+        } catch (error) {
+            toast({
+                title: "Something went wrong!"
+            })
+        }
+    }
 
     return (
         <div className="mt-6 bg-slate-100 rounded-md p-4">

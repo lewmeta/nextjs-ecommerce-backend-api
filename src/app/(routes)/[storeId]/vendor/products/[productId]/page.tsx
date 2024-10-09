@@ -104,10 +104,12 @@ const page = async (
                         <ProductNameForm
                             initialData={product!}
                             productId={params.productId}
+                            storeId={params.storeId}
                         />
                         <DescriptionForm
                             initialData={product!}
-                            productId={product?.id as string}
+                            productId={product?.id!}
+                            storeId={product?.storeId!}
                         />
                     </div>
                 </div>

@@ -22,9 +22,10 @@ import { Product } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
-interface TitleFormProps {
-    initialData: Product,
-    productId: string
+interface DescriptionFormProps {
+    initialData: Product;
+    productId: string;
+    storeId: string;
 }
 
 const formSchema = z.object({
@@ -36,9 +37,10 @@ const formSchema = z.object({
 
 const DescriptionForm = ({
     initialData,
-    productId
+    productId,
+    storeId
 
-}: TitleFormProps) => {
+}: DescriptionFormProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const {toast} = useToast();
 
@@ -56,9 +58,9 @@ const DescriptionForm = ({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            axios.patch(`/api/products/${productId}`, values);
+            await axios.patch(`/api/${storeId}/products/${productId}`, values);
             toast({
-                title: 'Course updated.'
+                title: 'Description updated.'
             });
             toggleEdit();
             router.refresh();
