@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -21,53 +21,51 @@ import {
 interface ComboboxProps {
     options: { label: string; value: string }[];
     value?: string;
-    onChange: (values: string) => void;
-}
+    onChange: (value: string) => void;
+};
 
 export const Combobox = ({
     options,
     value,
     onChange
 }: ComboboxProps) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
 
+    console.log({
+        optonsIS: options
+    })
     return (
-        <Popover
-            open={open}
-            onOpenChange={setOpen}
-        >
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant={'outline'}
+                    variant="outline"
                     role="combobox"
                     aria-expanded={open}
                     className="w-full justify-between"
                 >
                     {value
                         ? options.find((option) => option.value === value)?.label
-                        : 'Select option...'
-                    }
+                        : "Select option..."}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="w-full p-0">
                 <Command>
-                    <CommandInput
-                        placeholder="Search options ..." />
-                    <CommandEmpty>No options found</CommandEmpty>
+                    <CommandInput placeholder="Search option..." />
+                    <CommandEmpty>No option found.</CommandEmpty>
                     <CommandGroup>
-                        {options.map((option) => (
+                        {options?.map((option) => (
                             <CommandItem
                                 key={option.value}
                                 onSelect={() => {
-                                    onChange(option.value === value ? '' : option.value)
+                                    onChange(option.value === value ? "" : option.value)
                                     setOpen(false)
                                 }}
                             >
                                 <Check
                                     className={cn(
-                                        'mr-2 h-4 w-4',
-                                        value === option.value ? 'opacity-100' : 'opacity-0'
+                                        "mr-2 h-4 w-4",
+                                        value === option.value ? "opacity-100" : "opacity-0"
                                     )}
                                 />
                                 {option.label}

@@ -40,10 +40,17 @@ const page = async (
     });
 
     const categories = await db.category.findMany({
+        where: {
+            storeId: params.storeId,
+        },
         orderBy: {
             name: 'asc'
         }
     });
+
+    console.log(
+        { categories: categories }
+    )
 
     const requiredFields = [
         product?.name,
@@ -116,6 +123,10 @@ const page = async (
                             initialData={product!}
                             productId={product?.id!}
                             storeId={product?.storeId!}
+                            options={categories.map((category) => ({
+                                label: category.name,
+                                value: category.id,
+                            }))}
                         />
                     </div>
                 </div>
