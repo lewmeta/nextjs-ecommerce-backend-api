@@ -169,20 +169,6 @@ export const Sidebar = ({
                                                             <item.icon className="h-4 w-4" />
                                                             {item.label}{" "}
                                                         </Link>
-                                                        {/* <Link
-                                                                href="#"
-                                                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                                                            >
-                                                                <Users className="h-4 w-4" />
-                                                                Customers
-                                                            </Link>
-                                                            <Link
-                                                                href="#"
-                                                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                                                            >
-                                                                <LineChart className="h-4 w-4" />
-                                                                Analytics
-                                                            </Link> */}
                                                     </nav>
                                                 ))}
                                             </div>
@@ -201,87 +187,55 @@ export const Sidebar = ({
                                         )))
                                     ))}
                                 </div>
-                                {/* <div className="h-full">
-                                </div> */}
                             </div>
                         ) : (
                             <aside className="bg-background w-full justify-between h-full flex items-center flex-col">
-                                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <Home className="h-5 w-5" />
-                                                <span className="sr-only">Dashboard</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Dashboard</TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <ShoppingCart className="h-5 w-5" />
-                                                <span className="sr-only">Orders</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Orders</TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <Package className="h-5 w-5" />
-                                                <span className="sr-only">Products</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Products</TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <Users2 className="h-5 w-5" />
-                                                <span className="sr-only">Customers</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Customers</TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <LineChart className="h-5 w-5" />
-                                                <span className="sr-only">Analytics</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Analytics</TooltipContent>
-                                    </Tooltip>
-                                </nav>
-                                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link
-                                                href="#"
-                                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                                            >
-                                                <Settings className="h-5 w-5" />
-                                                <span className="sr-only">Settings</span>
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right">Settings</TooltipContent>
-                                    </Tooltip>
-                                </nav>
+                                {VENDOR_ROUTES.map((vendor) => (
+                                    (vendor.label === 'General' ? (
+                                        <div key={vendor.label}>
+                                            {vendor.items.map((item) => (
+                                                <nav className="flex flex-col items-center gap-4 px-2 sm:py-2"
+                                                    key={item.href}
+                                                >
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Link
+                                                                href={item.href}
+                                                                className={cn("flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground  transition-colors hover:text-foreground md:h-8 md:w-8", item.active && 'bg-accent text-accent-foreground')}
+                                                            >
+                                                                <item.icon className="h-5 w-5" />
+                                                                <span className="sr-only">{item.label}</span>
+                                                            </Link>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="right">{item.label}</TooltipContent>
+                                                    </Tooltip>
+                                                </nav>
+                                            ))}
+                                        </div>
+                                    ) : (vendor.label === 'Account' && (
+                                        <div key={vendor.label}>
+                                            {vendor.items.map((item) => (
+                                                <nav className="flex flex-col items-center gap-4 px-2 sm:py-2"
+                                                    key={item.href}
+                                                >
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Link
+                                                                href={item.href}
+                                                                className={cn("flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground  transition-colors hover:text-foreground md:h-8 md:w-8", item.active && 'bg-accent text-accent-foreground')}
+                                                            >
+                                                                <item.icon className="h-5 w-5" />
+                                                                <span className="sr-only">{item.label}</span>
+                                                            </Link>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="right">{item.label}</TooltipContent>
+                                                    </Tooltip>
+                                                </nav>
+                                            ))}
+                                        </div>
+                                    )
+                                    ))
+                                ))}
                             </aside>
                         )}
                     </div>
