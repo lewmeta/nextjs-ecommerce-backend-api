@@ -117,15 +117,22 @@ export const CategoryForm = ({
                                     <FormControl>
                                         <Combobox
                                             options={options}
-                                        // disabled={isSubmitting}
-                                        // {...field}
-                                        onChange={field.onChange}
-                              />
+                                            disabled={isSubmitting}
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                        <div className="flex items-center gap-x-2">
+                            <Button 
+                            disabled={isSubmitting}
+                            type="submit"
+                            >
+                                Save
+                            </Button>
+                        </div>
                     </form>
                 </Form>
             )}

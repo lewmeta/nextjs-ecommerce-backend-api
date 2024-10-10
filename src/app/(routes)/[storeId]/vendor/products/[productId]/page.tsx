@@ -48,10 +48,6 @@ const page = async (
         }
     });
 
-    console.log(
-        { categories: categories }
-    )
-
     const requiredFields = [
         product?.name,
         product?.description,
