@@ -184,7 +184,7 @@ model SubProduct {
   product            Product  @relation(fields: [productId], references: [id])
   images             Image[]
   description_images String[]
-  color              Json?
+  color              Color?
   sizes              Size[]
   discount           Float    @default(0)
   sold               Int      @default(0)
@@ -209,6 +209,16 @@ model Image {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Color {
+  id    String @id @default(cuid()) @map("_id")
+  size  String
+  qty   Int
+  price Float
+
+  subProductId String @unique
+  subProduct SubProduct @relation(fields: [subProductId], references: [id])
 }
 
 model Review {

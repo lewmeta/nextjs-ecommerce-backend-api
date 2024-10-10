@@ -31,8 +31,9 @@ const Page = async ({
             productId: params.productId,
         },
         include: {
-            sizes: true
-        }
+            sizes: true,
+            images: true,
+        },
     })
 
     if (!subProduct) {
@@ -42,13 +43,14 @@ const Page = async ({
     const sizes = subProduct.sizes.map((item) => ({
         qty: item.qty,
         price: item.price,
-        size: item.size
+        size: item.size.length > 2
     }));
 
     const requiredFields = [
-        subProduct.images,
+        subProduct.images.length > 0,
         subProduct.color,
-        // subProduct.discount,
+        subProduct.sizes.length > 0,
+        subProduct.discount,
         subProduct.sku,
     ]
 
