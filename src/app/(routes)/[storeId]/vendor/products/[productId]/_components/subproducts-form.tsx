@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { Product, SubProduct } from "@prisma/client";
+import { Product, Size, SubProduct } from "@prisma/client";
 
 import {
     Form,
@@ -23,7 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SubProductList } from "./subproducts-list";
 
 interface SubProductFormProps {
-    initialData: Product & { subproducts: SubProduct[] };
+    initialData: Product & { subProducts: SubProduct[] };
     productId: string;
     storeId: string;
 };
@@ -155,10 +155,14 @@ export const SubproductForm = ({
             {!isCreating && (
                 <div className={cn(
                     'text-sm mt-2',
-                    !initialData?.subproducts.length && 'text-slate-500 italic'
+                    !initialData?.subProducts.length && 'text-slate-500 italic'
                 )}>
-                    {!initialData?.subproducts.length && 'No SuProducts'}
-                    <SubProductList/>
+                    {!initialData?.subProducts.length && 'No SuProducts'}
+                    <SubProductList
+                        onEdit={onEdit}
+                        onReoder={onReoder}
+                        items={initialData.subProducts || []}
+                    />
                 </div>
             )}
         </div>

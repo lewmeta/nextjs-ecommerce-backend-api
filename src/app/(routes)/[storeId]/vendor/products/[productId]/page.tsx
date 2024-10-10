@@ -11,6 +11,7 @@ import ProductNameForm from './_components/name-form';
 import DescriptionForm from './_components/description-form';
 import { CategoryForm } from './_components/category-form';
 import { SubproductForm } from './_components/subproducts-form';
+import { Product } from '@prisma/client';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -136,8 +137,8 @@ const page = async (
                             </div>
                             <SubproductForm
                                 initialData={product!}
-
-
+                                productId={params.productId}
+                                storeId={params.storeId}
                             />
                         </div>
                     </div>
