@@ -36,16 +36,18 @@ const ProductsPage = async ({
         return redirect(`/${params.storeId}/vendor/products/create`)
     }
 
+    console.log({products: products})
+
     const formattedProducts = products.map((item) => ({
         id: item.id,
         name: item.name,
-        category: item.category,
+        category: item.category?.name,
         isFeatured: item.isFeatured,
         isArchived: item.isArchived,
         color: item.subProducts[0]?.color,
-        price: formatter.format(item.subProducts[0]?.sizes[0].price),
+        price: formatter.format(item.subProducts[0]?.sizes[0]?.price),
         createdAt: format(item.createdAt, 'MMMM do, yyyy'),
-        size: item.subProducts[0]?.sizes[0].size,
+        size: item.subProducts[0]?.sizes[0]?.size,
     })) as unknown as  ProductColumn[]
 
     return (
