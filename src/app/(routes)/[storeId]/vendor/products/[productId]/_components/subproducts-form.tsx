@@ -60,7 +60,7 @@ export const SubproductForm = ({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            await axios.post(`/api/${storeId}/products${productId}/subProducts`, values);
+            await axios.post(`/api/${storeId}/products/${productId}/subProducts`, values);
             toast({
                 title: "Subproduct created"
             });

@@ -184,7 +184,7 @@ model SubProduct {
   product            Product  @relation(fields: [productId], references: [id])
   images             String[]
   description_images String[]
-  color              Json
+  color              Json?
   sizes              Size[]
   discount           Float    @default(0)
   sold               Int      @default(0)
