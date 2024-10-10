@@ -177,7 +177,7 @@ model Product {
 
 model SubProduct {
   id                 String   @id @default(cuid()) @map("_id")
-  sku                String
+  sku                String   
   productId          String
   isPublished        Boolean  @default(false)
   position           Int
@@ -188,6 +188,8 @@ model SubProduct {
   sizes              Size[]
   discount           Float    @default(0)
   sold               Int      @default(0)
+
+  @@unique([productId, sku])
 }
 
 model Size {

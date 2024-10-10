@@ -39,7 +39,7 @@ export const Combobox = ({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full justify-between"
           >
             {value
               ? options.find((option) => option.value === value)?.label
@@ -49,9 +49,9 @@ export const Combobox = ({
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." />
+            <CommandInput placeholder="Search category..." />
             <CommandList>
-              <CommandEmpty>No framework found.</CommandEmpty>
+              <CommandEmpty>No category found.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => (
                   <CommandItem

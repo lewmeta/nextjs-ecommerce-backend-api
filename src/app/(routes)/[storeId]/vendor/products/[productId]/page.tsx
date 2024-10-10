@@ -6,10 +6,11 @@ import { db } from '@/lib/db'
 import { redirect } from 'next/navigation';
 import { Actions } from './_components/actions';
 import { IconBadge } from '@/components/icon-badge';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, ListCheck } from 'lucide-react';
 import ProductNameForm from './_components/name-form';
 import DescriptionForm from './_components/description-form';
 import { CategoryForm } from './_components/category-form';
+import { SubproductForm } from './_components/subproducts-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -124,6 +125,21 @@ const page = async (
                                 value: category.id,
                             }))}
                         />
+                    </div>
+                    <div className="space-y-6">
+                        <div>
+                            <div className="flex items-center gap-x-2">
+                                <IconBadge icon={ListCheck} />
+                                <h2 className="text-xl">
+                                    Subproducts
+                                </h2>
+                            </div>
+                            <SubproductForm
+                                initialData={product!}
+
+
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
