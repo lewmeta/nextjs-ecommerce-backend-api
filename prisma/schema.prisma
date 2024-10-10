@@ -150,7 +150,7 @@ model Product {
   name          String
   description   String?
   brand         String?
-  slug          String       
+  slug          String
   isPublished   Boolean      @default(false)
   isFeatured    Boolean      @default(false)
   isArchived    Boolean      @default(false)
@@ -177,12 +177,12 @@ model Product {
 
 model SubProduct {
   id                 String   @id @default(cuid()) @map("_id")
-  sku                String   
+  sku                String
   productId          String
   isPublished        Boolean  @default(false)
   position           Int
   product            Product  @relation(fields: [productId], references: [id])
-  images             String[]
+  images             Image[]
   description_images String[]
   color              Json?
   sizes              Size[]
@@ -199,6 +199,16 @@ model Size {
   size         String
   qty          Int
   price        Float
+}
+
+model Image {
+  id           String     @id @default(cuid()) @map("_id")
+  subProductId String
+  subProduct   SubProduct @relation(fields: [subProductId], references: [id])
+  url          String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Review {

@@ -5,6 +5,7 @@ import { LayoutComponent } from '@/components/layout-component'
 import { db } from "@/lib/db";
 import { redirect } from 'next/navigation';
 import { Banner } from '@/components/banner';
+import { ArrowLeft } from 'lucide-react';
 
 interface SubProductIdPageProps {
     params: {
@@ -38,11 +39,16 @@ const Page = async ({
         return redirect(`/${params.storeId}/products/${params.productId}`)
     }
 
+    const sizes = subProduct.sizes.map((item) => ({
+        qty: item.qty,
+        price: item.price,
+        size: item.size
+    }));
+
     const requiredFields = [
         subProduct.images,
-        subProduct.sizes,
         subProduct.color,
-        subProduct.discount,
+        // subProduct.discount,
         subProduct.sku,
     ]
 
@@ -61,6 +67,27 @@ const Page = async ({
                     label="This chapter is unpublished. It will not be visible in the course"
                 />
             )}
+            <div className="p-6">
+                <div className="flex items-center justify-between">
+                    <div className='w-full'>
+                        <Link
+                            href={`/${params.storeId}/vendor/products/${params.productId}`}
+                            className="flex items-center text-sm hover:opacity-75 transition mb-6"
+                        >
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Back to course setup
+                        </Link>
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex flex-col gap-y-2">
+                                <h1 className="text-2xl font-medium">Subproduct Creation</h1>
+                            </div>
+                        </div>
+                        <span className="text-sm text-slate-700 dark:text-slate-300 ">
+                            Complete all fields {completionText}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </LayoutComponent>
     )
 }
