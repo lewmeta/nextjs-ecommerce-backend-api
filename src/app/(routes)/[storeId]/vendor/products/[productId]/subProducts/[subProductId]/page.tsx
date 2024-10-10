@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { redirect } from 'next/navigation';
 import { Banner } from '@/components/banner';
 import { ArrowLeft } from 'lucide-react';
+import SubproductActions from './_components/sub-product-actions';
 
 interface SubProductIdPageProps {
     params: {
@@ -77,7 +78,7 @@ const Page = async ({
                             className="flex items-center text-sm hover:opacity-75 transition mb-6"
                         >
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Back to course setup
+                            Back to product setup
                         </Link>
                         <div className="flex items-center justify-between w-full">
                             <div className="flex flex-col gap-y-2">
@@ -88,6 +89,13 @@ const Page = async ({
                             Complete all fields {completionText}
                         </span>
                     </div>
+                    <SubproductActions
+                        disabled={!isComplete}
+                        isPublished={subProduct.isPublished}
+                        productId={params.productId}
+                        storeId={params.storeId}
+                        subProductId={params.subProductId}
+                    />
                 </div>
             </div>
         </LayoutComponent>
