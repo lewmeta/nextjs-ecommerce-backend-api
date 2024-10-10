@@ -11,18 +11,17 @@ import {
 
 import { Grip, Pencil } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 interface SubProductListProps {
     items: SubProduct[];
-    onReoder: (updateData: { id: string; position: number }[]) => void;
+    onReorder: (updateData: { id: string; position: number }[]) => void;
     onEdit: (id: string) => void;
 }
 
 export const SubProductList = ({
     items,
-    onReoder,
+    onReorder,
     onEdit
 }: SubProductListProps) => {
     const [isMounted, setIsMounted] = useState(false);
@@ -37,26 +36,26 @@ export const SubProductList = ({
     }, [items]);
 
     const onDragEnd = (result: DropResult) => {
-        if (!result.destination) return
+        if (!result.destination) return;
+    
         const items = Array.from(subproducts);
-        const [reoderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reoderedItem)
-
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+    
         const startIndex = Math.min(result.source.index, result.destination.index);
         const endIndex = Math.max(result.source.index, result.destination.index);
-
-        const updatedSubproducts = items.slice(startIndex, endIndex + 1);
-
-        setSubproducts(items)
-
-        const bulkUpdatedData = updatedSubproducts.map((subproduct) => ({
-            id: subproduct.id,
-            position: subproduct.position
+    
+        const updatedChapters = items.slice(startIndex, endIndex + 1);
+    
+        setSubproducts(items);
+    
+        const bulkUpdateData = updatedChapters.map((chapter) => ({
+          id: chapter.id,
+          position: items.findIndex((item) => item.id === chapter.id)
         }));
-
-        onReoder(bulkUpdatedData)
-    }
-
+    
+        onReorder(bulkUpdateData);
+      }
     if (!isMounted) {
         return null
     }
@@ -65,7 +64,7 @@ export const SubProductList = ({
         <DragDropContext
             onDragEnd={onDragEnd}
         >
-            <Droppable droppableId="subproducts">
+            <Droppable droppableId="subProducts">
                 {(provided) => (
                     <div
                         {...provided.droppableProps}
@@ -111,6 +110,7 @@ export const SubProductList = ({
                                 )}
                             </Draggable>
                         ))}
+                        {provided.placeholder}
                     </div>
                 )}
             </Droppable>

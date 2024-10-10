@@ -41,7 +41,6 @@ export const SubproductForm = ({
     const [isUpdating, setIsUpdating] = useState(false);
 
     const router = useRouter();
-    const params = useParams();
 
     const { toast } = useToast();
 
@@ -77,11 +76,11 @@ export const SubproductForm = ({
         router.push(`/${storeId}/vendor/products/${productId}/subProducts/${id}`);
     }
 
-    const onReoder = async (updateData: { id: string; position: number }[]) => {
+    const onReorder = async (updateData: { id: string; position: number }[]) => {
         try {
             setIsUpdating(true);
 
-            await axios.put(`/api/${storeId}/products/${productId}/subProducts/redorder`, {
+            await axios.put(`/api/${storeId}/products/${productId}/subProducts/reorder`, {
                 list: updateData
             });
             toast({
@@ -160,7 +159,7 @@ export const SubproductForm = ({
                     {!initialData?.subProducts.length && 'No SuProducts'}
                     <SubProductList
                         onEdit={onEdit}
-                        onReoder={onReoder}
+                        onReorder={onReorder}
                         items={initialData.subProducts || []}
                     />
                 </div>
