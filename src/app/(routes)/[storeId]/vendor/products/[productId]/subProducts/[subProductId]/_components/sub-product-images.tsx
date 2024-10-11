@@ -166,7 +166,7 @@ const SubProductImages = ({
                                         <MultiFileUpload
                                             endpoint="subProductImage"
                                             onChange={(urls) => field.onChange(urls)}
-                                            value={field.value}
+                                            value={field.value.map((item) => item.url)}
                                         />
                                     </FormControl>
                                     <FormMessage />
