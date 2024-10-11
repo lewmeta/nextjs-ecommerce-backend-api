@@ -36,6 +36,18 @@ export async function POST(
 
         const newPosition = lastSubProduct ? lastSubProduct.position + 1 : 1;
 
+        if (sku) {
+            const skuExists = await db.subProduct.findFirst({
+                where: {
+                    sku: sku,
+                },
+            });
+
+            if (skuExists) {
+                return NextResponse.json({ message: "This SKU already exists, try a different one!" }, { status: 409 });
+            }
+        }
+
         const subProduct = await db.subProduct.create({
             data: {
                 sku,

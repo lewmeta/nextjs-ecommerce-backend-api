@@ -10,9 +10,9 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const values = await req.json();
-        const { name } = values;
+        const {sku, ...values} = await req.json();
 
+        console.log({values: sku})
 
         if (!user?.id) {
             return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
@@ -33,8 +33,21 @@ export async function PATCH(
             return new NextResponse('Unauthorized', { status: 405 })
         }
 
-        // const slug = slugify(name)
+        // Check if the SKU already exists for another subproduct (optional if SKU can be edited)
+        if (sku) {
+            const skuExists = await db.subProduct.findFirst({
+                where: {
+                    sku: sku,
+                    // NOT: { id: params.subProductId }, // Exclude current subproduct
+                },
+            });
 
+            if (skuExists) {
+                return NextResponse.json({ message: "This SKU already exists!" }, { status: 409 });
+            }
+        }
+
+        // const slug = slugify(name)
         const product = await db.product.update({
             where: {
                 storeId: params.storeId,

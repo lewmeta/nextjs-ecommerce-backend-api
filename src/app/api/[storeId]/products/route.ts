@@ -16,7 +16,7 @@ export async function POST(
         const { name } = body;
 
         if (!user?.id) {
-            return new NextResponse("Unauthenticated", { status: 403 })
+            return NextResponse.json({message: "Unauthenticated"}, { status: 403 })
         }
 
         if (!params.storeId) {
@@ -24,7 +24,7 @@ export async function POST(
         }
 
         if (!name) {
-            return NextResponse.json({ error: "Name is required" }, { status: 400 })
+            return NextResponse.json({ message: "Name is required" }, { status: 400 })
         }
 
         const storeByUserId = await db.store.findFirst({
@@ -35,7 +35,7 @@ export async function POST(
         })
 
         if (!storeByUserId) {
-            return new NextResponse('Unauthorized', { status: 405 })
+        return NextResponse.json({message:'Unauthorized'}, { status: 405 })
         }
 
         const slug = slugify(name)
@@ -49,7 +49,7 @@ export async function POST(
         });
 
         if (existingSlug) {
-            return new NextResponse("This slug already exists!", { status: 409 });
+            return NextResponse.json({message: "This slug already exists!"}, { status: 409 });
         }
 
         const product = await db.product.create({

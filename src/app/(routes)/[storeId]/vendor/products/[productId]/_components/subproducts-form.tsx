@@ -65,10 +65,17 @@ export const SubproductForm = ({
             });
             toggleCreating();
             router.refresh();
-        } catch {
-            toast({
-                title: "Something went wrong"
-            });
+        } catch (error){
+            if (axios.isAxiosError(error)) {
+                toast({
+                    title: error.response?.data.message,
+                });
+
+            } else {
+                toast({
+                    title: "Something went wrong"
+                });
+            }
         }
     }
 

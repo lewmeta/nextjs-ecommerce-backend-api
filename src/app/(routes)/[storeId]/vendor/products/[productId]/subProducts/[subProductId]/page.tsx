@@ -22,6 +22,8 @@ const Page = async ({
     params
 }: SubProductIdPageProps) => {
 
+    console.log({subProductId: params.subProductId})
+
     const user = await currentUser();
 
     if (!user?.id) {
@@ -104,7 +106,7 @@ const Page = async ({
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
-                            subProductId={params.storeId}
+                            subProductId={params.subProductId}
                         />
                     </div>
                 </div>

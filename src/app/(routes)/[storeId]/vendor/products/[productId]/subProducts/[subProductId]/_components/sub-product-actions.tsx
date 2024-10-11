@@ -66,6 +66,8 @@ const SubproductActions = ({
             toast({
                 title: 'Subproduct deleted!'
             })
+
+            router.push(`/${storeId}/vendor/products/${productId}`)
         } catch (error) {
             toast({
                 title: 'Something went wrong!'
