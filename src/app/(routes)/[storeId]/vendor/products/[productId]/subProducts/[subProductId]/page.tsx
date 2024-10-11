@@ -5,8 +5,10 @@ import { LayoutComponent } from '@/components/layout-component'
 import { db } from "@/lib/db";
 import { redirect } from 'next/navigation';
 import { Banner } from '@/components/banner';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LayoutDashboard } from 'lucide-react';
 import SubproductActions from './_components/sub-product-actions';
+import { IconBadge } from '@/components/icon-badge';
+import SubProductKsu from './_components/sub-product-sku';
 
 interface SubProductIdPageProps {
     params: {
@@ -34,6 +36,7 @@ const Page = async ({
         include: {
             sizes: true,
             images: true,
+            color: true,
         },
     });
 
@@ -90,6 +93,20 @@ const Page = async ({
                         storeId={params.storeId}
                         subProductId={params.subProductId}
                     />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-x-2">
+                            <IconBadge icon={LayoutDashboard} />
+                            <h2 className="text-xl font-medium">Customize your Sub Products</h2>
+                        </div>
+                        <SubProductKsu
+                            initialData={subProduct}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                            subProductId={params.storeId}
+                        />
+                    </div>
                 </div>
             </div>
         </LayoutComponent>
