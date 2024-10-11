@@ -9,6 +9,7 @@ import { ArrowLeft, LayoutDashboard } from 'lucide-react';
 import SubproductActions from './_components/sub-product-actions';
 import { IconBadge } from '@/components/icon-badge';
 import SubProductKsu from './_components/sub-product-sku';
+import SubProductImages from './_components/sub-product-images';
 
 interface SubProductIdPageProps {
     params: {
@@ -22,7 +23,7 @@ const Page = async ({
     params
 }: SubProductIdPageProps) => {
 
-    console.log({subProductId: params.subProductId})
+    console.log({ subProductId: params.subProductId })
 
     const user = await currentUser();
 
@@ -66,7 +67,7 @@ const Page = async ({
             {!subProduct.isPublished && (
                 <Banner
                     variant="warning"
-                    label="This chapter is unpublished. It will not be visible in the course"
+                    label="This subProduct is unpublished. It will not be visible to the Customers"
                 />
             )}
             <div className="p-6">
@@ -103,6 +104,12 @@ const Page = async ({
                             <h2 className="text-xl font-medium">Customize your Sub Products</h2>
                         </div>
                         <SubProductKsu
+                            initialData={subProduct}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                            subProductId={params.subProductId}
+                        />
+                        <SubProductImages
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
