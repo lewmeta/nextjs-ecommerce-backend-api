@@ -59,12 +59,12 @@ const SubProductKsu = ({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
+            await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
 
             toast({
                 title: "Sub Product KSU updated"
             });
-            
+
             toggleEdit();
             router.refresh();
         } catch (error) {
@@ -90,7 +90,7 @@ const SubProductKsu = ({
                     ) : (
                         <>
                             <Pencil className="h-4 w-4 mr-2" />
-                            Edit title
+                            Edit SKU
                         </>
                     )}
                 </Button>

@@ -46,6 +46,7 @@ export async function PATCH(
             const skuExists = await db.subProduct.findFirst({
                 where: {
                     sku: sku,
+                    productId: params.productId,
                     NOT: { id: params.subProductId }, // Exclude current subproduct
                 },
             });
@@ -60,7 +61,7 @@ export async function PATCH(
                 id: params.subProductId,
                 productId: params.productId,
             },
-            data: { ...values }
+            data: { sku, ...values }
         })
 
 
