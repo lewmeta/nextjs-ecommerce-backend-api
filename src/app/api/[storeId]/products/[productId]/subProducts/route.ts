@@ -40,6 +40,7 @@ export async function POST(
             const skuExists = await db.subProduct.findFirst({
                 where: {
                     sku: sku,
+                    productId: params.productId
                 },
             });
 
