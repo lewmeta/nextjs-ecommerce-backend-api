@@ -9,7 +9,7 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { isPublished, ...values } = await req.json();
+        const { sku, isPublished, ...values } = await req.json();
 
         console.log({ values: values })
 
@@ -39,6 +39,20 @@ export async function PATCH(
 
         if (!existingSubproduct) {
             return new NextResponse("No suproduct found", { status: 401 })
+        }
+
+        // Check if the SKU already exists for another subproduct (optional if SKU can be edited)
+        if (sku) {
+            const skuExists = await db.subProduct.findFirst({
+                where: {
+                    sku: sku,
+                    NOT: { id: params.subProductId }, // Exclude current subproduct
+                },
+            });
+
+            if (skuExists) {
+                return NextResponse.json({ message: "This SKU already exists!" }, { status: 409 });
+            }
         }
 
         const subProduct = await db.subProduct.update({
