@@ -56,7 +56,7 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
 
   Review        Review[]
-  Store         Store[]
+  stores         Store[]
   Order         Order[]
   Address       Address[]
   notifications Notification[]
