@@ -58,13 +58,8 @@ const page = async (
         // product?.refundPolicy,
         product?.categoryId,
         product?.shippingPrice,
+        product?.subProducts?.length! > 0,
         product?.subProducts.some((chapter => chapter.isPublished)),
-        // product?.subProducts?.map(subProduct => ({
-        //     sku: subProduct.sku,
-        //     // position: subProduct.position,
-        //     images: subProduct.images,
-        //     sizes: subProduct.sizes,
-        // })),
     ]
 
     const totalFields = requiredFields.length;

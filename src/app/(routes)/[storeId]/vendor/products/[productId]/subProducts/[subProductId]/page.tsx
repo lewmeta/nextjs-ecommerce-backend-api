@@ -35,17 +35,11 @@ const Page = async ({
             sizes: true,
             images: true,
         },
-    })
+    });
 
     if (!subProduct) {
         return redirect(`/${params.storeId}/products/${params.productId}`)
     }
-
-    const sizes = subProduct.sizes.map((item) => ({
-        qty: item.qty,
-        price: item.price,
-        size: item.size.length > 2
-    }));
 
     const requiredFields = [
         subProduct.images.length > 0,
