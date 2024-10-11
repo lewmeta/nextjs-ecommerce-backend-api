@@ -166,7 +166,7 @@ const SubProductImages = ({
                                         <MultiFileUpload
                                             endpoint="subProductImage"
                                             onChange={(urls) => field.onChange(urls)}
-                                            value={field.value as any}
+                                            value={field.value}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -174,7 +174,7 @@ const SubProductImages = ({
                             )}
                         />
                         <div className="flex items-center gap-x-2">
-                            <Button disabled={!isValid || isSubmitting} type="submit">
+                            <Button disabled={isSubmitting} type="submit">
                                 Save
                             </Button>
                         </div>

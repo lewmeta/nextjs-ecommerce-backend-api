@@ -1,3 +1,4 @@
+// MultipleFileUpload.tsx
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { useToast } from "@/hooks/use-toast";
 import { UploadDropzone } from "@/lib/uploadthing";
@@ -5,28 +6,18 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
 
-interface Multi {
-    onChange: (url?: string | string[], originalFilename?: string) => void;
+interface MultipleFileUploadProps {
+    onChange: (urls?: string[]) => void;
     endpoint: keyof typeof ourFileRouter;
-    value?: string | string[];
-    allowMultiple?: boolean; // Include this if you want to support multiple uploads
+    value?: string[];
 }
 
-export const MultiFileUpload = ({
-    onChange,
-    endpoint,
-    value,
-    allowMultiple = false, // Default to false if not specified
-}: Multi) => {
+export const MultiFileUpload = ({ onChange, endpoint, value = [] }: MultipleFileUploadProps) => {
     const { toast } = useToast();
 
     const handleRemove = (url: string) => {
-        if (allowMultiple && Array.isArray(value)) {
-            const updatedFiles = value.filter((file) => file !== url);
-            onChange(updatedFiles.length > 0 ? updatedFiles : undefined);
-        } else {
-            onChange(undefined);
-        }
+        const updatedFiles = value.filter(file => file !== url);
+        onChange(updatedFiles.length > 0 ? updatedFiles : undefined);
     };
 
     const renderFilePreview = (fileUrl: string) => (
@@ -37,44 +28,34 @@ export const MultiFileUpload = ({
                     alt="uploaded image"
                     className="object-cover rounded-md"
                     fill
-                    onError={(e) => {
-                        console.error("Image load error:", e);
-                        e.currentTarget.src = "/path/to/fallback-image.png"; // Set a fallback image path
-                    }}
                 />
             </div>
-            <Button onClick={() => handleRemove(fileUrl)} type="button" variant="default" className="mt-2">
+            <Button
+                onClick={() => handleRemove(fileUrl)}
+                type="button"
+                variant="default"
+                className="mt-2"
+            >
                 <X className="h-4 w-4" />
             </Button>
         </div>
     );
 
-    if (Array.isArray(value)) {
-        return (
-            <div className="flex flex-col items-start justify-start">
-                {value.map(renderFilePreview)}
-            </div>
-        );
-    }
-
-    if (typeof value === "string") {
-        return <>{renderFilePreview(value)}</>;
-    }
-
     return (
-        <UploadDropzone
-            endpoint={endpoint}
-            onClientUploadComplete={(res) => {
-                if (allowMultiple) {
+        <div className="flex flex-col items-start justify-start">
+            {value.map(renderFilePreview)}
+            <UploadDropzone
+                endpoint={endpoint}
+                onClientUploadComplete={(res) => {
                     const newFiles = res?.map((file) => file.url) || [];
-                    onChange(newFiles);
-                } else {
-                    onChange(res?.[0].url, res?.[0].name);
-                }
-            }}
-            onUploadError={(error: Error) => {
-                toast({ title: error?.message });
-            }}
-        />
+                    onChange([...value, ...newFiles]); // Combine existing and new files
+                }}
+                onUploadError={(error: Error) => {
+                    toast({
+                        title: error?.message,
+                    });
+                }}
+            />
+        </div>
     );
 };
