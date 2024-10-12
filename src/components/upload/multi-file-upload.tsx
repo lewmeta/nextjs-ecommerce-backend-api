@@ -1,7 +1,7 @@
 // MultipleFileUpload.tsx
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { useToast } from "@/hooks/use-toast";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
@@ -21,29 +21,30 @@ export const MultiFileUpload = ({ onChange, endpoint, value = [] }: MultipleFile
     };
 
     const renderFilePreview = (fileUrl: string) => (
-        <div key={fileUrl} className="flex flex-col items-start justify-start relative">
+        <div key={fileUrl} className=" relative">
             <div className="relative w-40 h-40">
                 <Image
                     src={fileUrl}
                     alt="uploaded image"
                     className="object-cover rounded-md"
-                    fill
+                   fill
                 />
             </div>
-            <Button
+            <div
                 onClick={() => handleRemove(fileUrl)}
-                type="button"
-                variant="default"
-                className="mt-2"
+                className="mt-2 cursor-pointer mb-3"
             >
                 <X className="h-4 w-4" />
-            </Button>
+            </div>
         </div>
     );
 
     return (
         <div className="flex flex-col items-start justify-start">
+            <div className="flex items-start gap-4 justify-start">
             {value.map(renderFilePreview)}
+            </div>
+            <div className="mt-5">
             <UploadDropzone
                 endpoint={endpoint}
                 onClientUploadComplete={(res) => {
@@ -56,6 +57,7 @@ export const MultiFileUpload = ({ onChange, endpoint, value = [] }: MultipleFile
                     });
                 }}
             />
+            </div>
         </div>
     );
 };

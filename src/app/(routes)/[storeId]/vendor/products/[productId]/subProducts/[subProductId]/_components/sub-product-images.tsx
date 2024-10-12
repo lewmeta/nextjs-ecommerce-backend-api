@@ -16,13 +16,12 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Image as Images } from "@prisma/client";
 import Image from "next/image";
-import { FileUpload } from "@/components/upload/file-upload";
-import{ MultiFileUpload} from "@/components/upload/multi-file-upload";
+import { MultiFileUpload } from "@/components/upload/multi-file-upload";
 
 
 interface SubProductImagesProps {
@@ -35,9 +34,8 @@ interface SubProductImagesProps {
 };
 
 const formSchema = z.object({
-    images: z.object({ url: z.string() }).array(),
+    images: z.array(z.string().url()).nonempty("At least one image is required"),
 });
-
 
 const SubProductImages = ({
     initialData,
@@ -52,7 +50,9 @@ const SubProductImages = ({
     const { toast } = useToast()
 
     const toggleEdit = () => setIsEditing((prev) => !prev);
+    const initialImageUrls = initialData?.images?.map(img => img.url) || [];
 
+    console.log({ INITIALDATA: initialImageUrls })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -68,7 +68,7 @@ const SubProductImages = ({
             await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
 
             toast({
-                title: "Sub Product KSU updated"
+                title: "Sub Product Images updated"
             });
 
             toggleEdit();
@@ -96,60 +96,26 @@ const SubProductImages = ({
                     ) : (
                         <>
                             <Pencil className="h-4 w-4 mr-2" />
-                            Edit SKU
+                            Edit Images
                         </>
                     )}
                 </Button>
             </div>
             {!isEditing && (
-                <>
+                <div className="flex items-center gap-3">
                     {initialData?.images.map((image) => (
-                        <div key={image.id} className="relative">
+                        <div key={image.id} className="relative h-[150px] w-[200px] rounded-sm overflow-hidden flex items-center gap-2">
                             <Image
                                 src={image.url}
                                 width={200}
                                 height={200}
-                                objectFit="cover"
+                                className="w-full h-full object-cover"
                                 alt={image.id}
                             />
                         </div>
                     ))}
-                </>
+                </div>
             )}
-            {/* {isEditing && (
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-4 mt-4 dark:text-gray-300"
-                    >
-                        <FormField
-                        control={form.control}
-                        name="images"
-                        render={({ field }) => (
-                            <FormItem className=" flex flex-col items-start">
-                                <FormControl>
-                                    <FileUpload
-                                        endpoint="subProductImage"
-                                        onChange={(urls) => field.onChange(urls)}
-                                        value={field.value.map((image) => image.url) }
-                                        allowMultiple
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                        <div className="flex items-center gap-x-2">
-                            <Button
-                                disabled={!isValid || isSubmitting}
-                                type="submit"
-                            >
-                                Save
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
-            )} */}
 
             {isEditing && (
                 <Form {...form}>
@@ -166,7 +132,8 @@ const SubProductImages = ({
                                         <MultiFileUpload
                                             endpoint="subProductImage"
                                             onChange={(urls) => field.onChange(urls)}
-                                            value={field.value.map((item) => item.url)}
+                                            // value={field.value}
+                                            value={field.value?.length ? field.value : initialImageUrls}
                                         />
                                     </FormControl>
                                     <FormMessage />

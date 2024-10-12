@@ -9,7 +9,7 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { sku, isPublished, ...values } = await req.json();
+        const { images, sku, isPublished, ...values } = await req.json();
 
         console.log({ values: values })
 
@@ -60,10 +60,20 @@ export async function PATCH(
             where: {
                 id: params.subProductId,
                 productId: params.productId,
-            },
-            data: { sku, ...values }
-        })
 
+            },
+            data: {
+                sku, ...values ,
+                images: {
+                    // First, delete the old images
+                    deleteMany: {},
+
+                    // Then, add the new images
+                    create: images.map((url: string) => ({ url })),
+                },
+
+            }
+        })
 
         return NextResponse.json(subProduct);
     } catch (error) {

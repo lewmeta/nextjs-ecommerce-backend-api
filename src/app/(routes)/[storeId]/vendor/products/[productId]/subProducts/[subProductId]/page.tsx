@@ -10,6 +10,7 @@ import SubproductActions from './_components/sub-product-actions';
 import { IconBadge } from '@/components/icon-badge';
 import SubProductKsu from './_components/sub-product-sku';
 import SubProductImages from './_components/sub-product-images';
+import { SubProductSizes } from './_components/sub-product-sizes';
 
 interface SubProductIdPageProps {
     params: {
@@ -111,6 +112,12 @@ const Page = async ({
                         />
                         <SubProductImages
                             initialData={subProduct}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                            subProductId={params.subProductId}
+                        />
+                        <SubProductSizes
+                            initalData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}
