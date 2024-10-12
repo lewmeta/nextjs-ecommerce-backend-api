@@ -34,7 +34,10 @@ interface SubProductImagesProps {
 };
 
 const formSchema = z.object({
-    images: z.array(z.string().url()).nonempty("At least one image is required"),
+    images: z.array(z.string().url())
+        .min(3, "At least 3 images are required")  
+        .max(6, "A maximum of 6 images is allowed")
+        // .nonempty("At least one image is required"),
 });
 
 const SubProductImages = ({

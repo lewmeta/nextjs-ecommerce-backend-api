@@ -117,7 +117,7 @@ const Page = async ({
                             subProductId={params.subProductId}
                         />
                         <SubProductSizes
-                            initalData={subProduct}
+                            initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}

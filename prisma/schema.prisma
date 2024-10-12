@@ -196,7 +196,7 @@ model Size {
   id           String     @id @default(cuid()) @map("_id")
   subProductId String
   subProduct   SubProduct @relation(fields: [subProductId], references: [id])
-  size         String
+  size         String?
   qty          Int
   price        Float
 }
