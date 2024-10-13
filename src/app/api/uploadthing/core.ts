@@ -23,6 +23,9 @@ export const ourFileRouter = {
     profileImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => { }),
+    colorImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+        .middleware(() => handleAuth())
+        .onUploadComplete(() => { }),
     subProductImage: f({ image: { maxFileSize: "128MB",  minFileCount: 1} })
         .middleware(() => handleAuth())
         .onUploadComplete(() => { }),

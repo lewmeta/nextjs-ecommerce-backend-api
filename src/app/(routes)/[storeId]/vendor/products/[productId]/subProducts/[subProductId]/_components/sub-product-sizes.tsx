@@ -71,7 +71,6 @@ export const SubProductSizes = ({
 
     const onSubmit = async (values: FormValues) => {
 
-        console.log(values.sizes)
         try {
             await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
             toast({ title: "Sub Product Sizes updated" });

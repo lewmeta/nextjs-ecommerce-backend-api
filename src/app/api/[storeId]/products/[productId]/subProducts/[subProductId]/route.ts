@@ -9,7 +9,12 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { sizes, images, sku, isPublished, ...values } = await req.json();
+        const { sizes, imageUrl, color, images, sku, isPublished, ...values } = await req.json();
+
+        const colors = {
+            color: color,
+            imageUrl: imageUrl
+        }
 
         console.log({ sizes: sizes })
 
@@ -108,6 +113,16 @@ export async function PATCH(
                         price: size.price,
                     },
                 })),
+            };
+        }
+
+        // Handle color and image updates
+        if (color && imageUrl) {
+            updateData.color = {
+                upsert: {
+                    create: colors, // If there's no color, create it
+                    update: colors, // If the color exists, update it
+                },
             };
         }
 

@@ -125,7 +125,7 @@ const Page = async ({
                             subProductId={params.subProductId}
                         />
                         <SubProductColorImage
-                            initialData={subProduct}
+                            initialData={subProduct.color!}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}
