@@ -11,6 +11,8 @@ import { IconBadge } from '@/components/icon-badge';
 import SubProductKsu from './_components/sub-product-sku';
 import SubProductImages from './_components/sub-product-images';
 import { SubProductSizes } from './_components/sub-product-sizes';
+import { SubProductColorImage } from './_components/sub-product-color-image';
+import { Color } from '@prisma/client';
 
 interface SubProductIdPageProps {
     params: {
@@ -117,6 +119,12 @@ const Page = async ({
                             subProductId={params.subProductId}
                         />
                         <SubProductSizes
+                            initialData={subProduct}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                            subProductId={params.subProductId}
+                        />
+                        <SubProductColorImage
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
