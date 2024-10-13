@@ -55,8 +55,6 @@ const SubProductImages = ({
     const toggleEdit = () => setIsEditing((prev) => !prev);
     const initialImageUrls = initialData?.images?.map(img => img.url) || [];
 
-    console.log({ INITIALDATA: initialImageUrls })
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {

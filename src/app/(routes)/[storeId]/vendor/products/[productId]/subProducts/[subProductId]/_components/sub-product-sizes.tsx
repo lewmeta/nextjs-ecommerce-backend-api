@@ -1,5 +1,4 @@
-
-'use client'
+'use client';
 
 import * as z from "zod";
 import axios from "axios";
@@ -7,7 +6,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Pencil, Trash } from "lucide-react";
-import { Size, SubProduct } from "@prisma/client";
+import { Size } from "@prisma/client";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -21,12 +20,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-type SizeField = Omit<Size, 'id' | 'subProductId'>;
-
 interface SubProductSizesProps {
     initialData: {
         sizes: Size[];
-    },
+    };
     storeId: string;
     productId: string;
     subProductId: string;
@@ -55,13 +52,13 @@ export const SubProductSizes = ({
     const toggleEdit = () => setIsEditing((prev) => !prev);
 
     const form = useForm<FormValues>({
-        resolver: zodResolver(z.array(sizeSchema)),
+        resolver: zodResolver(z.object({ sizes: z.array(sizeSchema) })),
         defaultValues: {
-            sizes: initialData.sizes.map(size => ({
+            sizes: initialData.sizes.map((size) => ({
                 size: size.size || '',
                 qty: size.qty,
                 price: size.price,
-            })) || [{ size: '', qty: 1, price: 0 }],
+            })),
         },
     });
 
@@ -72,7 +69,7 @@ export const SubProductSizes = ({
     });
 
     const onSubmit = async (values: FormValues) => {
-        console.log({ values });
+        console.log(values.sizes)
         try {
             await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
             toast({ title: "Sub Product Sizes updated" });
@@ -111,7 +108,7 @@ export const SubProductSizes = ({
                             <div key={item.id} className="flex items-center gap-4">
                                 <FormField
                                     control={control}
-                                    name={`sizes.${index}.size`} // Dynamic naming
+                                    name={`sizes.${index}.size`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Size</FormLabel>
@@ -124,7 +121,7 @@ export const SubProductSizes = ({
                                 />
                                 <FormField
                                     control={control}
-                                    name={`sizes.${index}.qty`} // Dynamic naming
+                                    name={`sizes.${index}.qty`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Quantity</FormLabel>
@@ -137,7 +134,7 @@ export const SubProductSizes = ({
                                 />
                                 <FormField
                                     control={control}
-                                    name={`sizes.${index}.price`} // Dynamic naming
+                                    name={`sizes.${index}.price`}
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Price</FormLabel>
@@ -157,9 +154,7 @@ export const SubProductSizes = ({
                             Add Size
                         </Button>
                         <div className="flex items-center gap-x-2">
-                            <Button type="submit">
-                                Save
-                            </Button>
+                            <Button type="submit">Save</Button>
                         </div>
                     </form>
                 </Form>

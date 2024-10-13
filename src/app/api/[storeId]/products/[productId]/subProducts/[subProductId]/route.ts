@@ -9,9 +9,9 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { images, sku, isPublished, ...values } = await req.json();
+        const { sizes ,images, sku, isPublished, ...values } = await req.json();
 
-        console.log({ values: values })
+        console.log({ sizes: sizes })
 
         if (!user?.id) {
             return new NextResponse("Unauthenticated", { status: 403 })
@@ -56,24 +56,74 @@ export async function PATCH(
             }
         }
 
+        // Construct the update data object dynamically
+       
+
+        // Handle sizes update
+        
+        const updateData: any = {
+            sku,
+            ...values,
+        };
+
+
+         // Only update images if they are provided
+         if (images && images.length > 0) {
+            updateData.images = {
+                deleteMany: {}, // Clear old images
+                create: images.map((url: string) => ({ url })), // Add new images
+            };
+        }
+
         const subProduct = await db.subProduct.update({
             where: {
                 id: params.subProductId,
                 productId: params.productId,
-
             },
-            data: {
-                sku, ...values ,
-                images: {
-                    // First, delete the old images
-                    deleteMany: {},
+            data: updateData,
+        });
 
-                    // Then, add the new images
-                    create: images.map((url: string) => ({ url })),
-                },
+        // const subProduct = await db.subProduct.update({
+        //     where: {
+        //         id: params.subProductId,
+        //         productId: params.productId,
 
-            }
-        })
+        //     },
+        //     data: {
+        //         sku,
+        //         images: {
+        //             // First, delete the old images
+        //             deleteMany: {},
+
+        //             // Then, add the new images
+        //             create: images.map((url: string) => ({ url })),
+        //         },
+        //         sizes,
+        //         ...values ,
+        //     }
+        // })
+         // Upsert sizes
+         await Promise.all(
+            sizes.map((size: { id: any; size: any; qty: any; price: any; }) =>
+                db.size.upsert({
+                    where: {
+                        id: size.id || '', // Use empty string if id is not provided for new sizes
+                    },
+                    create: {
+                        size: size.size, // Assuming size object has 'size' field
+                        qty: size.qty,
+                        price: size.price,
+                        subProductId: subProduct.id, // Link to the updated subProduct
+                    },
+                    update: {
+                        qty: size.qty,
+                        price: size.price,
+                        // Other fields to update if necessary
+                    },
+                })
+            )
+        );
+
 
         return NextResponse.json(subProduct);
     } catch (error) {
