@@ -12,7 +12,7 @@ import SubProductKsu from './_components/sub-product-sku';
 import SubProductImages from './_components/sub-product-images';
 import { SubProductSizes } from './_components/sub-product-sizes';
 import { SubProductColorImage } from './_components/sub-product-color-image';
-import { Color } from '@prisma/client';
+import { SubProductDiscount } from './_components/sub-product-discount';
 
 interface SubProductIdPageProps {
     params: {
@@ -126,6 +126,12 @@ const Page = async ({
                         />
                         <SubProductColorImage
                             initialData={subProduct.color!}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                            subProductId={params.subProductId}
+                        />
+                        <SubProductDiscount
+                            initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}

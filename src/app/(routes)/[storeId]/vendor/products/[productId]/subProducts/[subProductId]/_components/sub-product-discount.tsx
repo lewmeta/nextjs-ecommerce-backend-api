@@ -18,29 +18,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { SubProduct } from "@prisma/client";
 
-interface SubProductSkuProps {
+interface SubProductDiscountProps {
     initialData: {
-        sku: string;
+        discount: number;
     };
     storeId: string;
     productId: string;
     subProductId: string;
-};
+}
 
 const formSchema = z.object({
-    sku: z.string().min(1, {
-        message: "SKU is required!"
-    }),
+    discount: z.coerce.number().optional(),
 });
 
-const SubProductKsu = ({
+export const SubProductDiscount = ({
     initialData,
-    storeId,
     productId,
+    storeId,
     subProductId
-}: SubProductSkuProps) => {
-
+}: SubProductDiscountProps) => {
+    
     const [isEditing, setIsEditing] = useState(false);
 
     const router = useRouter();
@@ -51,7 +50,9 @@ const SubProductKsu = ({
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData,
+        defaultValues: {
+            discount: initialData.discount || 0,
+        },
     });
 
     const { isValid, isSubmitting } = form.formState;
@@ -96,7 +97,7 @@ const SubProductKsu = ({
             </div>
             {!isEditing && (
                 <p className="text-sm mt-2 dark:text-gray-300">
-                    {initialData?.sku}
+                    {initialData?.discount}
                 </p>
             )}
             {isEditing && (
@@ -107,13 +108,14 @@ const SubProductKsu = ({
                     >
                         <FormField
                             control={form.control}
-                            name="sku"
+                            name="discount"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input
+                                        type="number"
                                             disabled={isSubmitting}
-                                            placeholder="e.g. Sub Product SKU"
+                                            placeholder="e.g. 25"
                                             {...field}
                                         />
                                     </FormControl>
@@ -135,5 +137,3 @@ const SubProductKsu = ({
         </div>
     )
 }
-
-export default SubProductKsu

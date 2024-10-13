@@ -26,7 +26,8 @@ const ProductsPage = async ({
             questions: true,
             subProducts: {
                 include: {
-                    sizes: true
+                    sizes: true,
+                    color: true
                 }
             },
         }
@@ -44,7 +45,7 @@ const ProductsPage = async ({
         category: item.category?.name,
         isFeatured: item.isFeatured,
         isArchived: item.isArchived,
-        color: item.subProducts[0]?.color,
+        color: item.subProducts[0]?.color?.color,
         price: formatter.format(item.subProducts[0]?.sizes[0]?.price),
         createdAt: format(item.createdAt, 'MMMM do, yyyy'),
         size: item.subProducts[0]?.sizes[0]?.size,
