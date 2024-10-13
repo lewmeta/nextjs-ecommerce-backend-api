@@ -19,6 +19,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface SubProductSizesProps {
     initialData: {
@@ -31,8 +32,8 @@ interface SubProductSizesProps {
 
 const sizeSchema = z.object({
     size: z.string().optional(),
-    qty: z.number().min(1, "Quantity must be at least 1"),
-    price: z.number().min(0, 'Price must be at least 0'),
+    qty: z.number(),
+    price: z.number(),
 });
 
 type FormValues = {
@@ -113,7 +114,11 @@ export const SubProductSizes = ({
                                         <FormItem>
                                             <FormLabel>Size</FormLabel>
                                             <FormControl>
-                                                <input {...field} className="border rounded-md p-2" placeholder="Size" />
+                                                <Input
+                                                    {...field}
+                                                    className="border rounded-md p-2"
+                                                    placeholder="Size"
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -126,7 +131,12 @@ export const SubProductSizes = ({
                                         <FormItem>
                                             <FormLabel>Quantity</FormLabel>
                                             <FormControl>
-                                                <input type="number" {...field} className="border rounded-md p-2" placeholder="Quantity" />
+                                                <Input
+                                                    type="number"
+                                                    {...field}
+                                                    placeholder="Quantity"
+                                                    className="border rounded-md p-2"
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -139,7 +149,8 @@ export const SubProductSizes = ({
                                         <FormItem>
                                             <FormLabel>Price</FormLabel>
                                             <FormControl>
-                                                <input type="number" {...field} className="border rounded-md p-2" placeholder="Price" />
+                                                <Input type="number"
+                                                    {...field} className="border rounded-md p-2" placeholder="Price" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
