@@ -9,7 +9,7 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { sizes ,images, sku, isPublished, ...values } = await req.json();
+        const { sizes, images, sku, isPublished, ...values } = await req.json();
 
         console.log({ sizes: sizes })
 
@@ -62,14 +62,34 @@ export async function PATCH(
         };
 
 
-         // Only update images if they are provided
-         if (images && images.length > 0) {
+        // Only update images if they are provided
+        if (images && images.length > 0) {
             updateData.images = {
                 deleteMany: {}, // Clear old images
                 create: images.map((url: string) => ({ url })), // Add new images
             };
         }
 
+        // Step 1: Get all existing sizes from the database
+        const existingSizes = await db.size.findMany({
+            where: { subProductId: params.subProductId },
+        });
+
+        // Step 2: Extract the IDs of the sizes sent from the frontend
+        const sizesToUpdateIds = sizes.map((size: { id: string; }) => size.id);
+
+        // Step 3: Find which sizes in the database are not included in the frontend submission
+        const sizesToDelete = existingSizes
+            .filter(size => !sizesToUpdateIds.includes(size.id))
+            .map(size => size.id); // These sizes will be deleted
+
+        // Step 4: Delete the sizes that were not in the frontend submission
+        await db.size.deleteMany({
+            where: {
+                id: { in: sizesToDelete },
+            },
+        });
+        
         const subProduct = await db.subProduct.update({
             where: {
                 id: params.subProductId,

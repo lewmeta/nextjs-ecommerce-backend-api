@@ -32,7 +32,7 @@ interface SubProductSizesProps {
 
 const sizeSchema = z.object({
     size: z.string().optional(),
-    qty:  z.coerce.number().min(0),  // Ensure quantity is a non-negative number
+    qty: z.coerce.number().min(0),  // Ensure quantity is a non-negative number
     price: z.coerce.number().min(0),
 });
 
@@ -70,19 +70,10 @@ export const SubProductSizes = ({
     });
 
     const onSubmit = async (values: FormValues) => {
-        // Parse qty and price to ensure they are numbers
-        const parsedValues = {
-            sizes: values.sizes.map(size => ({
-                size: size.size,
-                qty: Number(size.qty), // Convert qty to a number
-                price: Number(size.price) // Convert price to a number
-            })),
-        };
 
-        console.log(parsedValues.sizes); // Debugging the parsed values
         console.log(values.sizes)
         try {
-            await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, parsedValues);
+            await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}`, values);
             toast({ title: "Sub Product Sizes updated" });
             toggleEdit();
             router.refresh();
@@ -104,9 +95,9 @@ export const SubProductSizes = ({
                 </Button>
             </div>
             {!isEditing && (
-                <div className="flex items-center gap-3">
+                <div className="flex items-start flex-col w-full gap-3">
                     {initialData.sizes.map((s) => (
-                        <div key={s.id} className="relative h-[150px] w-[200px] rounded-sm overflow-hidden flex items-center gap-2">
+                        <div key={s.id} className="relative rounded-sm overflow-hidden flex items-center gap-2">
                             Size: {s.size}, Qty: {s.qty}, Price: {s.price}
                         </div>
                     ))}
@@ -159,10 +150,10 @@ export const SubProductSizes = ({
                                         <FormItem>
                                             <FormLabel>Price</FormLabel>
                                             <FormControl>
-                                                <input 
-                                                type="number"
+                                                <input
+                                                    type="number"
                                                     {...field}
-                                                    className="border rounded-md p-2" 
+                                                    className="border rounded-md p-2"
                                                     placeholder="Price"
                                                 />
                                             </FormControl>
