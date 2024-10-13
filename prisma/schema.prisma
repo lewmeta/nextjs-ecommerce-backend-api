@@ -56,7 +56,7 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
 
   Review        Review[]
-  stores         Store[]
+  stores        Store[]
   Order         Order[]
   Address       Address[]
   notifications Notification[]
@@ -212,13 +212,14 @@ model Image {
 }
 
 model Color {
-  id    String @id @default(cuid()) @map("_id")
-  size  String
-  qty   Int
-  price Float
+  id       String @id @default(cuid()) @map("_id")
+  color    String
+  imageUrl String
 
-  subProductId String @unique
-  subProduct SubProduct @relation(fields: [subProductId], references: [id])
+  subProductId String
+  subProduct   SubProduct @relation(fields: [subProductId], references: [id])
+
+  @@unique([subProductId])
 }
 
 model Review {

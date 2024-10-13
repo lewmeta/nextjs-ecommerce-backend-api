@@ -52,6 +52,8 @@ export const SubProductSizes = ({
 
     const toggleEdit = () => setIsEditing((prev) => !prev);
 
+    console.log({ 'INITIAL SIZES ARRAY': initialData.sizes})
+
     const form = useForm<FormValues>({
         resolver: zodResolver(z.object({ sizes: z.array(sizeSchema) })),
         defaultValues: {
