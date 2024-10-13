@@ -70,48 +70,54 @@ export async function PATCH(
             };
         }
 
-        // Step 1: Get all existing sizes from the database
-        const existingSizes = await db.size.findMany({
-            where: { subProductId: params.subProductId },
-        });
+        // Only handle size operations if sizes are provided
+        if (sizes && Array.isArray(sizes)) {
+            // Step 1: Get all existing sizes from the database
+            const existingSizes = await db.size.findMany({
+                where: { subProductId: params.subProductId },
+            });
 
-        // Step 2: Extract the IDs of the sizes sent from the frontend
-        const sizesToUpdateIds = sizes.map((size: { id: string; }) => size.id);
+            // Step 2: Extract the IDs of the sizes sent from the frontend
+            const sizesToUpdateIds = sizes.map((size: { id: string; }) => size.id);
 
-        // Step 3: Find which sizes in the database are not included in the frontend submission
-        const sizesToDelete = existingSizes
-            .filter(size => !sizesToUpdateIds.includes(size.id))
-            .map(size => size.id); // These sizes will be deleted
+            // Step 3: Find which sizes in the database are not included in the frontend submission
+            const sizesToDelete = existingSizes
+                .filter(size => !sizesToUpdateIds.includes(size.id))
+                .map(size => size.id); // These sizes will be deleted
 
-        // Step 4: Delete the sizes that were not in the frontend submission
-        await db.size.deleteMany({
-            where: {
-                id: { in: sizesToDelete },
-            },
-        });
-        
+            // Step 4: Delete the sizes that were not in the frontend submission
+            if (sizesToDelete.length > 0) {
+                await db.size.deleteMany({
+                    where: {
+                        id: { in: sizesToDelete },
+                    },
+                });
+            }
+
+            updateData.sizes = {
+                // Use upsert with the correct structure
+                upsert: sizes.map((size: { id: string; size: string; qty: number; price: number; }) => ({
+                    where: { id: size.id || "new" }, // use a condition to identify the size
+                    create: {
+                        size: size.size,
+                        qty: size.qty,
+                        price: size.price,
+                    },
+                    update: {
+                        qty: size.qty,
+                        price: size.price,
+                    },
+                })),
+            };
+        }
+
         const subProduct = await db.subProduct.update({
             where: {
                 id: params.subProductId,
                 productId: params.productId,
             },
             data: {
-                sizes: {
-                    // Use upsert with the correct structure
-                    upsert: sizes.map((size: { id: string; size: string; qty: number; price: number; }) => ({
-                        where: { id: size.id || "new" }, // use a condition to identify the size
-                        create: {
-                            size: size.size,
-                            qty: size.qty,
-                            price: size.price,
-                        },
-                        update: {
-                            qty: size.qty,
-                            price: size.price,
-                        },
-                    })),
-                },
-                ...updateData
+                ...updateData,
             },
         });
 
