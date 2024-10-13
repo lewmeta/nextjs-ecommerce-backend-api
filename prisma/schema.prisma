@@ -204,7 +204,7 @@ model Size {
 model Image {
   id           String     @id @default(cuid()) @map("_id")
   subProductId String
-  subProduct   SubProduct @relation(fields: [subProductId], references: [id])
+  subProduct   SubProduct @relation(fields: [subProductId], references: [id], onDelete: Cascade)
   url          String
 
   createdAt DateTime @default(now())
