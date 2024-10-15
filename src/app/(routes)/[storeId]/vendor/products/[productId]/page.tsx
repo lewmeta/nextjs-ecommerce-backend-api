@@ -87,21 +87,18 @@ const page = async (
                     <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
                         Pro Controller
                     </h1>
-                    <Badge variant="outline" className="ml-auto sm:ml-0">
-                        In stock
-                    </Badge>
                     {isComplete ? (
-                        <Button
-                            variant={'outline'}
+                        <Badge 
+                        variant="outline"
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             All fields Completed {completionText}
-                        </Button>
+                        </Badge>
                     ) : (
-                        <Button
+                        <Badge 
                             variant={'destructive'}
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             Complete all fields {completionText}
-                        </Button>
+                        </Badge>
 
                     )}
                     <div className="hidden items-center gap-2 md:ml-auto md:flex">
@@ -116,14 +113,14 @@ const page = async (
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                     <div>
-                        {/* <div className='flex items-center gap-x-2'>
+                        <div className='flex items-center gap-x-2'>
                             <IconBadge
                                 icon={LayoutDashboard}
                             />
                             <h2 className="text-xl">
                                 Customize your product
                             </h2>
-                        </div> */}
+                        </div>
                         <ProductNameForm
                             initialData={product!}
                             productId={params.productId}

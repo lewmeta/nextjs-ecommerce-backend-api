@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface DescriptionFormProps {
     initialData: Product;
@@ -42,7 +43,7 @@ const DescriptionForm = ({
 
 }: DescriptionFormProps) => {
     const [isEditing, setIsEditing] = useState(false);
-    const {toast} = useToast();
+    const { toast } = useToast();
 
     const toggleEdit = () => setIsEditing((current) => !current)
 
@@ -69,15 +70,61 @@ const DescriptionForm = ({
                 title: 'Something went wrong!'
             })
         }
-     }
+    }
 
     return (
-        <div className="mt-6 bg-slate-100 rounded-md p-4">
-            <div className="font-medium flex items-center justify-between">
-                Product description
+        <Card className="mt-5">
+            <CardHeader>
+                <CardTitle>
+                    Product Description
+                </CardTitle>
+                <CardDescription>
+                    Edit this product description by toggling the edit icon below.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {!isEditing && (
+                    <div className="flex items-center h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors ring-1">
+                        {initialData?.description}
+                    </div>
+                )}
+                {isEditing && (
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}
+                        >
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Textarea
+                                                disabled={isLoading}
+                                                placeholder="product description"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex items-center mt-3 gap-x-2">
+                                <Button
+                                    disabled={isSubmitting}
+                                    type="submit"
+                                >
+                                    Save
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                )}
+            </CardContent>
+            <CardFooter>
                 <Button
                     onClick={toggleEdit}
                     variant={'ghost'}
+                    className="text-primary bg-muted"
                 >
                     {isEditing ? (
                         <>Cancel</>
@@ -88,45 +135,8 @@ const DescriptionForm = ({
                         </>
                     )}
                 </Button>
-            </div>
-            {!isEditing && (
-                <p className="text-sm mt-2">
-                    {initialData?.description}
-                </p>
-            )}
-            {isEditing && (
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-4 mt-4 "
-                    >
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <Textarea
-                                            disabled={isLoading}
-                                            placeholder="product description"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex items-center gap-x-2">
-                            <Button
-                                disabled={isSubmitting}
-                                type="submit"
-                            >
-                                Save
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
-            )}
-        </div>
+            </CardFooter>
+        </Card>
     )
 }
 

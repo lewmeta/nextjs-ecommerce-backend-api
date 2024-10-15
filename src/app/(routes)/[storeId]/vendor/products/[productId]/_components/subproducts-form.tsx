@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { SubProductList } from "./subproducts-list";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface SubProductFormProps {
     initialData: Product & { subProducts: SubProduct[] };
@@ -65,7 +66,7 @@ export const SubproductForm = ({
             });
             toggleCreating();
             router.refresh();
-        } catch (error){
+        } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
                     title: error.response?.data.message,
@@ -104,73 +105,79 @@ export const SubproductForm = ({
     }
 
     return (
-        <div className="relative mt-6 border bg-slate-100 rounded-md p-4 dark:bg-gray-800">
+        <Card className="relative mt-5">
             {isUpdating && (
                 <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
                     <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
                 </div>
             )}
+            <CardHeader>
+                <CardTitle>Sub Products</CardTitle>
+                <CardDescription>This manage everything to do with this sub product variant</CardDescription>
+            </CardHeader>
 
-            <div className="font-medium flex items-center justify-between">
-                Subproducts
-                <Button
-                    onClick={toggleCreating}
-                    variant={'ghost'}
-                >
-                    {isCreating ? (
-                        <>Cancel</>
-                    ) : (
-                        <>
-                            <PlusCircle className="h-4 w-4 mr-2" />
-                            Add a subproduct
-                        </>
-                    )}
-                </Button>
-            </div>
-            {isCreating && (
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-4 mt-4"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="sku"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <Input
-                                            disabled={isSubmitting}
-                                            placeholder="Add SubProduct sku"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button
-                            disabled={!isValid || isSubmitting}
-                            type="submit"
+            <CardContent>
+                {isCreating && (
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
                         >
-                            Create
-                        </Button>
-                    </form>
-                </Form>
-            )}
-            {!isCreating && (
-                <div className={cn(
-                    'text-sm mt-2',
-                    !initialData?.subProducts.length && 'text-slate-500 italic'
-                )}>
-                    {!initialData?.subProducts.length && 'No SuProducts'}
-                    <SubProductList
-                        onEdit={onEdit}
-                        onReorder={onReorder}
-                        items={initialData.subProducts || []}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="sku"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                disabled={isSubmitting}
+                                                placeholder="Add SubProduct sku"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button
+                                disabled={!isValid || isSubmitting}
+                                type="submit"
+                            >
+                                Create
+                            </Button>
+                        </form>
+                    </Form>
+                )}
+                {!isCreating && (
+                    <div className={cn(
+                        'text-sm mt-2',
+                        !initialData?.subProducts.length && 'text-slate-500 italic'
+                    )}>
+                        {!initialData?.subProducts.length && 'No SuProducts'}
+                        <SubProductList
+                            onEdit={onEdit}
+                            onReorder={onReorder}
+                            items={initialData.subProducts || []}
+                        />
+                    </div>
+                )}
+            </CardContent>
+            <CardFooter>
+                <div className="font-medium flex items-center ">
+                    <Button
+                        onClick={toggleCreating}
+                        variant={'ghost'}
+                    >
+                        {isCreating ? (
+                            <>Cancel</>
+                        ) : (
+                            <>
+                                <PlusCircle className="h-4 w-4 mr-2" />
+                                Add a product variant
+                            </>
+                        )}
+                    </Button>
                 </div>
-            )}
-        </div>
+            </CardFooter>
+        </Card>
     )
 }
