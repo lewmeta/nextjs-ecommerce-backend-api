@@ -14,6 +14,7 @@ import { SubproductForm } from './_components/subproducts-form';
 import { Product } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ArchiveForm } from './_components/archive-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -84,8 +85,8 @@ const page = async (
                         <ChevronLeft className="h-4 w-4" />
                         <span className="sr-only">Back</span>
                     </Button>
-                    <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                        Pro Controller
+                    <h1 className="flex-1 shrink-0 whitespace-nowrap text-2xl font-semibold tracking-tight sm:grow-0">
+                        Product Controller
                     </h1>
                     {isComplete ? (
                         <Button
@@ -149,6 +150,11 @@ const page = async (
                                 </h2>
                             </div> */}
                         <SubproductForm
+                            initialData={product!}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                        />
+                        <ArchiveForm
                             initialData={product!}
                             productId={params.productId}
                             storeId={params.storeId}
