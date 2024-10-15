@@ -15,6 +15,7 @@ import { Product } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArchiveForm } from './_components/archive-form';
+import { FeaturedForm } from './_components/featured-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -155,6 +156,11 @@ const page = async (
                             storeId={params.storeId}
                         />
                         <ArchiveForm
+                            initialData={product!}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                        />
+                        <FeaturedForm
                             initialData={product!}
                             productId={params.productId}
                             storeId={params.storeId}
