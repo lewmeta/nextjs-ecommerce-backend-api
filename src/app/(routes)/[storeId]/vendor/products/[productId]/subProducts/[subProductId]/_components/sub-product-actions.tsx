@@ -36,12 +36,12 @@ const SubproductActions = ({
             await axios.patch(`/`)
 
             if (isPublished) {
-                await axios.patch(`/api/${storeId}/products/${productId}/unpublish`)
+                await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}/unpublish`)
                 toast({
                     title: 'Subproduct upublished!'
                 })
             } else {
-                await axios.patch(`/api/${storeId}/products/${productId}/publish`)
+                await axios.patch(`/api/${storeId}/products/${productId}/subProducts/${subProductId}/publish`)
                 toast({
                     title: 'Subproduct published!'
                 })
