@@ -59,7 +59,7 @@ const page = async (
         // product?.numReviews,
         // product?.refundPolicy,
         product?.categoryId,
-        // product?.shippingPrice,
+        product?.shippingPrice,
         product?.subProducts?.length! > 0,
         product?.subProducts.some((chapter => chapter.isPublished)),
     ]
@@ -73,11 +73,11 @@ const page = async (
 
     return (
         <LayoutComponent>
-            {/* {!product?.isPublished && (
+            {!product?.isPublished && (
                 <Banner
                     label='This product is not published. It will not be visible to your customers'
                 />
-            )} */}
+            )}
             <div className="p-6">
                 {/* <div className="flex items-center justify-between">
                     <div className='flex flex-col gap-y-2'>
@@ -110,6 +110,7 @@ const page = async (
                         <Actions
                             disabled={!isComplete}
                             productId={params.productId}
+                            storeId={params.storeId}
                             isPublished={product?.isPublished!}
                         />
                     </div>
