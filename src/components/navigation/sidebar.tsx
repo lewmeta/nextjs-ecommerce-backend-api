@@ -164,7 +164,7 @@ export const Sidebar = ({
                                                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4" key={item.href}>
                                                         <Link
                                                             href={item.href}
-                                                            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary h-full relative   text-muted-foreground", item.active && 'bg-muted text-primary border border-primary')}
+                                                            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary h-full relative   text-muted-foreground", item.active && 'bg-muted text-primary')}
                                                         >
                                                             <item.icon className="h-4 w-4" />
                                                             {item.label}{" "}
@@ -195,16 +195,16 @@ export const Sidebar = ({
                                     (vendor.label === 'General' ? (
                                         <div key={vendor.label}>
                                             {vendor.items.map((item) => (
-                                                <nav className="flex flex-col items-center gap-4 px-2 sm:py-2"
+                                                <nav className="flex flex-col items-center gap-0 px-2 sm:py-2"
                                                     key={item.href}
                                                 >
                                                     <Tooltip>
                                                         <TooltipTrigger asChild>
                                                             <Link
                                                                 href={item.href}
-                                                                className={cn("flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground  transition-colors hover:text-foreground md:h-8 md:w-8", item.active && 'bg-accent text-accent-foreground')}
+                                                                className={cn("flex items-center justify-center rounded-lg text-muted-foreground  transition-colors hover:text-foreground md:h-6 md:w-6", item.active && 'bg-accent text-accent-foreground')}
                                                             >
-                                                                <item.icon className="h-5 w-5" />
+                                                                <item.icon className="h-4 w-4" />
                                                                 <span className="sr-only">{item.label}</span>
                                                             </Link>
                                                         </TooltipTrigger>
@@ -225,7 +225,7 @@ export const Sidebar = ({
                                                                 href={item.href}
                                                                 className={cn("flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground  transition-colors hover:text-foreground md:h-8 md:w-8", item.active && 'bg-accent text-accent-foreground')}
                                                             >
-                                                                <item.icon className="h-5 w-5" />
+                                                                <item.icon className="h-4 w-4" />
                                                                 <span className="sr-only">{item.label}</span>
                                                             </Link>
                                                         </TooltipTrigger>
