@@ -82,7 +82,7 @@ const SubProductKsu = ({
     return (
         <div className="mt-6 bg-slate-100 rounded-md p-4 dark:bg-gray-800">
             <div className="font-medium flex items-center justify-between">
-                Course Title
+                Sub Product SKU.
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing ? (
                         <>Cancel</>

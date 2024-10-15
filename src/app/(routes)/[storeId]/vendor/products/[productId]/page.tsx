@@ -6,12 +6,14 @@ import { db } from '@/lib/db'
 import { redirect } from 'next/navigation';
 import { Actions } from './_components/actions';
 import { IconBadge } from '@/components/icon-badge';
-import { LayoutDashboard, ListCheck } from 'lucide-react';
+import { ChevronLeft, LayoutDashboard, ListCheck } from 'lucide-react';
 import ProductNameForm from './_components/name-form';
 import DescriptionForm from './_components/description-form';
 import { CategoryForm } from './_components/category-form';
 import { SubproductForm } from './_components/subproducts-form';
 import { Product } from '@prisma/client';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -57,7 +59,7 @@ const page = async (
         // product?.numReviews,
         // product?.refundPolicy,
         product?.categoryId,
-        product?.shippingPrice,
+        // product?.shippingPrice,
         product?.subProducts?.length! > 0,
         product?.subProducts.some((chapter => chapter.isPublished)),
     ]
@@ -71,13 +73,13 @@ const page = async (
 
     return (
         <LayoutComponent>
-            {!product?.isPublished && (
+            {/* {!product?.isPublished && (
                 <Banner
                     label='This product is not published. It will not be visible to your customers'
                 />
-            )}
+            )} */}
             <div className="p-6">
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                     <div className='flex flex-col gap-y-2'>
                         <h1 className="text-2xl font-medium">
                             Product Setup
@@ -91,6 +93,26 @@ const page = async (
                         productId={params.productId}
                         isPublished={product?.isPublished!}
                     />
+                </div> */}
+
+                <div className="flex items-center gap-4">
+                    <Button variant="outline" size="icon" className="h-7 w-7">
+                        <ChevronLeft className="h-4 w-4" />
+                        <span className="sr-only">Back</span>
+                    </Button>
+                    <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
+                        Pro Controller
+                    </h1>
+                    <Badge variant="outline" className="ml-auto sm:ml-0">
+                        In stock
+                    </Badge>
+                    <div className="hidden items-center gap-2 md:ml-auto md:flex">
+                        <Actions
+                            disabled={!isComplete}
+                            productId={params.productId}
+                            isPublished={product?.isPublished!}
+                        />
+                    </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                     <div>

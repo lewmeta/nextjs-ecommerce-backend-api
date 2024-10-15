@@ -128,7 +128,7 @@ const Test = () => {
                                 </nav>
                             </SheetContent>
                         </Sheet>
-                        <Breadcrumb className="hidden md:flex">
+                        {/* <Breadcrumb className="hidden md:flex">
                             <BreadcrumbList>
                                 <BreadcrumbItem>
                                     <BreadcrumbLink asChild>
@@ -146,7 +146,7 @@ const Test = () => {
                                     <BreadcrumbPage>Edit Product</BreadcrumbPage>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
-                        </Breadcrumb>
+                        </Breadcrumb> */}
                         <div className="relative ml-auto flex-1 md:grow-0">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -155,7 +155,7 @@ const Test = () => {
                                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
                             />
                         </div>
-                        <DropdownMenu>
+                        {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
                                     variant="outline"
@@ -179,7 +179,7 @@ const Test = () => {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>Logout</DropdownMenuItem>
                             </DropdownMenuContent>
-                        </DropdownMenu>
+                        </DropdownMenu> */}
                     </header>
                     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                         <div className="mx-auto grid flex-1 auto-rows-max gap-4">
