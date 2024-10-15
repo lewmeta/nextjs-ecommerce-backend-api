@@ -90,7 +90,7 @@ export const CategoryForm = ({
             </CardHeader>
             <CardContent>
                 {!isEditing && (
-                    <div className={cn("flex items-center h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors ring-1", !initialData.categoryId && 'italic')}>
+                    <div className={cn("flex items-center h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors", !initialData.categoryId && 'italic')}>
                         {selectOption?.label || "No category"}
                     </div>
                 )}
@@ -131,6 +131,7 @@ export const CategoryForm = ({
                     <Button
                         onClick={toggleEdit}
                         variant={'ghost'}
+                        className="text-primary bg-muted"
                     >
                         {isEditing ? (
                             <>Cancel</>

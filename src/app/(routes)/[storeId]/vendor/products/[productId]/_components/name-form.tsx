@@ -82,7 +82,7 @@ const ProductNameForm = ({
             </CardHeader>
             <CardContent>
                 {!isEditing && (
-                    <div className="flex items-center h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors ring-1">
+                    <div className="flex items-center min-h-11 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors">
                         {initialData?.name}
                     </div>
                 )}
@@ -124,7 +124,7 @@ const ProductNameForm = ({
                     <Button
                         onClick={toggleEdit}
                         variant={'ghost'}
-                        className="bg-muted"
+                        className="text-primary bg-muted"
                     >
                         {isEditing ? (
                             <>Cancel</>

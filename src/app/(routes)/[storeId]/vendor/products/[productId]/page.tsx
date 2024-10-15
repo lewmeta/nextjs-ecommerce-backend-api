@@ -88,13 +88,13 @@ const page = async (
                         Pro Controller
                     </h1>
                     {isComplete ? (
-                        <Button 
-                        variant="outline"
+                        <Button
+                            variant="outline"
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             All fields Completed {completionText}
                         </Button>
                     ) : (
-                        <Button 
+                        <Button
                             variant={'destructive'}
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             Complete all fields {completionText}
@@ -111,16 +111,16 @@ const page = async (
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div>
-                        <div className='flex items-center gap-x-2'>
+                        {/* <div className='flex items-center gap-x-2'>
                             <IconBadge
                                 icon={LayoutDashboard}
                             />
                             <h2 className="text-xl">
                                 Customize your product
                             </h2>
-                        </div>
+                        </div> */}
                         <ProductNameForm
                             initialData={product!}
                             productId={params.productId}
@@ -141,20 +141,18 @@ const page = async (
                             }))}
                         />
                     </div>
-                    <div className="space-y-6">
-                        <div>
-                            <div className="flex items-center gap-x-2">
+                    <div>
+                        {/* <div className="flex items-center gap-x-2">
                                 <IconBadge icon={ListCheck} />
                                 <h2 className="text-xl">
                                     Subproducts
                                 </h2>
-                            </div>
-                            <SubproductForm
-                                initialData={product!}
-                                productId={params.productId}
-                                storeId={params.storeId}
-                            />
-                        </div>
+                            </div> */}
+                        <SubproductForm
+                            initialData={product!}
+                            productId={params.productId}
+                            storeId={params.storeId}
+                        />
                     </div>
                 </div>
             </div>
