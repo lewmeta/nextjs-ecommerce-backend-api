@@ -34,21 +34,27 @@ export const Actions = ({
             if (isPublished) {
                 await axios.patch(`/api/${storeId}/products/${productId}/unpublish`)
                 toast({
-                    title: 'Subproduct upublished!'
+                    title: 'Product upublished!'
                 })
             } else {
                 await axios.patch(`/api/${storeId}/products/${productId}/publish`)
                 toast({
-                    title: 'Subproduct published!'
+                    title: 'Product published!'
                 })
             }
             router.refresh();
             return
 
         } catch (error) {
-            toast({
-                title: 'Something went wrong!'
-            })
+            if (axios.isAxiosError(error)) {
+                toast({
+                    title: error.response?.data.message
+                })
+            } else {
+                toast({
+                    title: "Something went wrong!"
+                })
+            }
         } finally {
             setIsLoading(false)
         }
@@ -58,16 +64,22 @@ export const Actions = ({
         try {
             setIsLoading(true);
 
-            await axios.delete(`/api/${storeId}/products/${productId}/`)
+            await axios.delete(`/api/${storeId}/products/${productId}`)
             toast({
                 title: 'Subproduct deleted!'
             })
 
-            router.push(`/${storeId}/vendor/products/${productId}`)
+            router.push(`/${storeId}/vendor/products`)
         } catch (error) {
-            toast({
-                title: 'Something went wrong!'
-            })
+            if (axios.isAxiosError(error)) {
+                toast({
+                    title: error.response?.data.message,
+                })
+            } else {
+                toast({
+                    title: 'Something went wrong!'
+                })
+            }
         } finally {
             setIsLoading(false)
         }

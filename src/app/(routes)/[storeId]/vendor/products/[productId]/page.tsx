@@ -59,7 +59,7 @@ const page = async (
         // product?.numReviews,
         // product?.refundPolicy,
         product?.categoryId,
-        product?.shippingPrice,
+        // product?.shippingPrice,
         product?.subProducts?.length! > 0,
         product?.subProducts.some((chapter => chapter.isPublished)),
     ]
@@ -90,11 +90,20 @@ const page = async (
                     <Badge variant="outline" className="ml-auto sm:ml-0">
                         In stock
                     </Badge>
-                    <Button
-                        variant={!isComplete ? 'destructive' : 'default'}
-                        className='flex flex-col gap-y-2 font-semibold mt-6 uppercase'>
-                        Complete all fields {completionText}
-                    </Button>
+                    {isComplete ? (
+                        <Button
+                            variant={'outline'}
+                            className='flex flex-col gap-y-2 font-semibold  uppercase'>
+                            All fields Completed {completionText}
+                        </Button>
+                    ) : (
+                        <Button
+                            variant={'destructive'}
+                            className='flex flex-col gap-y-2 font-semibold  uppercase'>
+                            Complete all fields {completionText}
+                        </Button>
+
+                    )}
                     <div className="hidden items-center gap-2 md:ml-auto md:flex">
                         <Actions
                             disabled={!isComplete}
