@@ -88,17 +88,17 @@ const page = async (
                         Pro Controller
                     </h1>
                     {isComplete ? (
-                        <Badge 
+                        <Button 
                         variant="outline"
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             All fields Completed {completionText}
-                        </Badge>
+                        </Button>
                     ) : (
-                        <Badge 
+                        <Button 
                             variant={'destructive'}
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
                             Complete all fields {completionText}
-                        </Badge>
+                        </Button>
 
                     )}
                     <div className="hidden items-center gap-2 md:ml-auto md:flex">
