@@ -61,7 +61,7 @@ const page = async (
     const totalFields = requiredFields.length;
     const completedFields = requiredFields.filter(Boolean).length;
 
-    const completionText = `(${completedFields} / ${totalFields})`;
+    // const completionText = `(${completedFields} / ${totalFields})`;
 
     const isComplete = requiredFields.every(Boolean);
 
@@ -83,20 +83,6 @@ const page = async (
                     <h1 className="flex-1 shrink-0 whitespace-nowrap text-2xl font-semibold tracking-tight sm:grow-0">
                         Pro Controller
                     </h1>
-                    {/* {isComplete ? (
-                        <Button
-                            variant="outline"
-                            className='flex flex-col gap-y-2 font-semibold  uppercase'>
-                            All fields Completed {completionText}
-                        </Button>
-                    ) : (
-                        <Button
-                            variant={'destructive'}
-                            className='flex flex-col gap-y-2 font-semibold  uppercase'>
-                            Complete all fields {completionText}
-                        </Button>
-
-                    )} */}
                     <div className="max-w-[290px] w-full">
                         <ProductProgress
                             variant={progress === 100 ? 'success' : 'default'}

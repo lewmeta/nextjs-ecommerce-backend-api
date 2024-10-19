@@ -106,6 +106,7 @@ export const ProductDetailsForm = ({
                                     type="text"
                                     className="w-full mt-2"
                                     defaultValue={name}
+                                    readOnly
                                 />
                             </div>
                             <div className="my-2">
@@ -114,6 +115,7 @@ export const ProductDetailsForm = ({
                                     id="description"
                                     defaultValue={description}
                                     className="min-h-32 mt-2"
+                                    readOnly
                                 />
                             </div>
                         </>
