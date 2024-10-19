@@ -6,8 +6,7 @@ import { db } from '@/lib/db'
 import { redirect } from 'next/navigation';
 import { Actions } from './_components/actions';
 import { ChevronLeft } from 'lucide-react';
-import ProductNameForm from './_components/name-form';
-import DescriptionForm from './_components/description-form';
+import { ProductDetailsForm } from './_components/product-details-form';
 import { CategoryForm } from './_components/category-form';
 import { SubproductForm } from './_components/subproducts-form';
 import { Button } from '@/components/ui/button';
@@ -119,15 +118,11 @@ const page = async (
                                 Customize your product
                             </h2>
                         </div> */}
-                        <ProductNameForm
-                            initialData={product!}
+                        <ProductDetailsForm
+                            name={product?.name!}
+                            description={product?.description!}
                             productId={params.productId}
                             storeId={params.storeId}
-                        />
-                        <DescriptionForm
-                            initialData={product!}
-                            productId={product?.id!}
-                            storeId={product?.storeId!}
                         />
                         <CategoryForm
                             initialData={product!}
