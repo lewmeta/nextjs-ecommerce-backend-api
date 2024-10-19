@@ -24,18 +24,21 @@ export const ProductProgress = ({
     size,
 }: ProductProgressProps) => {
     return (
-        <div>
+        <div className='flex items-center gap-x-3 w-full'>
             <Progress
                 className='h-4'
                 value={value}
                 variant={variant}
             />
             <p className={cn(
-                'font-medium mt-2 text-sky-700 ',
+                'font-medium flex items-center text-sky-700  gap-x-2',
                 colorByVariant[variant || 'default'],
                 sizeByVariant[size || 'default']
             )}>
-                {Math.round(value)}% Complete
+                {Math.round(value)}%
+                <span>
+                    complete
+                </span>
             </p>
         </div>
     )

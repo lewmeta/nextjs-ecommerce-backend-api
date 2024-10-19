@@ -97,7 +97,7 @@ const page = async (
                         </Button>
 
                     )} */}
-                    <div className="max-w-[270px] w-full">
+                    <div className="max-w-[290px] w-full">
                         <ProductProgress
                             variant={progress === 100 ? 'success' : 'default'}
                             size='default'
