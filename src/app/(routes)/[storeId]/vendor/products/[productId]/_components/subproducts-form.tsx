@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Loader2, PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle, RefreshCcw } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Product, Size, SubProduct } from "@prisma/client";
 
@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { SubProductList } from "./subproducts-list";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { generateSKU } from "@/lib/generate-sku";
 
 interface SubProductFormProps {
     initialData: Product & { subProducts: SubProduct[] };
@@ -62,7 +63,7 @@ export const SubproductForm = ({
         try {
             await axios.post(`/api/${storeId}/products/${productId}/subProducts`, values);
             toast({
-                title: "Subproduct created"
+                title: `Product variant ${values.sku} created`
             });
             toggleCreating();
             router.refresh();
@@ -104,6 +105,11 @@ export const SubproductForm = ({
         }
     }
 
+    const onSKUGenerate = () => {
+        const newSKU = generateSKU(initialData.name)
+        form.setValue("sku",newSKU);
+    }
+
     return (
         <Card className="relative mt-5">
             {isUpdating && (
@@ -116,7 +122,20 @@ export const SubproductForm = ({
                 <CardDescription>This manage everything to do with this sub product variant</CardDescription>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="mb-0">
+                {!isCreating && (
+                    <div className={cn(
+                        'text-sm ',
+                        !initialData?.subProducts.length && 'text-slate-500 italic'
+                    )}>
+                        {!initialData?.subProducts.length && 'No SuProducts'}
+                        <SubProductList
+                            onEdit={onEdit}
+                            onReorder={onReorder}
+                            items={initialData.subProducts || []}
+                        />
+                    </div>
+                )}
                 {isCreating && (
                     <Form {...form}>
                         <form
@@ -130,53 +149,51 @@ export const SubproductForm = ({
                                         <FormControl>
                                             <Input
                                                 disabled={isSubmitting}
-                                                placeholder="Add SubProduct sku"
+                                                placeholder="generate an sku"
                                                 {...field}
+                                                readOnly
                                             />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            <Button
+                             <Button
+                                type="submit"
+                                onClick={onSKUGenerate}
+                                variant="outline"
+                                className="flex items-center gap-x-2 mt-2"
+                                disabled={isSubmitting || !isValid}
+                            >
+                                <RefreshCcw className="h-4 w-4" />
+                                Regenerate SKU
+                            </Button>
+                            {/* <Button
                                 disabled={!isValid || isSubmitting}
                                 type="submit"
+                                className="mt-2"
                             >
                                 Create
-                            </Button>
+                            </Button> */}
                         </form>
                     </Form>
                 )}
-                {!isCreating && (
-                    <div className={cn(
-                        'text-sm mt-2',
-                        !initialData?.subProducts.length && 'text-slate-500 italic'
-                    )}>
-                        {!initialData?.subProducts.length && 'No SuProducts'}
-                        <SubProductList
-                            onEdit={onEdit}
-                            onReorder={onReorder}
-                            items={initialData.subProducts || []}
-                        />
-                    </div>
-                )}
             </CardContent>
             <CardFooter>
-                <div className="font-medium flex items-center ">
-                    <Button
-                        onClick={toggleCreating}
-                        variant={'ghost'}
-                    >
-                        {isCreating ? (
-                            <>Cancel</>
-                        ) : (
-                            <>
-                                <PlusCircle className="h-4 w-4 mr-2" />
-                                Add a product variant
-                            </>
-                        )}
-                    </Button>
-                </div>
+                <Button
+                    onClick={toggleCreating}
+                    variant={'ghost'}
+                    className="!mt-0"
+                >
+                    {isCreating ? (
+                        <>Cancel</>
+                    ) : (
+                        <>
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add a product variant
+                        </>
+                    )}
+                </Button>
             </CardFooter>
         </Card>
     )

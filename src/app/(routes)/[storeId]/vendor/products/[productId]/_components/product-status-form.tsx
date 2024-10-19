@@ -109,77 +109,24 @@ export const ProductStatusForm = ({
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {/* {!isEditing && (
-                        <div className="flex items-center min-h-11 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors gap-2 cursor-not-allowed">
-                            {initialData.isArchived ? (
-                                <>
-                                    <Checkbox
-                                        defaultChecked
-                                        disabled
-                                    />
-                                    Archived
-                                </>
-
-                            ) : (
-                                <>
-                                    <Checkbox
-                                        disabled
-                                    />
-                                    Not archived
-                                </>
-                            )}
-                        </div>
-                    )} */}
                     {!isEditing && (
                         <div>
                             {initialData.isArchived
-                                ? "Archived"
-                                : "Featured"
+                                ? <Input
+                                    type="text"
+                                    readOnly
+                                    defaultValue={"Archived"}
+                                />
+                                : <Input
+                                    type="text"
+                                    readOnly
+                                    defaultValue={"Featured"}
+                                />
                             }
                         </div>
                     )}
 
                     {isEditing && (
-                        // <Form {...form}>
-                        //     <form onSubmit={form.handleSubmit(onSubmit)}
-                        //         className="space-y-4 mt-4 "
-                        //     >
-                        //         <FormField
-                        //             control={form.control}
-                        //             name="productStatus"
-                        //             render={({ field }) => (
-                        //                 <FormItem>
-                        //                     <FormLabel>Status</FormLabel>
-                        //                     <Select onValueChange={field.onChange}>
-                        //                         <FormControl>
-                        //                             <SelectTrigger>
-                        //                                 <SelectValue placeholder="Select a status for this product" />
-                        //                             </SelectTrigger>
-                        //                         </FormControl>
-                        //                         <SelectContent>
-                        //                             <SelectContent>
-                        //                                 <SelectItem value="isFeatured">Featured</SelectItem>
-                        //                                 <SelectItem value="isArchived">Archived</SelectItem>
-                        //                             </SelectContent>
-                        //                         </SelectContent>
-                        //                     </Select>
-                        //                     <FormDescription>
-                        //                         You can manage the visibilty of your product.
-                        //                     </FormDescription>
-                        //                     <FormMessage />
-                        //                 </FormItem>
-                        //             )}
-                        //         />
-                        //         <div className="flex items-center gap-x-2">
-                        //             <Button
-                        //                 disabled={isSubmitting}
-                        //                 type="submit"
-                        //             >
-                        //                 Save
-                        //             </Button>
-                        //         </div>
-                        //     </form>
-                        // </Form>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                                 <FormField

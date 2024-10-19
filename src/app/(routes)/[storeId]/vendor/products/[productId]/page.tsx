@@ -108,7 +108,7 @@ const page = async (
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div className="grid gap-4 md:grid-cols-[1fr_350px] lg:gap-8">
                     <div>
                         {/* <div className='flex items-center gap-x-2'>
                             <IconBadge
