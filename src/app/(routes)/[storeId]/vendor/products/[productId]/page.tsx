@@ -53,11 +53,7 @@ const page = async (
     const requiredFields = [
         product?.name,
         product?.description,
-        // product?.rating,
-        // product?.numReviews,
-        // product?.refundPolicy,
         product?.categoryId,
-        // product?.shippingPrice,
         product?.subProducts?.length! > 0,
         product?.subProducts.some((chapter => chapter.isPublished)),
     ]
@@ -68,6 +64,8 @@ const page = async (
     const completionText = `(${completedFields} / ${totalFields})`;
 
     const isComplete = requiredFields.every(Boolean);
+
+    const progress = (completedFields / totalFields) * 100;
 
     return (
         <LayoutComponent>
@@ -83,9 +81,9 @@ const page = async (
                         <span className="sr-only">Back</span>
                     </Button>
                     <h1 className="flex-1 shrink-0 whitespace-nowrap text-2xl font-semibold tracking-tight sm:grow-0">
-                        Product Controller
+                        Pro Controller
                     </h1>
-                    {isComplete ? (
+                    {/* {isComplete ? (
                         <Button
                             variant="outline"
                             className='flex flex-col gap-y-2 font-semibold  uppercase'>
@@ -98,9 +96,15 @@ const page = async (
                             Complete all fields {completionText}
                         </Button>
 
-                    )}
-                    <ProductProgress />
-                    
+                    )} */}
+                    <div className="max-w-[270px] w-full">
+                        <ProductProgress
+                            variant={progress === 100 ? 'success' : 'default'}
+                            size='default'
+                            value={progress}
+                        />
+                    </div>
+
                     <div className="hidden items-center gap-2 md:ml-auto md:flex">
                         <Actions
                             disabled={!isComplete}

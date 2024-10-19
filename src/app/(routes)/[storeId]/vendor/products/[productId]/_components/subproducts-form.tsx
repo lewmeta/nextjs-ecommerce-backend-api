@@ -70,7 +70,7 @@ export const SubproductForm = ({
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 toast({
-                    title: error.response?.data.message,
+                    title: error.response?.data.message || 'An Error occured.',
                 });
 
             } else {
@@ -107,7 +107,7 @@ export const SubproductForm = ({
 
     const onSKUGenerate = () => {
         const newSKU = generateSKU(initialData.name)
-        form.setValue("sku",newSKU);
+        form.setValue("sku", newSKU);
     }
 
     return (
@@ -149,7 +149,7 @@ export const SubproductForm = ({
                                         <FormControl>
                                             <Input
                                                 disabled={isSubmitting}
-                                                placeholder="generate an sku"
+                                                placeholder="Generate an sku for this variant"
                                                 {...field}
                                                 readOnly
                                             />
@@ -158,23 +158,25 @@ export const SubproductForm = ({
                                     </FormItem>
                                 )}
                             />
-                             <Button
-                                type="submit"
-                                onClick={onSKUGenerate}
-                                variant="outline"
-                                className="flex items-center gap-x-2 mt-2"
-                                disabled={isSubmitting || !isValid}
-                            >
-                                <RefreshCcw className="h-4 w-4" />
-                                Regenerate SKU
-                            </Button>
-                            {/* <Button
-                                disabled={!isValid || isSubmitting}
-                                type="submit"
-                                className="mt-2"
-                            >
-                                Create
-                            </Button> */}
+                            <div className="flex items-center gap-x-3">
+                                <Button
+                                    type="button"
+                                    onClick={onSKUGenerate}
+                                    variant="outline"
+                                    className="flex items-center gap-x-2 mt-2"
+                                    disabled={isSubmitting}
+                                >
+                                    <RefreshCcw className="h-4 w-4" />
+                                    Regenerate SKU
+                                </Button>
+                                <Button
+                                    disabled={!isValid || isSubmitting}
+                                    type="submit"
+                                    className="mt-2"
+                                >
+                                    Create
+                                </Button>
+                            </div>
                         </form>
                     </Form>
                 )}
