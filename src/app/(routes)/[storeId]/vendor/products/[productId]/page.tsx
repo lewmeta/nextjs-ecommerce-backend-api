@@ -11,6 +11,7 @@ import { CategoryForm } from './_components/category-form';
 import { SubproductForm } from './_components/subproducts-form';
 import { Button } from '@/components/ui/button';
 import { ProductStatusForm } from './_components/product-status-form';
+import { ProductProgress } from '@/components/product-progress';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -98,6 +99,8 @@ const page = async (
                         </Button>
 
                     )}
+                    <ProductProgress />
+                    
                     <div className="hidden items-center gap-2 md:ml-auto md:flex">
                         <Actions
                             disabled={!isComplete}
