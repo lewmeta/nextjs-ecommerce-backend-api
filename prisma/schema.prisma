@@ -198,7 +198,10 @@ model Size {
   subProduct   SubProduct @relation(fields: [subProductId], references: [id])
   size         String?
   qty          Int
+  sku          String
   price        Float
+
+  @@unique([subProductId, sku])
 }
 
 model Image {
