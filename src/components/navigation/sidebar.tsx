@@ -2,24 +2,19 @@
 
 import { useExpandSlice } from "@/hooks/use-expand-slice";
 import { cn } from "@/lib/utils";
-import { MenuIcon } from "../icons/menu-icon";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { StoreSwitcher } from "./store-switcher";
-import { SidebarRoutes } from "./sidebar-routes";
-import { BoltIcon } from "../icons/bolt-icon";
 import { SettingsIcon } from "../icons/settings-icon";
-import Image from "next/image";
 import { BillBoardIcon, CategoryIcon, CollapeseIcon, CustomersIcon, ExpandIcon } from "../icons";
-import { Button } from "../ui/button";
+
 import { Separator } from "../ui/separator";
 import Link from "next/link";
-import { Bell, Home, LineChart, Package, Package2, Settings, ShoppingCart, Users, Users2 } from "lucide-react";
+
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Badge } from "../ui/badge";
 import { OrdersIcon } from "../icons/orders-icon";
 import { Overview } from "../icons/over-view-icon";
 import { PerformanceIcon } from "../icons/perfomance-icon";
@@ -125,7 +120,7 @@ export const Sidebar = ({
         <>
             <div className={cn('h-full border-r flex flex-col shadow-sm', expandSidebar ? 'w-80' : 'w-[70px]')}
             >
-                <div className="mb-[0px] w-full min-h-screen h-full">
+                <div className="mb-[0px] w-full h-full">
                     <div className={cn("w-full fixed top-0 left-0 z-50 flex mb-5 items-center  flex-wrap justify-center px-4 pt-6", expandSidebar ? 'justify-between w-80 pt-0 h-[80px] mb-0 border-b ' : 'w-[70px] mb-10')}>
                         <StoreSwitcher items={items} />
                         {!expandSidebar && (

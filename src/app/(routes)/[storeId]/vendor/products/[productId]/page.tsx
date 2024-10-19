@@ -5,17 +5,13 @@ import { currentUser } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { redirect } from 'next/navigation';
 import { Actions } from './_components/actions';
-import { IconBadge } from '@/components/icon-badge';
-import { ChevronLeft, LayoutDashboard, ListCheck } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import ProductNameForm from './_components/name-form';
 import DescriptionForm from './_components/description-form';
 import { CategoryForm } from './_components/category-form';
 import { SubproductForm } from './_components/subproducts-form';
-import { Product } from '@prisma/client';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArchiveForm } from './_components/archive-form';
-import { FeaturedForm } from './_components/featured-form';
+import { ProductStatusForm } from './_components/product-status-form';
 
 const page = async (
     { params }: { params: { productId: string, storeId: string } }
@@ -155,12 +151,7 @@ const page = async (
                             productId={params.productId}
                             storeId={params.storeId}
                         />
-                        <ArchiveForm
-                            initialData={product!}
-                            productId={params.productId}
-                            storeId={params.storeId}
-                        />
-                        <FeaturedForm
+                        <ProductStatusForm
                             initialData={product!}
                             productId={params.productId}
                             storeId={params.storeId}

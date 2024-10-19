@@ -12,8 +12,6 @@ export async function PATCH(
 
         const { sku, ...values } = await req.json();
 
-        console.log({ values: sku })
-
         if (!user?.id) {
             return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
         }
