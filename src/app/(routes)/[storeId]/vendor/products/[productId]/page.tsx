@@ -113,6 +113,7 @@ const page = async (
                         </div> */}
                         <ProductDetailsForm
                             name={product?.name!}
+                            slug={product?.slug!}
                             description={product?.description!}
                             productId={params.productId}
                             storeId={params.storeId}

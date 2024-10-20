@@ -4,7 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Pencil } from "lucide-react";
+import { Pencil, RefreshCcw } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,7 @@ import {
     FormControl,
     FormField,
     FormItem,
+    FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 
@@ -22,9 +23,11 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { slugify } from "@/lib/slugify";
 
-interface TitleFormProps {
+interface ProductDetailsProps {
     name: string;
+    slug: string;
     description?: string;
     productId: string;
     storeId: string;
@@ -38,6 +41,7 @@ const formSchema = z.object({
     ).min(1, {
         message: 'Product name is required.',
     }),
+    slug: z.string().min(1, { message: 'slug is required for this product' }),
     description: z.string(
         {
             required_error: "Please provide a product description.",
@@ -50,11 +54,12 @@ const formSchema = z.object({
 
 export const ProductDetailsForm = ({
     name,
+    slug,
     description,
     storeId,
     productId
 
-}: TitleFormProps) => {
+}: ProductDetailsProps) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const { toast } = useToast()
@@ -76,7 +81,7 @@ export const ProductDetailsForm = ({
             await axios.patch(`/api/${storeId}/products/${productId}`, values);
             toggleEdit();
             toast({
-                title: "Title updated."
+                title: "Product details updated."
             })
             router.refresh();
 
@@ -85,6 +90,11 @@ export const ProductDetailsForm = ({
                 title: "Something went wrong!"
             })
         }
+    }
+
+    const onSlugGenerate = () => {
+        const slug = slugify(name)
+        form.setValue("slug", slug);
     }
 
     return (
@@ -110,6 +120,17 @@ export const ProductDetailsForm = ({
                                 />
                             </div>
                             <div className="my-2">
+                                <Label className="mb-3">Slug</Label>
+                                <Input
+                                    id="name"
+                                    type="text"
+                                    className="w-full mt-2"
+                                    defaultValue={slug}
+                                    readOnly
+                                />
+                            </div>
+
+                            <div className="my-2">
                                 <Label className="mb-2">Description</Label>
                                 <Textarea
                                     id="description"
@@ -130,6 +151,7 @@ export const ProductDetailsForm = ({
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
+                                            <FormLabel>Name *</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     disabled={isLoading}
@@ -143,9 +165,35 @@ export const ProductDetailsForm = ({
                                 />
                                 <FormField
                                     control={form.control}
+                                    name="slug"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Slug *</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={isLoading}
+                                                    placeholder="e.g 'Generate a slug from title'"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                            <Button
+                                                type="button"
+                                                className="flex items-center gap-x-2 mt-2"
+                                                onClick={onSlugGenerate}
+                                            >
+                                                <RefreshCcw className="h-4 w-4" />
+                                                Generate Slug
+                                            </Button>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
                                     name="description"
                                     render={({ field }) => (
                                         <FormItem>
+                                            <FormLabel>Description *</FormLabel>
                                             <FormControl>
                                                 <Textarea
                                                     disabled={isLoading}

@@ -1,6 +1,6 @@
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { slugify } from "@/lib/slugify";
+// import { slugify } from "@/lib/slugify";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -10,7 +10,7 @@ export async function PATCH(
     try {
         const user = await currentUser();
 
-        const { sku, ...values } = await req.json();
+        const { sku, slug, ...values } = await req.json();
 
         if (!user?.id) {
             return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
@@ -45,7 +45,6 @@ export async function PATCH(
             }
         }
 
-        // const slug = slugify(name)
         const product = await db.product.update({
             where: {
                 storeId: params.storeId,
@@ -53,7 +52,7 @@ export async function PATCH(
             },
             data: {
                 ...values,
-                // slug: slug
+                slug: slug
             }
         })
 
@@ -76,11 +75,11 @@ export async function DELETE(
         const userId = user?.id
 
         if (!userId) {
-            return NextResponse.json({message : "Unauthenticated"}, { status: 403 });
+            return NextResponse.json({ message: "Unauthenticated" }, { status: 403 });
         }
 
         if (!params.productId) {
-            return NextResponse.json({message: "Product id is required"}, { status: 400 });
+            return NextResponse.json({ message: "Product id is required" }, { status: 400 });
         }
 
         const storeByUserId = await db.store.findFirst({
@@ -91,7 +90,7 @@ export async function DELETE(
         });
 
         if (!storeByUserId) {
-            return NextResponse.json({message: "Unauthorized"}, { status: 405 });
+            return NextResponse.json({ message: "Unauthorized" }, { status: 405 });
         }
 
         const product = await db.product.delete({
