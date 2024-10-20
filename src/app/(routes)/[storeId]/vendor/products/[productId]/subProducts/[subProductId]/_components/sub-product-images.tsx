@@ -100,29 +100,35 @@ export const SubProductImages = ({
             </CardHeader>
             <CardContent>
                 {!isEditing && (
-                    <div className="flex items-center gap-3">
-                        <div className="grid gap-2">
-                            <Image
-                                alt="Product image"
-                                className="aspect-square w-full rounded-md object-cover"
-                                height='300'
-                                src={initialData?.images[0].url!} // First image in the array
-                                width='300'
-                            />
-                            <div className="grid grid-cols-3 gap-2">
-                                {initialData?.images.slice(1, 7).map((image, index) => (
+                    <div className="flex items-center w-full gap-3">
+                        <div className="grid gap-2 w-full">
+                            <div className="flex items-center gap-3 w-full"
+                            >
+                                {initialData.images.slice(0, 2).map((image, index) => (
+                                    <Image
+                                        key={index}
+                                        alt={`Product image ${index + 1}`}
+                                        src={image.url}
+                                        className="aspect-square origin-center object-center w-full h-full rounded-md object-cover"
+                                        height={250}
+                                        width={250}
+                                    />
+                                ))}
+                            </div>
+                            <div className="flex flex-wrap items-start gap-3">
+                                {initialData?.images.slice(2, 7).map((image, index) => (
                                     <button key={index} className="relative w-[140px] h-[140px]"
                                     >
                                         <Image
                                             alt={`Product image ${index + 1}`}
-                                            className="aspect-square w-full h-full rounded-md object-cover"
+                                            className="aspect-square w-full h-full rounded-md object-center object-cover"
                                             src={image.url}
                                             fill
                                         />
                                     </button>
                                 ))}
                             </div>
-                            <div className="">
+                            <div>
                                 {initialData?.color && (
                                     <div className="w-20 h-20 mt-10 rounded-full p-1"
                                         style={{ borderWidth: '2px', borderColor: initialData.color?.color }}

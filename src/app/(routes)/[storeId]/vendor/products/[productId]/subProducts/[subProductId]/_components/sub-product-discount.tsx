@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { SubProduct } from "@prisma/client";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 interface SubProductDiscountProps {
     initialData: {
@@ -39,7 +41,7 @@ export const SubProductDiscount = ({
     storeId,
     subProductId
 }: SubProductDiscountProps) => {
-    
+
     const [isEditing, setIsEditing] = useState(false);
 
     const router = useRouter();
@@ -81,59 +83,80 @@ export const SubProductDiscount = ({
     }
 
     return (
-        <div className="mt-6 bg-slate-100 rounded-md p-4 dark:bg-gray-800">
-            <div className="font-medium flex items-center justify-between">
-                SubProduct Discount
-                <Button onClick={toggleEdit} variant="ghost">
-                    {isEditing ? (
-                        <>Cancel</>
-                    ) : (
-                        <>
+        <Card className="mt-5">
+            <CardHeader>
+                <CardTitle>
+                    Product discount
+                </CardTitle>
+                <CardDescription>
+                    You can control your product discount from this section.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {!isEditing && (
+                    <div className="flex items-start flex-col gap-x-2">
+                        <Label>Discount</Label>
+                        <Input
+                            type="number"
+                            disabled={isSubmitting}
+                            defaultValue={initialData?.discount} 
+                            readOnly
+                            className="mt-3"                           
+                        />
+                    </div>
+                )}
+                {isEditing && (
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-4 mt-4 dark:text-gray-300"
+                        >
+                            <FormField
+                                control={form.control}
+                                name="discount"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                type="number"
+                                                disabled={isSubmitting}
+                                                placeholder="e.g. 25"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex items-center gap-x-2">
+                                <Button
+                                    disabled={!isValid || isSubmitting}
+                                    type="submit"
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant={'ghost'}
+                                    onClick={toggleEdit}
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                )}
+            </CardContent>
+            <CardFooter>
+                <div className="font-medium flex items-center justify-between">
+                    {!isEditing && (
+                        <Button onClick={toggleEdit} variant="ghost">
                             <Pencil className="h-4 w-4 mr-2" />
                             Edit Discount
-                        </>
+                        </Button>
                     )}
-                </Button>
-            </div>
-            {!isEditing && (
-                <p className="text-sm mt-2 dark:text-gray-300">
-                    {initialData?.discount}
-                </p>
-            )}
-            {isEditing && (
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-4 mt-4 dark:text-gray-300"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="discount"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <Input
-                                        type="number"
-                                            disabled={isSubmitting}
-                                            placeholder="e.g. 25"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex items-center gap-x-2">
-                            <Button
-                                disabled={!isValid || isSubmitting}
-                                type="submit"
-                            >
-                                Save
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
-            )}
-        </div>
+                </div>
+            </CardFooter>
+        </Card>
     )
 }
