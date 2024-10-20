@@ -8,8 +8,8 @@ import { Banner } from '@/components/banner';
 import { ArrowLeft } from 'lucide-react';
 import SubproductActions from './_components/sub-product-actions';
 // import { IconBadge } from '@/components/icon-badge';
-import SubProductKsu from './_components/sub-product-sku';
-import SubProductImages from './_components/sub-product-images';
+// import SubProductKsu from './_components/sub-product-sku';
+import { SubProductImages } from './_components/sub-product-images';
 import { SubProductSizes } from './_components/sub-product-sizes';
 import { SubProductColorImage } from './_components/sub-product-color-image';
 import { SubProductDiscount } from './_components/sub-product-discount';
@@ -48,7 +48,7 @@ const Page = async ({
         },
     });
 
-    console.log({subProduct: subProduct?.product})
+    console.log({ subProduct: subProduct?.product })
     if (!subProduct) {
         return redirect(`/${params.storeId}/products/${params.productId}`)
     }
@@ -108,7 +108,7 @@ const Page = async ({
                         subProductId={params.subProductId}
                     />
                 </div>
-                <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:gap-8">
+                <div className="grid gap-4 md:grid-cols-[1fr_350px] lg:gap-8">
                     <div className="">
                         {/* <div className="flex items-center gap-x-2">
                             <IconBadge icon={LayoutDashboard} />
@@ -120,13 +120,13 @@ const Page = async ({
                             storeId={params.storeId}
                             subProductId={params.subProductId}
                         /> */}
-                        <SubProductImages
+                        <SubProductSizes
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}
                         />
-                        <SubProductSizes
+                        <SubProductImages
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
@@ -138,6 +138,8 @@ const Page = async ({
                             storeId={params.storeId}
                             subProductId={params.subProductId}
                         />
+                    </div>
+                    <div className="">
                         <SubProductDiscount
                             initialData={subProduct}
                             productId={params.productId}

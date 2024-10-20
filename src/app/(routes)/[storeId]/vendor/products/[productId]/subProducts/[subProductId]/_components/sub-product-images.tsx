@@ -6,7 +6,7 @@ import axios from 'axios'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Pencil } from "lucide-react";
+import { Pencil, Upload } from "lucide-react";
 
 import {
     Form,
@@ -19,15 +19,17 @@ import {
 // import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Image as Images } from "@prisma/client";
+import { Color, Image as Images } from "@prisma/client";
 import Image from "next/image";
 import { MultiFileUpload } from "@/components/upload/multi-file-upload";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 
 interface SubProductImagesProps {
     initialData: {
         images: Images[];
-    } | null;
+        color: Color | null;
+    };
     storeId: string;
     productId: string;
     subProductId: string;
@@ -35,12 +37,12 @@ interface SubProductImagesProps {
 
 const formSchema = z.object({
     images: z.array(z.string().url())
-        .min(3, "At least 3 images are required")  
+        .min(3, "At least 3 images are required")
         .max(6, "A maximum of 6 images is allowed")
-        // .nonempty("At least one image is required"),
+    // .nonempty("At least one image is required"),
 });
 
-const SubProductImages = ({
+export const SubProductImages = ({
     initialData,
     storeId,
     productId,
@@ -87,70 +89,103 @@ const SubProductImages = ({
         }
     }
 
+    console.log({ color: initialData.color?.color })
     return (
-        <div className="mt-6 bg-slate-100 rounded-md p-4 dark:bg-gray-800">
-            <div className="font-medium flex items-center justify-between">
-                SubProduct Images
-                <Button onClick={toggleEdit} variant="ghost">
-                    {isEditing ? (
-                        <>Cancel</>
-                    ) : (
-                        <>
+        <Card className="mt-5">
+            <CardHeader>
+                <CardTitle>Product Images</CardTitle>
+                <CardDescription>
+                    Manage all of your product images from this section, like creating, updating and deleting
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {!isEditing && (
+                    <div className="flex items-center gap-3">
+                        <div className="grid gap-2">
+                            <Image
+                                alt="Product image"
+                                className="aspect-square w-full rounded-md object-cover"
+                                height='300'
+                                src={initialData?.images[0].url!} // First image in the array
+                                width='300'
+                            />
+                            <div className="grid grid-cols-3 gap-2">
+                                {initialData?.images.slice(1, 7).map((image, index) => (
+                                    <button key={index} className="relative w-[140px] h-[140px]"
+                                    >
+                                        <Image
+                                            alt={`Product image ${index + 1}`}
+                                            className="aspect-square w-full h-full rounded-md object-cover"
+                                            src={image.url}
+                                            fill
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="">
+                                {initialData?.color && (
+                                    <div className="w-20 h-20 mt-10 rounded-full p-1"
+                                        style={{ borderWidth: '2px', borderColor: initialData.color?.color }}
+                                    >
+                                        <Image
+                                            src={initialData.color.imageUrl}
+                                            width='140'
+                                            height='140'
+                                            alt="color image"
+                                            className="w-full h-full rounded-full object-cover"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {isEditing && (
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-4 mt-4 dark:text-gray-300"
+                        >
+                            <FormField
+                                control={form.control}
+                                name="images"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col items-start">
+                                        <FormControl>
+                                            <MultiFileUpload
+                                                endpoint="subProductImage"
+                                                onChange={(urls) => field.onChange(urls)}
+                                                // value={field.value}
+                                                value={field.value?.length ? field.value : initialImageUrls}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex items-center gap-x-2">
+                                <Button disabled={isSubmitting} type="submit">
+                                    Save
+                                </Button>
+                                <Button disabled={isSubmitting} onClick={toggleEdit} type="button" variant='ghost'>
+                                    Cancel
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                )}
+            </CardContent>
+            <CardFooter>
+                <div className="font-medium flex items-center justify-between">
+                    {!isEditing && (
+                        <Button variant={'ghost'} onClick={toggleEdit} className="flex items-center gap-2">
                             <Pencil className="h-4 w-4 mr-2" />
                             Edit Images
-                        </>
+                        </Button>
                     )}
-                </Button>
-            </div>
-            {!isEditing && (
-                <div className="flex items-center gap-3">
-                    {initialData?.images.map((image) => (
-                        <div key={image.id} className="relative h-[150px] w-[200px] rounded-sm overflow-hidden flex items-center gap-2">
-                            <Image
-                                src={image.url}
-                                width={200}
-                                height={200}
-                                className="w-full h-full object-cover"
-                                alt={image.id}
-                            />
-                        </div>
-                    ))}
                 </div>
-            )}
-
-            {isEditing && (
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-4 mt-4 dark:text-gray-300"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="images"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col items-start">
-                                    <FormControl>
-                                        <MultiFileUpload
-                                            endpoint="subProductImage"
-                                            onChange={(urls) => field.onChange(urls)}
-                                            // value={field.value}
-                                            value={field.value?.length ? field.value : initialImageUrls}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex items-center gap-x-2">
-                            <Button disabled={isSubmitting} type="submit">
-                                Save
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
-            )}
-        </div>
+            </CardFooter>
+        </Card>
     )
 }
-
-export default SubProductImages

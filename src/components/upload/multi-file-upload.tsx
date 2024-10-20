@@ -21,18 +21,18 @@ export const MultiFileUpload = ({ onChange, endpoint, value = [] }: MultipleFile
     };
 
     const renderFilePreview = (fileUrl: string) => (
-        <div key={fileUrl} className=" relative">
-            <div className="relative w-40 h-40">
+        <div key={fileUrl} className="relative w-[200px] h-[200px] overflow-hidden flex flex-wrap">
                 <Image
                     src={fileUrl}
                     alt="uploaded image"
                     className="object-cover rounded-md"
                    fill
                 />
-            </div>
+            {/* <div>
+            </div> */}
             <div
                 onClick={() => handleRemove(fileUrl)}
-                className="mt-2 cursor-pointer mb-3"
+                className="cursor-pointer absolute top-0 right-0  h-8 w-8 rounded-tl-full rounded-bl-full text-white flex items-center justify-center bg-blue-900"
             >
                 <X className="h-4 w-4" />
             </div>
@@ -41,7 +41,7 @@ export const MultiFileUpload = ({ onChange, endpoint, value = [] }: MultipleFile
 
     return (
         <div className="flex flex-col items-start justify-start">
-            <div className="flex items-start gap-4 justify-start">
+            <div className="flex items-start flex-wrap gap-4 justify-start">
             {value.map(renderFilePreview)}
             </div>
             <div className="mt-5">

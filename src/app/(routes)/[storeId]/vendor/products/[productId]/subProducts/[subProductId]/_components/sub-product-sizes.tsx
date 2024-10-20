@@ -101,7 +101,7 @@ export const SubProductSizes = ({
 
     return (
         <>
-            <Card>
+            <Card className="mt-5">
                 <CardHeader>
                     <CardTitle>Stock</CardTitle>
                     <CardDescription>
