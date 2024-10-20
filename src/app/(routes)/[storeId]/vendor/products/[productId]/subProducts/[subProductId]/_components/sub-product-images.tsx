@@ -102,17 +102,18 @@ export const SubProductImages = ({
                 {!isEditing && (
                     <div className="flex items-center w-full gap-3">
                         <div className="grid gap-2 w-full">
-                            <div className="flex items-center gap-3 w-full"
+                            <div className="flex items-center gap-3 w-full h-full"
                             >
                                 {initialData.images.slice(0, 2).map((image, index) => (
-                                    <Image
-                                        key={index}
-                                        alt={`Product image ${index + 1}`}
-                                        src={image.url}
-                                        className="aspect-square origin-center object-center w-full h-full rounded-md object-cover"
-                                        height={250}
-                                        width={250}
-                                    />
+                                    <div className="w-full h-[500px]  relative">
+                                        <Image
+                                            key={index}
+                                            alt={`Product image ${index + 1}`}
+                                            src={image.url}
+                                            className="aspect-square w-full h-full rounded-md object-cover"
+                                            fill
+                                        />
+                                    </div>
                                 ))}
                             </div>
                             <div className="flex flex-wrap items-start gap-3">

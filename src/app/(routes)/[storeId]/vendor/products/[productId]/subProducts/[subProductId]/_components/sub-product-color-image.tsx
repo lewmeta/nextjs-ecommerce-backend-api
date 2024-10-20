@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { FileUpload } from "@/components/upload/file-upload";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface SubProductColorImage {
     initialData: Color;
@@ -78,70 +79,89 @@ export const SubProductColorImage = ({
     }
 
     return (
-        <div className="mt-6 bg-slate-100 rounded-md p-4 dark:bg-gray-800">
-            <div className="font-medium flex items-center justify-between">
-                Color Image
-                <Button onClick={toggleEdit} variant="ghost">
-                    {isEditing ? "Cancel" : <><Pencil className="h-4 w-4 mr-2" /> Edit Color Image</>}
-                </Button>
-            </div>
-            {!isEditing && (
-                (initialData !== null && (
-                    <>
-                        <span>{initialData.color}</span>
-                        <Image
-                            src={initialData.imageUrl}
-                            width={60}
-                            height={60}
-                            alt="image color"
-                        />
-                    </>
-                ))
-            )}
+        <Card className="mt-5">
+            <CardHeader>
+                <CardTitle>Color Images</CardTitle>
+                <CardDescription>
+                    Manage from this category the color of the image of this variant of product.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {!isEditing && (
+                    (initialData !== null && (
+                        <>
+                            <div className="w-20 h-20 mt-10 rounded-full p-1"
+                                style={{ borderWidth: '2px', borderColor: initialData.color }}
+                            >
+                                <Image
+                                    src={initialData.imageUrl}
+                                    width='90'
+                                    height='90'
+                                    alt="color image"
+                                    className="w-full h-full rounded-full object-cover"
+                                />
+                            </div>
+                        </>
+                    ))
+                )}
 
-            {isEditing && (
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
-                        <FormField
-                            control={form.control}
-                            name={`color`}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Color</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className="border rounded-md p-2"
-                                            placeholder="eg. #00000"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name={`imageUrl`}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Image</FormLabel>
-                                    <FormControl>
-                                        <FileUpload
-                                            endpoint="colorImage"
-                                            onChange={field.onChange}
-                                            value={field.value}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex items-center gap-x-2">
-                            <Button type="submit" disabled={isSubmitting || !isValid}>Save</Button>
-                        </div>
-                    </form>
-                </Form>
-            )}
-        </div>
+                {isEditing && (
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+                            <FormField
+                                control={form.control}
+                                name={`color`}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Color</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className="border rounded-md p-2"
+                                                placeholder="eg. #00000"
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`imageUrl`}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Image</FormLabel>
+                                        <FormControl>
+                                            <FileUpload
+                                                endpoint="colorImage"
+                                                onChange={field.onChange}
+                                                value={field.value}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex items-center gap-x-2">
+                                <Button disabled={isSubmitting} type="submit">
+                                    Save
+                                </Button>
+                                <Button disabled={isSubmitting} onClick={toggleEdit} type="button" variant='ghost'>
+                                    Cancel
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                )}
+            </CardContent>
+            <CardFooter>
+                {!isEditing && (
+                    <Button variant={'ghost'} onClick={toggleEdit} className="flex items-center gap-2">
+                        <Pencil className="h-4 w-4 mr-2" />
+                        Edit
+                    </Button>
+                )}
+            </CardFooter>
+        </Card>
     )
 }
