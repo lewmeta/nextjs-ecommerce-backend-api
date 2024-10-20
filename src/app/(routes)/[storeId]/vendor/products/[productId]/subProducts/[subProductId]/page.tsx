@@ -5,14 +5,15 @@ import { LayoutComponent } from '@/components/layout-component'
 import { db } from "@/lib/db";
 import { redirect } from 'next/navigation';
 import { Banner } from '@/components/banner';
-import { ArrowLeft, LayoutDashboard } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import SubproductActions from './_components/sub-product-actions';
-import { IconBadge } from '@/components/icon-badge';
+// import { IconBadge } from '@/components/icon-badge';
 import SubProductKsu from './_components/sub-product-sku';
 import SubProductImages from './_components/sub-product-images';
 import { SubProductSizes } from './_components/sub-product-sizes';
 import { SubProductColorImage } from './_components/sub-product-color-image';
 import { SubProductDiscount } from './_components/sub-product-discount';
+import { ProductProgress } from '@/components/product-progress';
 
 interface SubProductIdPageProps {
     params: {
@@ -43,9 +44,11 @@ const Page = async ({
             sizes: true,
             images: true,
             color: true,
+            product: true,
         },
     });
 
+    console.log({subProduct: subProduct?.product})
     if (!subProduct) {
         return redirect(`/${params.storeId}/products/${params.productId}`)
     }
@@ -61,9 +64,10 @@ const Page = async ({
     const totalFields = requiredFields.length;
     const completedFields = requiredFields.filter(Boolean).length;
 
-    const completionText = `(${completedFields}/${totalFields})`;
+    // const completionText = `(${completedFields}/${totalFields})`;
 
     const isComplete = requiredFields.every(Boolean);
+    const progress = (completedFields / totalFields) * 100;
 
     return (
         <LayoutComponent>
@@ -88,9 +92,13 @@ const Page = async ({
                                 <h1 className="text-2xl font-medium">Subproduct Creation</h1>
                             </div>
                         </div>
-                        <span className="text-sm text-slate-700 dark:text-slate-300 ">
-                            Complete all fields {completionText}
-                        </span>
+                        <div className="max-w-[290px] mt-4 w-full">
+                            <ProductProgress
+                                variant={progress === 100 ? 'success' : 'default'}
+                                size='default'
+                                value={progress}
+                            />
+                        </div>
                     </div>
                     <SubproductActions
                         disabled={!isComplete}
@@ -100,18 +108,18 @@ const Page = async ({
                         subProductId={params.subProductId}
                     />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-x-2">
+                <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:gap-8">
+                    <div className="">
+                        {/* <div className="flex items-center gap-x-2">
                             <IconBadge icon={LayoutDashboard} />
                             <h2 className="text-xl font-medium">Customize your Sub Products</h2>
-                        </div>
-                        <SubProductKsu
+                        </div> */}
+                        {/* <SubProductKsu
                             initialData={subProduct}
                             productId={params.productId}
                             storeId={params.storeId}
                             subProductId={params.subProductId}
-                        />
+                        /> */}
                         <SubProductImages
                             initialData={subProduct}
                             productId={params.productId}

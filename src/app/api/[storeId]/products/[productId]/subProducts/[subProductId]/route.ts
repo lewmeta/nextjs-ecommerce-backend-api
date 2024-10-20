@@ -101,16 +101,18 @@ export async function PATCH(
 
             updateData.sizes = {
                 // Use upsert with the correct structure
-                upsert: sizes.map((size: { id: string; size: string; qty: number; price: number; }) => ({
+                upsert: sizes.map((size: { id: string; size: string; qty: number; price: number; sku: string }) => ({
                     where: { id: size.id || "new" }, // use a condition to identify the size
                     create: {
                         size: size.size,
                         qty: size.qty,
                         price: size.price,
+                        sku: size.sku
                     },
                     update: {
                         qty: size.qty,
                         price: size.price,
+                        sku: size.sku,
                     },
                 })),
             };

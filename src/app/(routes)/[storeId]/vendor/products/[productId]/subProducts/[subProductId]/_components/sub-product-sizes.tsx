@@ -5,8 +5,8 @@ import axios from "axios";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Pencil, Trash } from "lucide-react";
-import { Size } from "@prisma/client";
+import { Pencil, PlusCircle, Trash, Wand } from "lucide-react";
+import { Color, Product, Size } from "@prisma/client";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -20,10 +20,17 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Label } from "@/components/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { generateSubProductSKU } from "@/lib/generate-sku";
 
 interface SubProductSizesProps {
     initialData: {
         sizes: Size[];
+        product: Product;
+        color: Color | null;
     };
     storeId: string;
     productId: string;
@@ -34,6 +41,7 @@ const sizeSchema = z.object({
     size: z.string().optional(),
     qty: z.coerce.number().min(0),  // Ensure quantity is a non-negative number
     price: z.coerce.number().min(0),
+    sku: z.string({ required_error: 'SKU is required to identify this varaint' }).min(1, { message: 'Generate an SKU before submitting.' }),
 });
 
 type FormValues = {
@@ -57,6 +65,7 @@ export const SubProductSizes = ({
         defaultValues: {
             sizes: initialData.sizes.map((size) => ({
                 size: size.size || '',
+                sku: size.sku || '',
                 qty: Number(size.qty),  // Ensure this is a number
                 price: Number(size.price), // Ensure this is a number
             })),
@@ -85,95 +94,173 @@ export const SubProductSizes = ({
         }
     };
 
+    const handleGenerateSKU = (index: number) => {
+        const generateSKU = generateSubProductSKU(initialData.product.name, initialData.color?.color!)
+        form.setValue(`sizes.${index}.sku`, generateSKU);
+    }
+
     return (
-        <div className="mt-6 bg-slate-100 rounded-md p-4 dark:bg-gray-800">
-            <div className="font-medium flex items-center justify-between">
-                SubProduct Sizes
-                <Button onClick={toggleEdit} variant="ghost">
-                    {isEditing ? "Cancel" : <><Pencil className="h-4 w-4 mr-2" /> Edit Sizes</>}
-                </Button>
-            </div>
-            {!isEditing && (
-                <div className="flex items-start flex-col w-full gap-3">
-                    {initialData.sizes.map((s) => (
-                        <div key={s.id} className="relative rounded-sm overflow-hidden flex items-center gap-2">
-                            Size: {s.size}, Qty: {s.qty}, Price: {s.price}
+        <>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Stock</CardTitle>
+                    <CardDescription>
+                        Manage your stock sizes and prices.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>SKU</TableHead>
+                                <TableHead>Stock</TableHead>
+                                <TableHead>Price</TableHead>
+                                <TableHead>Size</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {!isEditing && (
+                                (initialData ? (
+                                    <>
+                                        {initialData.sizes.map((s, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell className="font-semibold">
+                                                    {s.sku}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {s.qty}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {s.price}
+                                                </TableCell>
+                                                <TableCell className="uppercase">
+                                                    {s.size == null && 'Product has no size'}
+                                                    {s.size !== null && s.size}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                        No data found.
+                                    </>
+                                ))
+                            )}
+                        </TableBody>
+                    </Table>
+                    {isEditing && (
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
+                                <Table>
+                                    <TableBody>
+                                        {fields.map((item, index) => (
+                                            <TableRow key={item.id}>
+                                                {/* SKU Field */}
+                                                <TableCell className="font-semibold w-[120px]">
+                                                    <FormField
+                                                        control={control}
+                                                        name={`sizes.${index}.sku`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormControl>
+                                                                    <Input {...field} readOnly />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </TableCell>
+
+                                                {/* Stock Field */}
+                                                <TableCell>
+                                                    <FormField
+                                                        control={control}
+                                                        name={`sizes.${index}.qty`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <Label htmlFor={`stock-${index}`} className="sr-only">Stock</Label>
+                                                                <Input type="number" {...field} id={`stock-${index}`} />
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </TableCell>
+
+                                                {/* Price Field */}
+                                                <TableCell>
+                                                    <FormField
+                                                        control={control}
+                                                        name={`sizes.${index}.price`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <Label htmlFor={`price-${index}`} className="sr-only">Price</Label>
+                                                                <Input type="number" {...field} id={`price-${index}`} />
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </TableCell>
+
+                                                {/* Size Field */}
+                                                <TableCell>
+                                                    <FormField
+                                                        control={control}
+                                                        name={`sizes.${index}.size`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <ToggleGroup
+                                                                    type="single"
+                                                                    value={field.value}
+                                                                    onValueChange={field.onChange}
+                                                                    variant="outline"
+                                                                >
+                                                                    <ToggleGroupItem value="s">S</ToggleGroupItem>
+                                                                    <ToggleGroupItem value="m">M</ToggleGroupItem>
+                                                                    <ToggleGroupItem value="l">L</ToggleGroupItem>
+                                                                </ToggleGroup>
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="flex items-center gap-x-2">
+                                                    <Button type="button" onClick={() => handleGenerateSKU(index)}>
+                                                        <Wand className="h-4 w-4 mr-1" />
+                                                        Generate SKU
+                                                    </Button>
+                                                    <Button type="button" variant="destructive" onClick={() => remove(index)}>
+                                                        <Trash />
+                                                    </Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </form>
+                        </Form>
+                    )}
+                    {isEditing && (
+                        <div className="w-full flex items-center justify-center mt-8">
+                            <Button type="button" variant={'ghost'} onClick={() => append({ size: '', qty: 1, price: 0, sku: '' })}>
+                                <PlusCircle className="h-3.5 w-3.5" />
+                                Add Variant
+                            </Button>
                         </div>
-                    ))}
-                </div>
-            )}
-            {isEditing && (
-                <Form {...form}>
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4 dark:text-gray-300">
-                        {fields.map((item, index) => (
-                            <div key={item.id} className="flex items-center gap-4">
-                                <FormField
-                                    control={control}
-                                    name={`sizes.${index}.size`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Size</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    className="border rounded-md p-2"
-                                                    placeholder="Size"
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={control}
-                                    name={`sizes.${index}.qty`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Quantity</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type="number"
-                                                    {...field}
-                                                    placeholder="Quantity"
-                                                    className="border rounded-md p-2"
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={control}
-                                    name={`sizes.${index}.price`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Price</FormLabel>
-                                            <FormControl>
-                                                <input
-                                                    type="number"
-                                                    {...field}
-                                                    className="border rounded-md p-2"
-                                                    placeholder="Price"
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                                    <Trash />
-                                </Button>
-                            </div>
-                        ))}
-                        <Button type="button" onClick={() => append({ size: '', qty: 1, price: 0 })}>
-                            Add Size
+                    )}
+                </CardContent>
+
+                <CardFooter className="justify-center border-t p-4">
+                    {isEditing ? (
+                        <div className="flex gap-x-2 items-center">
+                            <Button type="submit" onClick={handleSubmit(onSubmit)}>Save</Button>
+                            <Button type="button" variant='ghost' onClick={toggleEdit}>Cancel</Button>
+                        </div>
+                    ) : (
+                        <Button onClick={toggleEdit} variant="ghost">
+                            <Pencil className="h-4 w-4 mr-2" /> Edit Sizes
                         </Button>
-                        <div className="flex items-center gap-x-2">
-                            <Button type="submit">Save</Button>
-                        </div>
-                    </form>
-                </Form>
-            )}
-        </div>
+                    )}
+                </CardFooter>
+            </Card>
+        </>
     );
 };
