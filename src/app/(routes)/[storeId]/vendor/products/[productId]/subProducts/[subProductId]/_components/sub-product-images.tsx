@@ -105,7 +105,7 @@ export const SubProductImages = ({
                             <div className="flex items-center gap-3 w-full h-full"
                             >
                                 {initialData.images.slice(0, 2).map((image, index) => (
-                                    <div className="w-full h-[500px]  relative">
+                                    <div className="w-full h-[400px]  relative">
                                         <Image
                                             key={index}
                                             alt={`Product image ${index + 1}`}
